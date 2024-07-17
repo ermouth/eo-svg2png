@@ -2,7 +2,7 @@ const sevruga = require('sevruga');
 const fs = require('fs');
 const Jimp = require('jimp');
 
-var width = 500,
+var width = 800,
     inFile = 's1.svg';
 
 var svg = fs.readFileSync(`${__dirname}/${inFile}`, {encoding: 'utf8'});
@@ -44,10 +44,9 @@ svgRenderToBuf(svg).then(function({buf, dim, scale}){
 // =======================
 
 async function svgRenderToBuf(svg) {
-  var dim = {};
   // get root node and dimensions
   var root = svg.match(/<svg [^>]+>/)[0],
-      props = [...root.matchAll(/(x|y|width|height)="([0-9\-\.]+)"/g)],
+      props = [...root.matchAll(/(x|y|width|height)="(-?[0-9\.]+)"/g)],
       dim = {}; // source dimensions
   props.forEach(e=>dim[e[1]]=+e[2]|0);
   var k = width / dim.width,
