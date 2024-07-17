@@ -1,0 +1,13 @@
+{
+  "name": "eo-svg2png",
+  "description": "",
+  "version": "0.01",
+  "author": "ermouth",
+  "license": "MIT",
+
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "jimp": "^0.22.12",
+    "sevruga": "^0.1.7"
+  }
+}

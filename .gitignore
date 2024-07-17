@@ -1,0 +1,10 @@
+.idea
+.vscode
+.github
+.DS_STORE
+
+*.env
+*.svg
+
+node_modules
+package-lock.json
