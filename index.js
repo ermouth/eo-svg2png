@@ -7,8 +7,8 @@ const xpath = require('xpath');
 
 var opts = {
   width:      800,
-  isDrainage: true,
-  fname:      __dirname + '/dr1.svg',
+  isDrainage: true,  // key showing we have drainage sketch
+  fname:      __dirname + '/s3.svg',
   font:       'OpenGost Type B TT',  // font-family=
 };
 
@@ -26,81 +26,116 @@ function svgRender(svgString, opts){
     ...opts
   };
 
-  var svg = !opts.fname ? svgString : fs.readFileSync(opts.fname, {encoding: 'utf8'}),
+  var svgString = !opts.fname ? svgString : fs.readFileSync(opts.fname, {encoding: 'utf8'}),
       width = typeof opts.width != 'number' ? 500 : _clamp(opts.width, 10, 3000) | 0;
 
-  return svgRenderToBuf(svg)
-  .then(imageBufferToPNG)
+  return preprocessSVG(svgString)
+  .then (renderSVGToBuf)
+  .then(bufferToPNG)
   .then(pngBuf => {
     if (opts.fname) fs.writeFileSync(opts.fname.replace(/\.svg$/i,'.png'), pngBuf);
     return pngBuf;
-  })
-  .catch();
+  });
 
-  
   // =======================
-  
-  async function svgRenderToBuf(svg) {
+
+  async function preprocessSVG(svgString){
     // get root node and dimensions
-    var root = svg.match(/<svg [^>]+>/)[0],
-        props = [...root.matchAll(/(x|y|width|height)="(-?[0-9\.]+)"/g)],
+    var rootString = svgString.match(/<svg [^>]+>/)[0],
+        props = [...rootString.matchAll(/(x|y|width|height)="(-?[0-9\.]+)"/g)],
         dim = {}; 
     // source dimensions raw
     props.forEach(e=>dim[e[1]]=+e[2]|0);
 
     // get current viewBox
-    var vbox = root.match(/viewBox="([^"]+)"/)[1].split(/[, ]+/).map(n=>Math.round(+n));
+    var vbox = rootString.match(/viewBox="([^"]+)"/)[1].split(/[, ]+/).map(n=>Math.round(+n));
     if (vbox.length != 4) throw new TypeError('Incomplete SVG viewBox');
 
-    //console.log(vbox, dim);
-
-    // check if we already have nearly good viewBox
-    if (dim.width && dim.height && Math.abs((dim.width/dim.height) - (vbox[2]/vbox[3])) < 0.05) {
-      // we likely have a valid viewBox
-      dim = {x:vbox[0],y:vbox[1],width:vbox[2],height:vbox[3]};
+    // check if we already have reasonable viewBox
+    if (dim.height && vbox[3] && Math.abs((dim.width/dim.height) - (vbox[2]/vbox[3])) < 0.05) {
+      dim = {x:vbox[0], y:vbox[1], width:vbox[2], height:vbox[3]};
     }
+
+    // go with SVG DOM then
+    var svg = new DOMParser().parseFromString(svgString,'text/xml');
 
     // Fix drainage sketch gaps
     if (opts.isDrainage) {
       ({svg,dim} = fixDrainageQuirks(svg, dim));
     }
 
-    var k = width / dim.width,
-        d1 = {width:Math.round(dim.width*k), height:Math.round(dim.height*k)};
-  
+    // Here we can add more contextual SVG processors
+
+    // back to string
+    var newSVG = new XMLSerializer().serializeToString(svg);
+
     // rebuild SVG root node, no x and y attributes
+    var k = width / dim.width,
+    d1 = {width:Math.round(dim.width*k), height:Math.round(dim.height*k)};
+    
     var newroot = `<svg xmlns="http://www.w3.org/2000/svg" 
     xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" 
     viewBox="${dim.x},${dim.y},${dim.width},${dim.height}"
     width="${d1.width}" height="${d1.height}">`;
-    svg = svg.replace(root, newroot);
+
+    newSVG = newSVG.replace(/<svg [^>]+>/, newroot);
 
     // fix no font-family defined
-    if (svg.indexOf('font-family="') == -1) {
-      svg = svg.replace(/<g>/g, `<g font-family="${opts.font}">`)
+    if (newSVG.indexOf('font-family="') == -1) {
+      newSVG = newSVG.replace(/<g>/g, `<g font-family="${opts.font}">`)
     }
+    return {svg:newSVG, dim:d1};
+  }
 
-    // svg = fixLines(svg); // fix lines maybe
+  // =======================
   
-    // create buf and fill it with white
-    var renderBuf = Buffer.alloc(d1.width * d1.height * 4);
+  async function renderSVGToBuf({svg, dim}) {
+    var renderBuf = Buffer.alloc(dim.width * dim.height * 4);
     renderBuf.fill(255);
-  
-    await sevruga.renderSVG(svg, renderBuf, d1);
-    return {buf:renderBuf, dim:d1, scale:k};
+    await sevruga.renderSVG(svg, renderBuf, dim);
+    return {buf:renderBuf, dim};
+  }
+
+
+  // =======================
+
+  function bufferToPNG({buf, dim}){
+    var future = deferred(),
+        outArr = [];
+    // shuffle bgra into rgba
+    for (var r,g,b,a,i=0; i<buf.length; i+=4) {
+      r = buf[i+2]; g = buf[i+1]; b = buf[i]; a = buf[i+3];
+      outArr.push(r,g,b,a);
+    }
+    
+    new Jimp({data: Buffer.from(outArr), ...dim}, (err,res) => {
+      if (err) future.reject(err);
+
+      // if a small image sharpen it a little
+      if (dim.width<1000) {
+        var sa = -0.1, kernel = [[sa,sa,sa], [sa,-sa*8+1,sa], [sa,sa,sa]];
+        res.convolute(kernel);
+      }
+      
+      // send/write output
+      res.getBuffer(Jimp.MIME_PNG, (err, pngBuf) => {
+        if (err) future.reject(err);
+        else future.resolve(pngBuf);
+      });
+    });
+
+    return future.promise;
   }
 
   // =======================
 
   function fixDrainageQuirks(svg, dim){
-    // add 2.5% more canvas space left and right
-    dim.x = (dim.x - dim.width * 0.025) | 0;
-    dim.width = dim.width * 1.05 | 0;
-    // manipulate XML DOM then
-    var doc = new DOMParser().parseFromString(svg,'text/xml'),
-        xfind = xpath.useNamespaces({"v": "http://www.w3.org/2000/svg"}),
-        titleNode = xfind('//v:g[@id="text"]/v:text[1]', doc)[0],
-        lineNode = xfind('//v:g[@id="sectionals"]/v:g/v:path', doc)[0];
+    var xfind = xpath.useNamespaces({"v": "http://www.w3.org/2000/svg"}),
+        titleNode = xfind('//v:g[@id="text"]/v:text[1]', svg)[0],
+        lineNode = xfind('//v:g[@id="sectionals"]/v:g/v:path', svg)[0];
+
+    // likely not a drainage
+    if (!lineNode || !titleNode) return {svg, dim};
 
     // detect bounding box of the drainage contour 
     var coordStringPairs = [...lineNode.getAttribute('d').matchAll(/\w[0-9\-\.,\s]+/g)],
@@ -127,52 +162,11 @@ function svgRender(svgString, opts){
     dim.height = dim.height - dY;
     dim.y = dim.y + dY;
 
-    //console.log(titleNode.textContent, bbox);
-    var newSVG = new XMLSerializer().serializeToString(doc);
-    return {svg:newSVG, dim}
-  }
+    // add 2.5% more canvas space left and right
+    dim.x = (dim.x - dim.width * 0.025) | 0;
+    dim.width = dim.width * 1.05 | 0;
 
-
-  // =======================
-
-  function imageBufferToPNG ({buf, dim, scale}){
-    var future = deferred(),
-        outArr = [];
-    // shuffle bgra into rgba
-    for (var r,g,b,a,i=0; i<buf.length; i+=4) {
-      r = buf[i+2]; g = buf[i+1]; b = buf[i]; a = buf[i+3];
-      outArr.push(r,g,b,a);
-    }
-    
-    new Jimp({data: Buffer.from(outArr), ...dim}, (err,res) => {
-      if (err) future.reject(err);
-
-      // if a small image sharpen it a little
-      if (scale<1 && dim.width<1000) {
-        var sa = -0.1, kernel = [[sa,sa,sa], [sa,-sa*8+1,sa], [sa,sa,sa]];
-        res.convolute(kernel);
-      }
-      
-      // send/write output
-      res.getBuffer(Jimp.MIME_PNG, (err, pngBuf) => {
-        if (err) future.reject(err);
-        else future.resolve(pngBuf);
-      });
-    });
-
-    return future.promise;
-  }
-
-  
-  // =======================
-
-  function fixLines(svg) {
-    var svg = svg;
-    // drop non-scaling strokes, they produce too faint lines
-    svg = svg.replace(/vector-effect="non-scaling-stroke"/g,'');
-    // fix too narrow linewidths
-    if (k<1) svg = svg.replace(/stroke\-width="1"/g,`stroke-width="${k<0.5?10:5}"`);
-    return svg;
+    return {svg, dim}
   }
 
   // =======================
