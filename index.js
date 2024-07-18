@@ -60,10 +60,7 @@ function svgRender(svgString, opts){
       dim = {x:vbox[0],y:vbox[1],width:vbox[2],height:vbox[3]};
     }
 
-    var k = width / dim.width,
-        d1 = {width:Math.round(dim.width*k), height:Math.round(dim.height*k)};
-
-    // Fix drainage
+    // Fix drainage sketch gaps
     if (opts.isDrainage) {
       ({svg,dim} = fixDrainageQuirks(svg, dim));
     }
@@ -120,14 +117,15 @@ function svgRender(svgString, opts){
 
     // move title text
     var titleY = +titleNode.getAttribute('y'),
-        newY = bbox[1] - 300; // new title baseline
+        newY = bbox[1] - 300, // new title baseline
+        dY = Math.abs(titleY - newY);
     
     titleNode.setAttribute('y', newY);
     titleNode.setAttribute('x', bbox[0] + 150);
 
     // change dim
-    dim.height = dim.height - Math.abs(titleY - newY);
-    dim.y = dim.y + Math.abs(titleY - newY);
+    dim.height = dim.height - dY;
+    dim.y = dim.y + dY;
 
     //console.log(titleNode.textContent, bbox);
     var newSVG = new XMLSerializer().serializeToString(doc);
