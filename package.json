@@ -4,10 +4,12 @@
   "version": "0.01",
   "author": "ermouth",
   "license": "MIT",
-
   "dependencies": {
+    "@xmldom/xmldom": "^0.8.10",
+    "deferred": "^0.7.11",
     "fs": "^0.0.1-security",
     "jimp": "^0.22.12",
-    "sevruga": "^0.1.7"
+    "sevruga": "^0.1.7",
+    "xpath": "^0.0.34"
   }
 }
