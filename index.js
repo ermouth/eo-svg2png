@@ -26,7 +26,7 @@ function renderSVGtoPNG(svgString, opts){
   var svgString = !opts.fname ? svgString : fs.readFileSync(opts.fname, {encoding: 'utf8'});
   
   return preprocessSVG(svgString, opts)
-  .then (renderSVGToBuf)
+  .then(renderSVGToBuf)
   .then(bufferToPNG)
   .then(pngBuf => {
     if (opts.fname) fs.writeFileSync(opts.fname.replace(/\.svg$/i,'.png'), pngBuf);
@@ -78,7 +78,7 @@ async function preprocessSVG(svgString, opts){
 
   newSVG = newSVG.replace(/<svg [^>]+>/, newroot);
 
-  // fix no font-family defined
+  // fix missing font-family
   if (newSVG.indexOf('font-family="') == -1) {
     newSVG = newSVG.replace(/<g>/g, `<g font-family="${opts.font}">`)
   }
@@ -93,7 +93,6 @@ async function renderSVGToBuf({svg, dim, opts}) {
   await sevruga.renderSVG(svg, buf, dim);
   return {buf, dim, opts};
 }
-
 
 // =======================
 
@@ -195,7 +194,7 @@ function _clamp(x, a, b) {
 function _attrs(node, attrs) {
   Object.entries(attrs).forEach(([k,v]) => {
     if (v==null) node.removeAttribute(k);
-    else node.setAttribute(k,v+'');
+    else node.setAttribute(k, v+'');
   });
   return node;
 }
