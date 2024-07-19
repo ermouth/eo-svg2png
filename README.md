@@ -19,7 +19,7 @@ scaled accordingly.
 const {renderSVGtoImage} = require('eo-svg2png/index.js');
 
 var opts = {
-  width:      // result image width, default is 500
+  width:      1000,       // result image width, default is 500
   background: [0,0,0,0],  // optional, default is white
   format:     'jpg',      // optional, default is png
   sharpen:    0,          // optional, default is 0.1
