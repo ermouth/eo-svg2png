@@ -10,3 +10,6 @@
 temp
 node_modules
 package-lock.json
+
+test/*.png
+snippets.js

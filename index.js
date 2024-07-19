@@ -5,17 +5,12 @@ const deferred = require('deferred');
 const {DOMParser, XMLSerializer} = require('@xmldom/xmldom');
 const xpath = require('xpath');
 
-var opts = {
-  width:  500,
-  isDrainage: true, // key showing we have a drainage sketch, special case  
-  fname:  __dirname + '/dr1.svg',
-  font:   'OpenGost Type B TT',  // font-family if not present in SVG
-};
+// Converts SVG document string into PNG buffer,
+// returns Promise which is resolved with Buffer.
 
-renderSVGtoPNG('', opts)
-.then(_ => console.log('Done'))
-.catch(err => console.log(`Render failed: ${err}`));
-
+// Fixes inconsistent x,y,width,height,viewBox 
+// in root <svg> node, also fixes special
+// cases like drainage sketch quirks.
 
 function renderSVGtoPNG(svgString, opts){
   var opts = {
@@ -169,7 +164,7 @@ function fixDrainageQuirks(svg, dim, opts){
     // skip title and long lines which are likely not dimensions
     if (!i || node.textContent.length > 6) return; 
     _attrs(node, {'font-size': node.getAttribute('font-size') * 0.8 | 0})
-  })
+  });
 
   // move title text
   var titleY = +titleNode.getAttribute('y'),

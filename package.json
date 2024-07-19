@@ -4,6 +4,11 @@
   "version": "0.01",
   "author": "ermouth",
   "license": "MIT",
+
+  "scripts":{
+    "test": "node ./test/test.js"
+  },
+
   "dependencies": {
     "@xmldom/xmldom": "^0.8.10",
     "deferred": "^0.7.11",
