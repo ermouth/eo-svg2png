@@ -12,25 +12,29 @@ const xpath = require('xpath');
 // in root <svg> node, also fixes special
 // cases like drainage sketch quirks.
 
-function renderSVGtoPNG(svgString, opts){
+function renderSVGtoImage(svgString, opts){
   var opts = {
     fname:      '',             // non-empty is for testing, takes a file from fs and saves to fs
     width:      500,            // default target PNG width
     isDrainage: false,          // is source SVG a drainage sketch
     font:       'GOST type B',  // default font
+    background: [255,255,255,255],  // background color, RGBA
+    format:     'png',          // output format, png,jpg or any other for Canvas Buffer
+    sharpen:    0.1,            // sharpen result bitmap, 0…1
     ...opts
   };
 
   opts.width = typeof opts.width != 'number' ? 500 : _clamp(opts.width, 10, 3000) | 0;
 
-  var svgString = !opts.fname ? svgString : fs.readFileSync(opts.fname, {encoding: 'utf8'});
+  var fname = opts.fname,
+      svgString = !fname ? svgString : fs.readFileSync(fname, {encoding: 'utf8'});
   
   return preprocessSVG(svgString, opts)
   .then(renderSVGToBuf)
-  .then(bufferToPNG)
-  .then(pngBuf => {
-    if (opts.fname) fs.writeFileSync(opts.fname.replace(/\.svg$/i,'.png'), pngBuf);
-    return pngBuf;
+  .then(bufferToImage)
+  .then(buf => {
+    if (fname) fs.writeFileSync(fname.replace(/\.svg$/i,'.'+opts.format), buf);
+    return buf;
   });
 }
 
@@ -88,37 +92,43 @@ async function preprocessSVG(svgString, opts){
 // =======================
 
 async function renderSVGToBuf({svg, dim, opts}) {
-  var buf = Buffer.alloc(dim.width * dim.height * 4);
-  buf.fill(0xFF);
+  var buf = Buffer.alloc(dim.width * dim.height * 4),
+      b = (opts || {}).background || [0,0,0,0];
+  
+  // Set background and render
+  buf.fill(Buffer.from([b[2],b[1],b[0],b[3]]));
   await sevruga.renderSVG(svg, buf, dim);
+
+  // shuffle OpenGL style ARGB LE result
+  // into more common Canvas style RGBA BE
+  for (var pix, i=0; i<buf.length; i+=4) {
+    pix = buf.readInt32LE(i) & 0xffffff;
+    buf.writeInt32BE(pix << 8 | buf[i+3], i);
+  }
+
   return {buf, dim, opts};
 }
 
 // =======================
 
-function bufferToPNG({buf, dim}){
-  var future = deferred();
-
-  // shuffle argb LE into rgba BE
-  for (var pix,i=0; i<buf.length; i+=4) {
-    pix = buf.readInt32LE(i) & 0xffffff;
-    buf.writeInt32BE(pix << 8 | 0xFF, i);
-  }
+function bufferToImage({buf, dim, opts}){
+  var future = deferred(),
+      fmt = /^jp[e]?g$/i.test((opts||{}).format+'') 
+            ? Jimp.MIME_JPEG 
+            : Jimp.MIME_PNG
   
-  // make PNG
-  new Jimp({data: buf, ...dim}, (err,res) => {
+  // make output
+  new Jimp({data: buf, ...dim}, (err,img) => {
     if (err) future.reject(err);
 
-    // if a small image sharpen it a little
-    if (dim.width<1000) {
-      var sa = -0.1, kernel = [[sa,sa,sa], [sa,-sa*8+1,sa], [sa,sa,sa]];
-      res.convolute(kernel);
-    }
+    // sharpen image
+    var sa = -_clamp(+opts.sharpen, -1, 1);
+    if (sa) img.convolute([[sa,sa,sa], [sa,-sa*8+1,sa], [sa,sa,sa]]);
     
     // send/write output
-    res.getBuffer(Jimp.MIME_PNG, (err, pngBuf) => {
+    img.getBuffer(fmt, (err, dataBuf) => {
       if (err) future.reject(err);
-      else future.resolve(pngBuf);
+      else future.resolve(dataBuf);
     });
   });
 
@@ -200,9 +210,9 @@ function _attrs(node, attrs) {
 }
 
 module.exports = {
-  default: renderSVGtoPNG,
-  renderSVGtoPNG,
+  default: renderSVGtoImage,
+  renderSVGtoImage,
   preprocessSVG,
   renderSVGToBuf,
-  bufferToPNG
+  bufferToImage
 };
