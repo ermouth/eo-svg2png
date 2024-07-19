@@ -154,6 +154,23 @@ function fixDrainageQuirks(svg, dim, opts){
     if (py < bbox[1]) bbox[1] = py; else if (py > bbox[3]) bbox[3] = py;
   });
 
+  // thicker line
+  _attrs(lineNode, {
+    'stroke-width': 5,
+    'stroke-linejoin': 'round',
+    'stroke-miterlimit': 0.5,
+    'vector-effect': null
+  });
+
+  // make non-title text bit smaller to reduce
+  // probability of dim texts overlap
+  var textNodes = xfind('//v:g[@id="text"]/v:text', svg);
+  textNodes.forEach((node, i) => {
+    // skip title and long lines which are likely not dimensions
+    if (!i || node.textContent.length > 6) return; 
+    _attrs(node, {'font-size': node.getAttribute('font-size') * 0.8 | 0})
+  })
+
   // move title text
   var titleY = +titleNode.getAttribute('y'),
       newY = bbox[1] - 300, // new title baseline
@@ -164,14 +181,6 @@ function fixDrainageQuirks(svg, dim, opts){
   // change dim
   dim.height = dim.height - dY;
   dim.y = dim.y + dY;
-
-  // thicker line
-  _attrs(lineNode, {
-    'stroke-width': 5,
-    'stroke-linejoin': 'round',
-    'stroke-miterlimit': 0.5,
-    'vector-effect': null
-  });
 
   // add 2.5% more canvas space left and right
   dim.x = (dim.x - dim.width * 0.025) | 0;
