@@ -134,7 +134,7 @@ function bufferToPNG({buf, dim}){
 // =======================
 
 function fixDrainageQuirks(svg, dim, opts){
-  var xfind = xpath.useNamespaces({"v": "http://www.w3.org/2000/svg"}),
+  var xfind = xpath.useNamespaces({ v:'http://www.w3.org/2000/svg' }),
       titleNode = xfind('//v:g[@id="text"]/v:text[1]', svg)[0],
       lineNode = xfind('//v:g[@id="sectionals"]/v:g/v:path', svg)[0];
 
@@ -159,12 +159,19 @@ function fixDrainageQuirks(svg, dim, opts){
       newY = bbox[1] - 300, // new title baseline
       dY = Math.abs(titleY - newY);
   
-  titleNode.setAttribute('y', newY);
-  titleNode.setAttribute('x', bbox[0] + 150);
+  _attrs(titleNode, {x:bbox[0] + 150, y:newY});
 
   // change dim
   dim.height = dim.height - dY;
   dim.y = dim.y + dY;
+
+  // thicker line
+  _attrs(lineNode, {
+    'stroke-width': 5,
+    'stroke-linejoin': 'round',
+    'stroke-miterlimit': 0.5,
+    'vector-effect': null
+  });
 
   // add 2.5% more canvas space left and right
   dim.x = (dim.x - dim.width * 0.025) | 0;
@@ -179,8 +186,18 @@ function _clamp(x, a, b) {
   return Math.max(a, Math.min(x, b));
 }
 
+// =======================
+
+function _attrs(node, attrs) {
+  Object.entries(attrs).forEach(([k,v]) => {
+    if (v==null) node.removeAttribute(k);
+    else node.setAttribute(k,v+'');
+  });
+  return node;
+}
+
 module.exports = {
-  default:  renderSVGtoPNG,
+  default: renderSVGtoPNG,
   renderSVGtoPNG,
   preprocessSVG,
   renderSVGToBuf,
