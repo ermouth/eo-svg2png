@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="145" height="480" x="-68" y="-442" xml:space="preserve" viewBox="-300.300640028896 -1944.33617 636.589066674431 2109.978268485931">
+  <g>
+    <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+      <g id="bottomLayers" fill="none" stroke="none" font-size="14" text-anchor="start"/>
+      <g id="fillings" fill="none" stroke="none" font-size="14" text-anchor="start"/>
+      <g id="profiles" fill="none" stroke="none" font-size="14" text-anchor="start"/>
+      <g id="sectionals" fill="none" stroke="#000000">
+        <g>
+          <path d="M-300.1,-436.9l149.4,13.7l267.2,226l42.4,246.4l-65.6,-55.5" vector-effect="non-scaling-stroke"/>
+        </g>
+      </g>
+      <g id="topLayers" fill="none" stroke="none" font-size="14" text-anchor="start"/>
+      <g id="visualization" fill="none" stroke="none" font-size="14" text-anchor="start">
+        <g id="by_insets"/>
+        <g id="by_spec"/>
+        <g/>
+      </g>
+      <g id="dimlns" fill="none" stroke="none" font-size="14" text-anchor="start"/>
+      <g id="text">
+        <text x="-23.8" y="-1890.3" fill="#000000" stroke="none" font-size="72" text-anchor="start">&#x41F;&#x43E;&#x43A;&#x440;&#x430;&#x441;&#x43A;&#x430;</text>
+        <path d="M-200.5,-427.8c-2,21.7 10.3,42.2 30.5,50.7c20.1,8.4 43.4,2.8 57.5,-13.8" fill="none" stroke="#808080"/>
+        <text x="-108.2" y="-524.7" fill="#0000ff" stroke="none" font-size="84" text-anchor="middle">145&#xB0;</text>
+        <path d="M78.3,-229.5c-13.6,16 -15.7,38.9 -5.2,57.1c10.4,18.2 31.2,28 51.9,24.4" fill="none" stroke="#808080"/>
+        <text x="212" y="-251.8" fill="#0000ff" stroke="none" font-size="84" text-anchor="middle">140&#xB0;</text>
+        <path d="M150.4,-0.1c-11.6,2 -22.1,8 -29.7,17" fill="none" stroke="#808080"/>
+        <text x="213.5" y="144.6" fill="#0000ff" stroke="none" font-size="84" text-anchor="middle">40&#xB0;</text>
+        <text x="-220.8" y="-479.9" fill="#000000" stroke="none" font-size="84" text-anchor="middle">30</text>
+        <text x="15.2" y="-348.4" fill="#000000" stroke="none" font-size="84" text-anchor="middle">70</text>
+        <text x="187" y="-82.5" fill="#000000" stroke="none" font-size="84" text-anchor="middle">50</text>
+        <text x="93.8" y="78.7" fill="#000000" stroke="none" font-size="84" text-anchor="middle">17</text>
+      </g>
+    </g>
+    <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-size="14" text-anchor="start" style="mix-blend-mode: normal">
+      <g id="articles"/>
+    </g>
+    <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-size="14" text-anchor="start" style="mix-blend-mode: normal">
+      <g/>
+    </g>
+  </g>
+</svg>

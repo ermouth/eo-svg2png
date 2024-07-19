@@ -5,11 +5,11 @@
 
 *.env
 *.svg
+!/test/*.svg
 *.png
 
 temp
 node_modules
 package-lock.json
 
-test/*.png
 snippets.js
