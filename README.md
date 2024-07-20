@@ -15,7 +15,7 @@ not by SVG root `width` attribute. Result image height is
 scaled accordingly.
 
 ```javascript
-const {renderSVGtoImage} = require('eo-svg2png/index.js');
+const {renderSVGtoImage} = require('eo-svg2png');
 
 var opts = {
   width:      1000,       // result image width, default is 500
@@ -59,7 +59,7 @@ Result dimensions will be taken from `dim` and if they don’t match
 original SVG `width` and `height` the result image is truncated.
 
 ```javascript
-const {renderSVGToBuf, bufferToImage} = require('eo-svg2png/index.js');
+const {renderSVGToBuf, bufferToImage} = require('eo-svg2png');
 
 renderSVGToBuf({
   svg:  sourceSVGstring,    // required
@@ -86,7 +86,7 @@ Result dimensions will be taken from `dim` and if they don’t match
 original SVG `width` and `height` the result image is truncated.
 
 ```javascript
-const {renderSVGToBuf} = require('eo-svg2png/index.js');
+const {renderSVGToBuf} = require('eo-svg2png');
 
 renderSVGToBuf({
   svg:  sourceSVGstring,    // required

@@ -16,7 +16,7 @@
 будет пропорционально изменена.
 
 ```javascript
-const {renderSVGtoImage} = require('eo-svg2png/index.js');
+const {renderSVGtoImage} = require('eo-svg2png');
 
 var opts = {
   width:      1000,       // ширина битмапа на выходе, 500 по умолчанию
@@ -65,7 +65,7 @@ renderSVGtoImage(sourceSVGstring, opts)
 в `dim.width` и `dim.height` как целые числа.
 
 ```javascript
-const {renderSVGToBuf, bufferToImage} = require('eo-svg2png/index.js');
+const {renderSVGToBuf, bufferToImage} = require('eo-svg2png');
 
 renderSVGToBuf({
   svg:  sourceSVGstring,    // required, SVG строка
@@ -96,7 +96,7 @@ renderSVGToBuf({
 в `dim.width` и `dim.height` как целые числа.
 
 ```javascript
-const {renderSVGToBuf} = require('eo-svg2png/index.js');
+const {renderSVGToBuf} = require('eo-svg2png');
 
 renderSVGToBuf({
   svg:  sourceSVGstring,    // required
@@ -109,7 +109,7 @@ renderSVGToBuf({
   }
 })
 .then(({buf}) => {
-  /* buf содержит данные готовые к отправке или сохранению */
+  /* buf содержит RGBA Buffer изображения */
 });
 ```
 
