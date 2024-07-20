@@ -23,10 +23,18 @@ var opts = {
     filters:    ['addMargin3percent'], 
     fname:      __dirname + '/s0.svg' 
   }})
-  .then(_ => console.log('Test 2: Done hires full window + margins render on custom background'))
+  .then(_ => console.log('Test 2: Done hires window + margins render on custom background'))
   .catch(err => console.log(`Test 2 render failed: ${err}`));
 
   await renderSVGtoImage('', {...opts, ...{ fname:  __dirname + '/s1.svg' }})
   .then(_ => console.log('Test 3: Done door render'))
   .catch(err => console.log(`Test 3 render failed: ${err}`));
+
+  await renderSVGtoImage('', {...opts, ...{ 
+    sharpen:    0, 
+    background: [0,0,0,0],
+    fname:  __dirname + '/i0.svg' 
+  }})
+  .then(_ => console.log('Test 4: Done avatar on transparent bg render'))
+  .catch(err => console.log(`Test 4 render failed: ${err}`));
 })();

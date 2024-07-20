@@ -42,10 +42,10 @@ function renderSVGtoImage(svgString, opts){
 async function preprocessSVG(svgString, opts){
   // get root node and dimensions
   var rootString = svgString.match(/<svg [^>]+>/)[0],
-      props = [...rootString.matchAll(/(x|y|width|height)="(-?[0-9\.]+)"/g)],
+      props = [...rootString.matchAll(/(x|y|width|height)\s?=\s?"(-?[0-9\.]+)[^"]{0,4}"/g)],
       dim = {}; 
   // source dimensions raw
-  props.forEach(e=>dim[e[1]]=+e[2]|0);
+  props.forEach(e => dim[e[1]] = Math.round(parseFloat(e[2])));
 
   // get current viewBox
   var vbox = rootString.match(/viewBox="([^"]+)"/)[1].split(/[, ]+/).map(n=>Math.round(+n));
