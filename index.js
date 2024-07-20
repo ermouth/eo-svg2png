@@ -5,18 +5,17 @@ const deferred = require('deferred');
 const {DOMParser, XMLSerializer} = require('@xmldom/xmldom');
 const xpath = require('xpath');
 
-// Converts SVG document string into PNG buffer,
+// Converts SVG document string into bitmap buffer,
 // returns Promise which is resolved with Buffer.
 
 // Fixes inconsistent x,y,width,height,viewBox 
-// in root <svg> node, also fixes special
-// cases like drainage sketch quirks.
+// in root <svg> node
 
 function renderSVGtoImage(svgString, opts){
   var opts = {
     fname:      '',             // non-empty is for testing, takes a file from fs and saves to fs
     width:      500,            // default target PNG width
-    isDrainage: false,          // is source SVG a drainage sketch
+    filters:    [],             // array of names of SVG filters to call (see /filters folder)
     font:       'GOST type B',  // default font
     background: [255,255,255,255],  // background color, RGBA
     format:     'png',          // output format, png,jpg or any other for Canvas Buffer
@@ -38,7 +37,6 @@ function renderSVGtoImage(svgString, opts){
   });
 }
 
-
 // =======================
 
 async function preprocessSVG(svgString, opts){
@@ -51,25 +49,33 @@ async function preprocessSVG(svgString, opts){
 
   // get current viewBox
   var vbox = rootString.match(/viewBox="([^"]+)"/)[1].split(/[, ]+/).map(n=>Math.round(+n));
-  if (vbox.length != 4) throw new TypeError('Incomplete SVG viewBox');
+  if (vbox.length && vbox.length != 4) throw new TypeError('Incomplete SVG viewBox');
 
   // check if we already have reasonable viewBox
-  if (dim.height && vbox[3] && Math.abs((dim.width/dim.height) - (vbox[2]/vbox[3])) < 0.05) {
+  if (
+    dim.height && vbox.length && vbox[3] 
+    && Math.abs((dim.width/dim.height) - (vbox[2]/vbox[3])) < 0.05
+  ) {
     dim = {x:vbox[0], y:vbox[1], width:vbox[2], height:vbox[3]};
   }
-
-  // go with SVG DOM then
-  var svg = new DOMParser().parseFromString(svgString,'text/xml');
-
-  // Fix drainage sketch gaps
-  if (opts.isDrainage) {
-    ({svg,dim} = fixDrainageQuirks(svg, dim, opts));
+  else if (dim.x == null || dim.y == null ||  dim.width == null ||  dim.height == null){
+    throw new TypeError('Incomplete SVG x,y,width,height');
   }
 
-  // Here we can add more contextual SVG processors
+  var newSVG = svgString;
 
-  // back to string
-  var newSVG = new XMLSerializer().serializeToString(svg);
+  if (opts.filters && opts.filters.length) {
+    // filters require SVG DOM
+    var svg = new DOMParser().parseFromString(svgString,'text/xml');
+
+    // run filters one by one
+    opts.filters.forEach(function(filterName){
+      ({svg,dim} = require('./filters/'+filterName+'.js')(svg, dim, opts));
+    });
+
+    // back to string
+    var newSVG = new XMLSerializer().serializeToString(svg);
+  }
 
   // rebuild SVG root node, no x and y attributes
   var k = opts.width / dim.width,
@@ -92,7 +98,7 @@ async function preprocessSVG(svgString, opts){
 // =======================
 
 async function renderSVGToBuf({svg, dim, opts}) {
-  var buf = Buffer.alloc(dim.width * dim.height * 4),
+  var buf = Buffer.alloc((dim.width | 0) * (dim.height | 0) * 4),
       b = (opts || {}).background || [0,0,0,0];
   
   // Set background and render
@@ -137,76 +143,8 @@ function bufferToImage({buf, dim, opts}){
 
 // =======================
 
-function fixDrainageQuirks(svg, dim, opts){
-  var xfind = xpath.useNamespaces({ v:'http://www.w3.org/2000/svg' }),
-      titleNode = xfind('//v:g[@id="text"]/v:text[1]', svg)[0],
-      lineNode = xfind('//v:g[@id="sectionals"]/v:g/v:path', svg)[0];
-
-  // likely not a drainage
-  if (!lineNode || !titleNode) return {svg, dim, opts};
-
-  // detect bounding box of the drainage contour 
-  var coordStringPairs = [...lineNode.getAttribute('d').matchAll(/\w[0-9\-\.,\s]+/g)],
-      bbox = [1e6,1e6,-1e6,-1e6],
-      px, py;
-  
-  coordStringPairs.map(_=>_[0]).forEach(function(s,i){
-    var cmd = s[0], v = s.substr(1).split(/[, ]+/).map(Number);
-    if (!i || /[A-Z]/.test(cmd)) px = v[0], py = v[1];
-    else px += v[0], py += v[1];
-    if (px < bbox[0]) bbox[0] = px; else if (px > bbox[2]) bbox[2] = px;
-    if (py < bbox[1]) bbox[1] = py; else if (py > bbox[3]) bbox[3] = py;
-  });
-
-  // thicker line
-  _attrs(lineNode, {
-    'stroke-width': 5,
-    'stroke-linejoin': 'round',
-    'stroke-miterlimit': 0.5,
-    'vector-effect': null
-  });
-
-  // make non-title text bit smaller to reduce
-  // probability of dim texts overlap
-  var textNodes = xfind('//v:g[@id="text"]/v:text', svg);
-  textNodes.forEach((node, i) => {
-    // skip title and long lines which are likely not dimensions
-    if (!i || node.textContent.length > 6) return; 
-    _attrs(node, {'font-size': node.getAttribute('font-size') * 0.8 | 0})
-  });
-
-  // move title text
-  var titleY = +titleNode.getAttribute('y'),
-      newY = bbox[1] - 300, // new title baseline
-      dY = Math.abs(titleY - newY);
-  
-  _attrs(titleNode, {x:bbox[0] + 150, y:newY});
-
-  // change dim
-  dim.height = dim.height - dY;
-  dim.y = dim.y + dY;
-
-  // add 2.5% more canvas space left and right
-  dim.x = (dim.x - dim.width * 0.025) | 0;
-  dim.width = dim.width * 1.05 | 0;
-
-  return {svg, dim}
-}
-
-// =======================
-
 function _clamp(x, a, b) {
   return Math.max(a, Math.min(x, b));
-}
-
-// =======================
-
-function _attrs(node, attrs) {
-  Object.entries(attrs).forEach(([k,v]) => {
-    if (v==null) node.removeAttribute(k);
-    else node.setAttribute(k, v+'');
-  });
-  return node;
 }
 
 module.exports = {

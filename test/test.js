@@ -9,10 +9,10 @@ var opts = {
 
 (async function test(){
   await renderSVGtoImage('', {...opts, ...{
-    isDrainage: true,  
-    fname:  __dirname + '/dr1.svg',
+    filters:  ['fixDrainage'],  
+    fname:    __dirname + '/dr1.svg',
   }})
-  .then(_ => console.log('Tests 1: Done drainage render'))
+  .then(_ => console.log('Test 1: Done drainage fix by filter and render'))
   .catch(err => console.log(`Test 1 render failed: ${err}`));
 
   await renderSVGtoImage('', {...opts, ...{ 
@@ -20,12 +20,13 @@ var opts = {
     sharpen:    0, 
     background: [240, 248, 255, 200],
     font:       'Ubuntu,Arial',
+    filters:    ['addMargin3percent'], 
     fname:      __dirname + '/s0.svg' 
   }})
-  .then(_ => console.log('Tests 2: Done hires full window render'))
+  .then(_ => console.log('Test 2: Done hires full window + margins render on custom background'))
   .catch(err => console.log(`Test 2 render failed: ${err}`));
 
   await renderSVGtoImage('', {...opts, ...{ fname:  __dirname + '/s1.svg' }})
-  .then(_ => console.log('Tests 3: Done door render'))
+  .then(_ => console.log('Test 3: Done door render'))
   .catch(err => console.log(`Test 3 render failed: ${err}`));
 })();

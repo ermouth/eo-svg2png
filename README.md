@@ -1,9 +1,8 @@
-# SVG to image converter
+# SVG to bitmap converter
 
-Converts SVG string into PNG, JPG or Canvas RGBA Buffer.
-
-The lib was written for private use and contains several 
-special functions which may be ignored.
+Converts SVG string into PNG, JPG or Canvas RGBA Buffer. The lib was 
+written for private use and contains several special filters which 
+may be ignored.
 
 ## Fit SVG into bitmap image of predefined width
 
@@ -23,6 +22,8 @@ var opts = {
   background: [0,0,0,0],  // optional, default is white
   format:     'jpg',      // optional, default is png
   sharpen:    0,          // optional, default is 0.1
+  filters:    [],         // array of filter names to apply to SVG DOM,
+                          // see /test and /filters folders for examples
   font:       ''          // fixes default font if no single font-family 
                           // attribute was found in SVG,
                           // pass empty space to avoid font fixing
@@ -38,8 +39,20 @@ Add `fname` key with a file name into options to load
 SVG from a file. If `fname` is provided the result image 
 also goes to a file with the same name but different extension.
 
+### Filters
 
-## Convert SVG to image as is
+Filters are located in `/filters` folder. Each filter exports a single 
+function which receives SVG DOM, dimensions and options. A filter 
+must return object with two props: `svg` which is new SVG DOM, 
+and `dim` which is dimensions.
+
+It’s ok for a filter to mutate given svg and dim directly without 
+prior cloning. 
+
+Sequence of filters for a given SVG is defined in `opts.filters` 
+array.
+
+## Convert SVG to bitmap as is
 
 SVG root must have valid `width`, `height` and `viewBox` attributes. 
 Result dimensions will be taken from `dim` and if they don’t match 
@@ -89,6 +102,11 @@ renderSVGToBuf({
   /* buf contains raw pixels in RGBA format */
 });
 ```
+
+## Fonts
+
+Fonts embedded in SVG are mostly ignored. Fonts used must be installed 
+on a host system to work properly.
 
 ## Tests
 
