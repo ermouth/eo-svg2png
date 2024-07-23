@@ -4,6 +4,21 @@ Converts SVG string into PNG, JPG or Canvas RGBA Buffer. The lib was
 written for private use and contains several special filters which 
 may be ignored.
 
+## Before install
+
+The lib is primarily intended for Ubuntu. On Linux you will likely 
+need to pre-install one dependency manually to avoid failure 
+during `npm install`:
+
+```bash
+sudo apt-get install librsvg2-dev
+```
+To prepare other OS please read installation manual for 
+[sevruga](https://github.com/Streampunk/sevruga), the renderer 
+under the hood of `eo-svg2png`.
+
+
+
 ## Fit SVG into bitmap image of predefined width
 
 SVG root must have either valid `width`, `height`, `x` and `y`,

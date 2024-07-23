@@ -27,7 +27,7 @@ var opts = {
   .catch(err => console.log(`Test 2 render failed: ${err}`));
 
   await renderSVGtoImage('', {...opts, ...{ fname:  __dirname + '/s1.svg' }})
-  .then(_ => console.log('Test 3: Done door render'))
+  .then(_ => console.log('Test 3: Done door with fixed viewBox render'))
   .catch(err => console.log(`Test 3 render failed: ${err}`));
 
   await renderSVGtoImage('', {...opts, ...{ 

@@ -14,11 +14,11 @@ const xpath = require('xpath');
 function renderSVGtoImage(svgString, opts){
   var opts = {
     fname:      '',             // non-empty is for testing, takes a file from fs and saves to fs
-    width:      500,            // default target PNG width
+    width:      500,            // default target bitmap width
     filters:    [],             // array of names of SVG filters to call (see /filters folder)
     font:       'GOST type B',  // default font
     background: [255,255,255,255],  // background color, RGBA
-    format:     'png',          // output format, png,jpg or any other for Canvas Buffer
+    format:     'png',          // output format, png/jpg, former is default
     sharpen:    0.1,            // sharpen result bitmap, 0…1
     ...opts
   };
