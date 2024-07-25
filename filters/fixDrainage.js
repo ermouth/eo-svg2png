@@ -50,15 +50,34 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
   });
 
   // move title text
-  var titleY = +titleNode.getAttribute('y'),
-      newY = bbox[1] - 300, // new title baseline
-      dY = Math.abs(titleY - newY);
-  
-  _attrs(titleNode, {x:bbox[0] + 150, y:newY});
+  var titleY = +titleNode.getAttribute('y');
 
-  // change dim
-  dim.height = dim.height - dY;
-  dim.y = dim.y + dY;
+  // text on top of drawing
+  if (titleY < bbox[1]) {
+    
+    // new title baseline
+    var newY = bbox[1] - 250, 
+        dY =  newY - _clamp(titleY, dim.y + 100, dim.y + dim.height - 20);
+
+    _attrs(titleNode, {x:bbox[0] + 150, y:newY});
+
+    // change dim
+    dim.height = dim.height - dY;
+    dim.y = dim.y + dY;
+  }
+
+  // text below drawing
+  else if (titleY > bbox[3]) {
+    // new title baseline
+    var newY = bbox[3] + 250, 
+        dY =  _clamp(titleY, dim.y + 100, dim.y + dim.height - 20) - newY;
+
+    _attrs(titleNode, {x:bbox[0] + 150, y:newY});
+
+    // change dim
+    dim.height = dim.height - dY;
+    //dim.y = dim.y + dY;
+  }
 
   // add 2.5% more canvas space left and right
   dim.x = (dim.x - dim.width * 0.025) | 0;
@@ -75,4 +94,10 @@ function _attrs(node, attrs) {
     else node.setAttribute(k, v+'');
   });
   return node;
+}
+
+// =======================
+
+function _clamp(x, a, b) {
+  return Math.max(a, Math.min(x, b));
 }

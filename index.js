@@ -54,7 +54,7 @@ async function preprocessSVG(svgString, opts){
   // check if we already have reasonable viewBox
   if (
     dim.height && vbox.length && vbox[3] 
-    && Math.abs((dim.width/dim.height) - (vbox[2]/vbox[3])) < 0.05
+    && Math.abs((dim.width/dim.height) - (vbox[2]/vbox[3])) < 0.005
   ) {
     dim = {x:vbox[0], y:vbox[1], width:vbox[2], height:vbox[3]};
   }
