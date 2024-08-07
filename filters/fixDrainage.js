@@ -13,11 +13,12 @@ const xpath = require('xpath');
 
 module.exports = exports = function fixDrainage(svg, dim, opts){
   var xfind = xpath.useNamespaces({ v:'http://www.w3.org/2000/svg' }),
-      titleNode = xfind('//v:g[@id="text"]/v:text[1]', svg)[0],
+      titleNode, 
+      titleNodeTextLength = 0,
       lineNode = xfind('//v:g[@id="sectionals"]/v:g/v:path', svg)[0];
 
   // likely not a drainage
-  if (!lineNode || !titleNode) return {svg, dim};
+  if (!lineNode) return {svg, dim};
 
   // detect bounding box of the drainage contour 
   var coordStringPairs = [...lineNode.getAttribute('d').matchAll(/\w[0-9\-\.,\s]+/g)],
@@ -45,38 +46,51 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
   var textNodes = xfind('//v:g[@id="text"]/v:text', svg);
   textNodes.forEach((node, i) => {
     // skip title and long lines which are likely not dimensions
-    if (!i || node.textContent.length > 6) return; 
-    _attrs(node, {'font-size': node.getAttribute('font-size') * 0.8 | 0})
+    if (node.textContent.length > 6) {
+      titleNode = node;
+      titleNodeTextLength = node.textContent.length;
+    }
+    else {
+      _attrs(node, {'font-size': node.getAttribute('font-size') * 0.8 | 0});
+    }
   });
 
-  // move title text
-  var titleY = +titleNode.getAttribute('y');
+  if (titleNode) {
+    // move title text
+    var titleY = +titleNode.getAttribute('y');
 
-  // text on top of drawing
-  if (titleY < bbox[1]) {
-    
-    // new title baseline
-    var newY = bbox[1] - 250, 
-        dY =  newY - _clamp(titleY, dim.y + 100, dim.y + dim.height - 20);
+    // text on top of drawing
+    if (titleY < bbox[1]) {
+      
+      // new title baseline
+      var newY = bbox[1] - 250, 
+          dY =  newY - _clamp(titleY, dim.y + 100, dim.y + dim.height - 20);
 
-    _attrs(titleNode, {x:bbox[0] + 150, y:newY});
+      _attrs(titleNode, {x:bbox[0] + 100, y:newY});
 
-    // change dim
-    dim.height = dim.height - dY;
-    dim.y = dim.y + dY;
+      // change dim
+      dim.height = dim.height - dY;
+      dim.y = dim.y + dY;
+    }
+
+    // text below drawing
+    else if (titleY > bbox[3]) {
+      // new title baseline
+      var newY = bbox[3] + 250, 
+          dY =  _clamp(titleY, dim.y + 100, dim.y + dim.height - 20) - newY;
+
+      _attrs(titleNode, {x:bbox[0] + 100, y:newY});
+
+      // change dim
+      dim.height = dim.height - dY;
+    }
   }
 
-  // text below drawing
-  else if (titleY > bbox[3]) {
-    // new title baseline
-    var newY = bbox[3] + 250, 
-        dY =  _clamp(titleY, dim.y + 100, dim.y + dim.height - 20) - newY;
-
-    _attrs(titleNode, {x:bbox[0] + 150, y:newY});
-
-    // change dim
-    dim.height = dim.height - dY;
-    //dim.y = dim.y + dY;
+  // Fix too narrow or small images
+  // where title text is truncated
+  
+  if (dim.width < 100 + titleNodeTextLength * 42) {
+    dim.width = 100 + titleNodeTextLength * 42;
   }
 
   // add 2.5% more canvas space left and right
