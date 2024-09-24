@@ -66,7 +66,7 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
       var newY = bbox[1] - 250, 
           dY =  newY - _clamp(titleY, dim.y + 100, dim.y + dim.height - 20);
 
-      _attrs(titleNode, {x:bbox[0] + 100, y:newY});
+      _attrs(titleNode, {x:bbox[0] + 10, y:newY});
 
       // change dim
       dim.height = dim.height - dY;
@@ -79,7 +79,7 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
       var newY = bbox[3] + 250, 
           dY =  _clamp(titleY, dim.y + 100, dim.y + dim.height - 20) - newY;
 
-      _attrs(titleNode, {x:bbox[0] + 100, y:newY});
+      _attrs(titleNode, {x:bbox[0] + 10, y:newY});
 
       // change dim
       dim.height = dim.height - dY;
@@ -89,8 +89,8 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
   // Fix too narrow or small images
   // where title text is truncated
   
-  if (dim.width < 100 + titleNodeTextLength * 42) {
-    dim.width = 100 + titleNodeTextLength * 42;
+  if (dim.width < 30 + titleNodeTextLength * 44) {
+    dim.width = 30 + titleNodeTextLength * 44;
   }
 
   // add 2.5% more canvas space left and right
