@@ -97,7 +97,7 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
   dim.x = (dim.x - dim.width * 0.025) | 0;
   dim.width = dim.width * 1.05 | 0;
 
-  return {svg, dim}
+  return {svg, dim};
 }
 
 // =======================
