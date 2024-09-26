@@ -65,7 +65,8 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
 
   if (titleNode) {
     // move title text
-    var titleY = +titleNode.getAttribute('y');
+    var titleY = +titleNode.getAttribute('y'),
+        titleX = +titleNode.getAttribute('x');
 
     // text on top of drawing
     if (titleY < bbox[1]) {
@@ -74,7 +75,13 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
       var newY = bbox[1] - 250, 
           dY =  newY - _clamp(titleY, dim.y + 100, dim.y + dim.height - 20);
 
-      _attrs(titleNode, {x:bbox[0] + 10, y:newY});
+      var newX = titleX;
+      if (titleX < dim.x) newX = dim.x + 10;
+      else if (titleX + titleNodeTextLength * 44 > dim.x + dim.width) {
+        newX = dim.x + dim.width - titleNodeTextLength * 44 - 10;
+      }
+
+      _attrs(titleNode, {x:newX, y:newY});
 
       // change dim
       dim.height = dim.height - dY;
@@ -87,7 +94,13 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
       var newY = bbox[3] + 250, 
           dY =  _clamp(titleY, dim.y + 100, dim.y + dim.height - 20) - newY;
 
-      _attrs(titleNode, {x:bbox[0] + 10, y:newY});
+      var newX = titleX;
+      if (titleX < dim.x) newX = dim.x + 10;
+      else if (titleX + titleNodeTextLength * 44 > dim.x + dim.width) {
+        newX = dim.x + dim.width - titleNodeTextLength * 44 - 10;
+      }
+
+      _attrs(titleNode, {x:newX, y:newY});
 
       // change dim
       dim.height = dim.height - dY;
