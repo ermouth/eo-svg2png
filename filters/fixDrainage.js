@@ -27,8 +27,16 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
   
   coordStringPairs.map(_=>_[0]).forEach(function(s,i){
     var cmd = s[0], v = s.substr(1).split(/[, ]+/).map(Number);
-    if (!i || /[A-Z]/.test(cmd)) px = v[0], py = v[1];
-    else px += v[0], py += v[1];
+    if (!i || /[A-Z]/.test(cmd)) {
+      if (cmd == 'H') px = v[0];
+      else if (cmd == 'V') py = v[0];
+      else px = v[0], py = v[1];
+    }
+    else {
+      if (cmd == 'h') px += v[0];
+      else if (cmd == 'v') py += v[0];
+      else px += v[0], py += v[1];
+    }
     if (px < bbox[0]) bbox[0] = px; else if (px > bbox[2]) bbox[2] = px;
     if (py < bbox[1]) bbox[1] = py; else if (py > bbox[3]) bbox[3] = py;
   });

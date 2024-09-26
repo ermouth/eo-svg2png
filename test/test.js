@@ -10,7 +10,7 @@ var opts = {
 (async function test(){
   await renderSVGtoImage('', {...opts, ...{
     filters:  ['fixDrainage'],  
-    fname:    __dirname + '/dr1.svg',
+    fname:    __dirname + '/dr2.svg',
   }})
   .then(_ => console.log('Test 1: Done drainage fix by filter and render'))
   .catch(err => console.log(`Test 1 render failed: ${err}`));
