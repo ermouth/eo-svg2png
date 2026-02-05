@@ -16,7 +16,6 @@ var opts = {
   .catch(err => console.log(`Test 1 render failed: ${err}`));
 
   await renderSVGtoImage('', {...opts, ...{ 
-    ignoreViewboxCheck: true,
     width:      1500, 
     sharpen:    0, 
     background: [240, 248, 255, 200],
