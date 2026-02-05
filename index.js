@@ -60,9 +60,9 @@ async function preprocessSVG(svgString, opts){
   ) {
     dim = {x:vbox[0], y:vbox[1], width:vbox[2], height:vbox[3]};
   }
-  else if (dim.x == null || dim.y == null ||  dim.width == null ||  dim.height == null){
+  else if (opts.useViewboxAsXYWH || dim.x == null || dim.y == null ||  dim.width == null ||  dim.height == null){
     if (!vbox.length) throw new TypeError('Incomplete SVG: no x,y,width,height and no viewBox');
-    if (opts.useViewboxAsXYWH) dim = {x:vbox[0], y:vbox[1], width:vbox[2], height:vbox[3]};
+    dim = {x:vbox[0], y:vbox[1], width:vbox[2], height:vbox[3]};
   }
 
   var newSVG = svgString;
