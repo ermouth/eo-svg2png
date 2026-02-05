@@ -20,7 +20,8 @@ function renderSVGtoImage(svgString, opts){
     background: [255,255,255,255],  // background color, RGBA
     format:     'png',          // output format, png/jpg, former is default
     sharpen:    0.1,            // sharpen result bitmap, 0…1
-    ignoreViewboxCheck: false,  // ignore ViewBox check if w,y,width,height <svg> attrs present
+    useViewboxAsXYWH: false,    // if viewBox is present use for as w,y,width,height 
+    applyViewboxCheck: false,   // apply ViewBox check if w,y,width,height <svg> attrs present
     ...opts
   };
 
@@ -54,14 +55,14 @@ async function preprocessSVG(svgString, opts){
 
   // check if we already have reasonable viewBox
   if (
-    !opts.ignoreViewboxCheck && dim.height && vbox.length && vbox[3] 
+    opts.applyViewboxCheck && dim.height && vbox.length && vbox[3] 
     && Math.abs((dim.width/dim.height) - (vbox[2]/vbox[3])) < 0.001
   ) {
     dim = {x:vbox[0], y:vbox[1], width:vbox[2], height:vbox[3]};
   }
   else if (dim.x == null || dim.y == null ||  dim.width == null ||  dim.height == null){
     if (!vbox.length) throw new TypeError('Incomplete SVG: no x,y,width,height and no viewBox');
-    dim = {x:vbox[0], y:vbox[1], width:vbox[2], height:vbox[3]};
+    if (opts.useViewboxAsXYWH) dim = {x:vbox[0], y:vbox[1], width:vbox[2], height:vbox[3]};
   }
 
   var newSVG = svgString;
