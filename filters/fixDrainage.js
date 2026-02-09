@@ -31,7 +31,7 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
   // make non-title text bit smaller to reduce
   // probability of dim texts overlap,
   // also save coords of texts
-  var textNodes = xfind('g[id="text"]>text', svg);
+  var textNodes = xfind('//v:g[@id="text"]/v:text', svg);
   textNodes.forEach((node, i) => {
     // skip title and long lines which are likely not dimensions
     var nl = node.textContent.length;
@@ -115,7 +115,7 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
       let newY = bbox[3] + w0*3, 
           dY =  _clamp(titleY, dim.y + 100, dim.y + dim.height - 20) - newY,
           newX = titleX;
-          
+
       if (titleX < dim.x) newX = dim.x + 10;
       else if (titleX + titleLength * w0 > dim.x + dim.width) {
         newX = dim.x + dim.width - titleLength * w0 - 10;
