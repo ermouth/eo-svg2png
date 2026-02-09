@@ -14,19 +14,48 @@ const xpath = require('xpath');
 module.exports = exports = function fixDrainage(svg, dim, opts){
   var xfind = xpath.useNamespaces({ v:'http://www.w3.org/2000/svg' }),
       titleNode, 
-      titleNodeTextLength = 0,
-      lineNode = xfind('//v:g[@id="sectionals"]/v:g/v:path', svg)[0];
+      titleLength = 0,
+      lineNode = xfind('//v:g[@id="sectionals"]/v:g/v:path', svg)[0],
+      w0 = 30;
 
   // likely not a drainage
   if (!lineNode) return {svg, dim};
 
-  // detect bounding box of the drainage contour 
-  var coordStringPairs = [...lineNode.getAttribute('d').matchAll(/\w[0-9\-\.,\s]+/g)],
-      bbox = [1e6,1e6,-1e6,-1e6],
-      px, py;
+  // Coord pairs of line segments
+  var coordStringPairs = [...lineNode.getAttribute('d').matchAll(/\w[0-9\-\.,\s]+/g)];
+  var coords = coordStringPairs.map(_=>_[0]).map(function(s,i){
+    let cmd = s[0], v = s.substr(1).split(/[, ]+/).map(Number);
+    return [cmd, v[0], v[1]];
+  });
+
+  // make non-title text bit smaller to reduce
+  // probability of dim texts overlap,
+  // also save coords of texts
+  var textNodes = xfind('g[id="text"]>text', svg);
+  textNodes.forEach((node, i) => {
+    // skip title and long lines which are likely not dimensions
+    var nl = node.textContent.length;
+    if (nl > 6) {
+      titleNode = node;
+      titleLength = node.textContent.length;
+    }
+    else {
+      let x = +node.getAttribute('x'),
+          y = +node.getAttribute('y'),
+          ta = node.getAttribute('text-anchor')||'start',
+          k1 = ta=='start'?0:ta=='middle'?-0.4:-0.8,
+          k2 = ta=='start'?0.8:ta=='middle'?0.4:0;
+      coords.push(['M', x+w0*nl*k1, y]);
+      coords.push(['M', x+w0*nl*k2, y-w0*2]);
+      _attrs(node, {'font-size': node.getAttribute('font-size') * 0.8 | 0});
+    }
+  });
   
-  coordStringPairs.map(_=>_[0]).forEach(function(s,i){
-    var cmd = s[0], v = s.substr(1).split(/[, ]+/).map(Number);
+  // detect new bounding box
+  var bbox = [1e6,1e6,-1e6,-1e6],
+      px, py;
+  coords.forEach(function(s,i){
+    let cmd = s[0], v = s.slice(1);
     if (!i || /[A-Z]/.test(cmd)) {
       if (cmd == 'H') px = v[0];
       else if (cmd == 'V') py = v[0];
@@ -37,8 +66,14 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
       else if (cmd == 'v') py += v[0];
       else px += v[0], py += v[1];
     }
-    if (px < bbox[0]) bbox[0] = px; else if (px > bbox[2]) bbox[2] = px;
-    if (py < bbox[1]) bbox[1] = py; else if (py > bbox[3]) bbox[3] = py;
+    if(!i) {
+      bbox[0] = bbox[2] = px;
+      bbox[1] = bbox[3] = py;
+    }
+    else {
+      if (px < bbox[0]) bbox[0] = px; else if (px > bbox[2]) bbox[2] = px;
+      if (py < bbox[1]) bbox[1] = py; else if (py > bbox[3]) bbox[3] = py;
+    }
   });
 
   // thicker line
@@ -49,36 +84,22 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
     'vector-effect': null
   });
 
-  // make non-title text bit smaller to reduce
-  // probability of dim texts overlap
-  var textNodes = xfind('//v:g[@id="text"]/v:text', svg);
-  textNodes.forEach((node, i) => {
-    // skip title and long lines which are likely not dimensions
-    if (node.textContent.length > 6) {
-      titleNode = node;
-      titleNodeTextLength = node.textContent.length;
-    }
-    else {
-      _attrs(node, {'font-size': node.getAttribute('font-size') * 0.8 | 0});
-    }
-  });
-
+  // move title node
   if (titleNode) {
-    // move title text
-    var titleY = +titleNode.getAttribute('y'),
+    let titleY = +titleNode.getAttribute('y'),
         titleX = +titleNode.getAttribute('x');
 
     // text on top of drawing
-    if (titleY < bbox[1]) {
+    if (titleY < (bbox[1]+bbox[3])/2) {
       
       // new title baseline
-      var newY = bbox[1] - 250, 
-          dY =  newY - _clamp(titleY, dim.y + 100, dim.y + dim.height - 20);
+      let newY = bbox[1] - w0*0.5, 
+          dY =  newY - _clamp(titleY, dim.y + 100, dim.y + dim.height - 20),
+          newX = titleX;
 
-      var newX = titleX;
       if (titleX < dim.x) newX = dim.x + 10;
-      else if (titleX + titleNodeTextLength * 44 > dim.x + dim.width) {
-        newX = dim.x + dim.width - titleNodeTextLength * 44 - 10;
+      else if (titleX + titleLength * w0 > dim.x + dim.width) {
+        newX = dim.x + dim.width - titleLength * w0 - 10;
       }
 
       _attrs(titleNode, {x:newX, y:newY});
@@ -89,15 +110,15 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
     }
 
     // text below drawing
-    else if (titleY > bbox[3]) {
+    else if (titleY > (bbox[1]+bbox[3])/2) {
       // new title baseline
-      var newY = bbox[3] + 250, 
-          dY =  _clamp(titleY, dim.y + 100, dim.y + dim.height - 20) - newY;
-
-      var newX = titleX;
+      let newY = bbox[3] + w0*3, 
+          dY =  _clamp(titleY, dim.y + 100, dim.y + dim.height - 20) - newY,
+          newX = titleX;
+          
       if (titleX < dim.x) newX = dim.x + 10;
-      else if (titleX + titleNodeTextLength * 44 > dim.x + dim.width) {
-        newX = dim.x + dim.width - titleNodeTextLength * 44 - 10;
+      else if (titleX + titleLength * w0 > dim.x + dim.width) {
+        newX = dim.x + dim.width - titleLength * w0 - 10;
       }
 
       _attrs(titleNode, {x:newX, y:newY});
@@ -110,8 +131,8 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
   // Fix too narrow or small images
   // where title text is truncated
   
-  if (dim.width < 30 + titleNodeTextLength * 44) {
-    dim.width = 30 + titleNodeTextLength * 44;
+  if (dim.width < w0 + titleLength * w0) {
+    dim.width = w0 + titleLength * w0;
   }
 
   // add 2.5% more canvas space left and right
