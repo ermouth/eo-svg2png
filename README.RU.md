@@ -4,20 +4,6 @@
 написана для частного использования и содержит несколько 
 специальных фильтров, которые можно проигнорировать.
 
-## Перед установкой
-
-Конвертер преимущественно предназначен для использования под Ubuntu. 
-Для успешной установки под Ubuntu желательно предустановить ключевую 
-зависимость вручную во избежание ошибок во время `npm install`:
-
-```bash
-sudo apt-get install librsvg2-dev
-```
-
-Для установки под другой ОС нужно прочесть и выполнить инструкции 
-по установке [sevruga](https://github.com/Streampunk/sevruga), 
-основной библиотеки под капотом `eo-svg2png`.
-
 ## Обработка и ресайз SVG в битмап указанной ширины
 
 Корневой эл-т SVG должен иметь корректные `width`, `height`, `x` и `y`,
@@ -36,7 +22,7 @@ var opts = {
   width:      1000,       // ширина битмапа на выходе, 500 по умолчанию
   background: [0,0,0,0],  // optional, по умолчанию белый фон
   format:     'jpg',      // optional, по умолчанию png
-  sharpen:    0,          // optional, по умолчанию 0.1
+  sharpen:    0.1,        // optional, по умолчанию 0
   filters:    [],         // optional, массив имён фильтров для модификации
                           // SVG, примеры в /test
   font:       ''          // если в док-те ни одного атрибута font-family 
@@ -67,70 +53,6 @@ renderSVGtoImage(sourceSVGstring, opts)
 
 Цепочка фильтров, которые нужно применить, определяется в 
 `opts.filters` при вызове конвертера.
-
-## Конверсия SVG в битмап с размерами из SVG
-
-Если в SVG уже заданы корректные `width`, `height`, `viewBox`
-и не нужны фильтры, можно применить сокращённую схему вызова.
-
-Передаётся только SVG-строка, размеры буфера и некоторые опции. 
-Размер результирующего изображения берётся из атрибутов `width` 
-и `height` исходного SVG. Эти размеры должны быть продублированы 
-в `dim.width` и `dim.height` как целые числа.
-
-```javascript
-const {renderSVGToBuf, bufferToImage} = require('eo-svg2png');
-
-renderSVGToBuf({
-  svg:  sourceSVGstring,    // required, SVG строка
-  dim:  {
-    width:  bufferWidth,    // required, int из SVG width
-    height: bufferHeight    // required, int из SVG height
-  },
-  opts: {
-    background: [0,0,0,0],  // optional RGBA, по умолчанию белый
-    format:     'jpg',      // optional, по умолчанию png
-    sharpen:    0           // optional, по умолчанию 0.1
-  }
-})
-.then(bufferToImage)
-.then(buf => {
-  /* buf содержит данные готовые к отправке или сохранению */
-});
-```
-
-## Конверсия SVG в Canvas-style RGBA buffer
-
-Если в SVG уже заданы корректные `width`, `height` и `viewBox`, 
-и не нужны фильтры и упаковка, можно применить минимальную схему вызова.
-
-Передаётся только SVG-строка, размеры буфера и некоторые параметры. 
-Размер результирующего изображения берётся из атрибутов `width` 
-и `height` исходного SVG. Эти размеры должны быть продублированы 
-в `dim.width` и `dim.height` как целые числа.
-
-```javascript
-const {renderSVGToBuf} = require('eo-svg2png');
-
-renderSVGToBuf({
-  svg:  sourceSVGstring,    // required
-  dim:  {
-    width:  bufferWidth,    // required, int из SVG width
-    height: bufferHeight    // required, int из SVG height
-  },
-  opts: {
-    background: [0,0,0,0],  // optional RGBA, по умолчанию белый
-  }
-})
-.then(({buf}) => {
-  /* buf содержит RGBA Buffer изображения */
-});
-```
-
-## Шрифты
-
-Шрифты, внедрённые в SVG, игнорируются. Для использования кастомных 
-шрифтов они должны быть установлены в хостовой ОС.
 
 ## Тесты
 

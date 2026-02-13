@@ -1,9 +1,8 @@
-const sevruga = require('sevruga');
+const { Resvg } = require('@resvg/resvg-js');
 const fs = require('fs');
-const Jimp = require('jimp');
+const {Jimp, JimpMime} = require('jimp');
 const deferred = require('deferred');
 const {DOMParser, XMLSerializer} = require('@xmldom/xmldom');
-const xpath = require('xpath');
 
 // Converts SVG document string into bitmap buffer,
 // returns Promise which is resolved with Buffer.
@@ -13,26 +12,29 @@ const xpath = require('xpath');
 
 function renderSVGtoImage(svgString, opts){
   var opts = {
-    fname:      '',             // non-empty is for testing, takes a file from fs and saves to fs
+    format:     'png',          // output format, png/jpg, former is default, jpg is ~5x slower
     width:      500,            // default target bitmap width
-    filters:    [],             // array of names of SVG filters to call (see /filters folder)
-    font:       'GOST type B',  // default font
+    fname:      '',             // non-empty is for testing, takes a file from fs and saves to fs
     background: [255,255,255,255],  // background color, RGBA
-    format:     'png',          // output format, png/jpg, former is default
-    sharpen:    0.1,            // sharpen result bitmap, 0…1
+
+    filters:    [],             // array of SVG preprocessors to run (see /filters folder)
+    font:       'OpenGost Type B',  // font to enforce with plugins forceFont and fixDrainage
+    quality:    60,             // default JPEG quality
+    sharpen:    0,              // sharpen -2…2, negatives do strange things, 3…20x slower if !=0
+
     useViewboxAsXYWH: false,    // if viewBox is present use for as w,y,width,height 
     applyViewboxCheck: false,   // apply ViewBox check if w,y,width,height <svg> attrs present
     ...opts
   };
 
-  opts.width = typeof opts.width != 'number' ? 500 : _clamp(opts.width, 10, 3000) | 0;
+  opts.width = typeof opts.width != 'number' ? 500 : _clamp(opts.width, 10, 5000) | 0;
 
   var fname = opts.fname,
       svgString = !fname ? svgString : fs.readFileSync(fname, {encoding: 'utf8'});
   
   return preprocessSVG(svgString, opts)
-  .then(renderSVGToBuf)
-  .then(bufferToImage)
+  .then(renderSVGToPNG)
+  .then(pngBufferToImage)
   .then(buf => {
     if (fname) fs.writeFileSync(fname.replace(/\.svg$/i,'.'+opts.format), buf);
     return buf;
@@ -43,14 +45,16 @@ function renderSVGtoImage(svgString, opts){
 
 async function preprocessSVG(svgString, opts){
   // get root node and dimensions
-  var rootString = svgString.match(/<svg [^>]+>/)[0],
+  let rootString = svgString.match(/<svg [^>]+>/)[0],
       props = [...rootString.matchAll(/(x|y|width|height)\s?=\s?"(-?[0-9\.]+)[^"]{0,4}"/g)],
-      dim = {}; 
+      dim = {x:0, y:0},
+      vbox = []; 
   // source dimensions raw
   props.forEach(e => dim[e[1]] = Math.round(parseFloat(e[2])));
 
   // get current viewBox
-  var vbox = rootString.match(/viewBox="([^"]+)"/)[1].split(/[, ]+/).map(n=>Math.round(+n));
+  let root = rootString.match(/viewBox="([^"]+)"/);
+  if (root) vbox = rootString.match(/viewBox="([^"]+)"/)[1].split(/[, ]+/).map(n=>Math.round(+n));
   if (vbox.length && vbox.length != 4) throw new TypeError('Incomplete SVG viewBox');
 
   // check if we already have reasonable viewBox
@@ -65,84 +69,90 @@ async function preprocessSVG(svgString, opts){
     dim = {x:vbox[0], y:vbox[1], width:vbox[2], height:vbox[3]};
   }
 
-  var newSVG = svgString;
+  let newSVG = svgString;
 
   if (opts.filters && opts.filters.length) {
     // filters require SVG DOM
-    var svg = new DOMParser().parseFromString(svgString,'text/xml');
-
+    let svg = new DOMParser().parseFromString(svgString,'text/xml');
     // run filters one by one
-    opts.filters.forEach(function(filterName){
+    opts.filters.forEach(filterName => {
       ({svg,dim} = require('./filters/'+filterName+'.js')(svg, dim, opts));
     });
-
     // back to string
-    var newSVG = new XMLSerializer().serializeToString(svg);
+    newSVG = new XMLSerializer().serializeToString(svg);
   }
 
   // rebuild SVG root node, no x and y attributes
-  var k = opts.width / dim.width,
-  d1 = {width:Math.round(dim.width*k), height:Math.round(dim.height*k)};
+  let k = opts.width / dim.width;
+  let d1 = {
+    width:  Math.round(dim.width*k), 
+    height: Math.round(dim.height*k)
+  };
   
-  var newroot = `<svg xmlns="http://www.w3.org/2000/svg" 
+  let newroot = `<svg xmlns="http://www.w3.org/2000/svg" 
   xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" 
   viewBox="${dim.x},${dim.y},${dim.width},${dim.height}"
   width="${d1.width}" height="${d1.height}">`;
 
   newSVG = newSVG.replace(/<svg [^>]+>/, newroot);
 
-  // fix missing font-family
-  if (newSVG.indexOf('font-family="') == -1) {
-    newSVG = newSVG.replace(/<g>/g, `<g font-family="${opts.font}">`)
-  }
   return {svg:newSVG, dim:d1, opts};
 }
 
 // =======================
 
-async function renderSVGToBuf({svg, dim, opts}) {
-  var buf = Buffer.alloc((dim.width | 0) * (dim.height | 0) * 4),
-      b = (opts || {}).background || [0,0,0,0];
-  
-  // Set background and render
-  buf.fill(Buffer.from([b[2],b[1],b[0],b[3]]));
-  await sevruga.renderSVG(svg, buf, dim);
+async function renderSVGToPNG({svg, dim, opts}) {
 
-  // shuffle OpenGL style ARGB LE result
-  // into more common Canvas style RGBA BE
-  for (var pix, i=0; i<buf.length; i+=4) {
-    pix = buf.readInt32LE(i) & 0xffffff;
-    buf.writeInt32BE(pix << 8 | buf[i+3], i);
-  }
+  let bg0 = opts?.background || [0,0,0,0],
+      bg = bg0.length == 3 ? bg0.concat([255]) : bg0;
+  let reopts = {
+    background: `rgba(${bg[0]},${bg[1]},${bg[2]},${bg[3]/255})`,
+    fitTo:      { mode:'width', value:opts.width },
+    font:{
+      fontFiles:[
+        './fonts/FiraSansCondensed-Regular.ttf',
+        './fonts/OpenGostTypeB.ttf',
+      ].concat(opts.fontFiles||[]),
+      loadSystemFonts: false
+    }
+  };
+  if (opts.fontBuffers) reopts.font.fontBuffers = opts.fontBuffers;
 
-  return {buf, dim, opts};
+  const resvg = new Resvg(svg, reopts),
+        pngData = resvg.render(),
+        pngbuf = pngData.asPng();
+
+  return {pngbuf, dim, opts};
 }
 
 // =======================
 
-function bufferToImage({buf, dim, opts}){
+function pngBufferToImage({pngbuf, opts}){
   var future = deferred(),
       fmt = /^jp[e]?g$/i.test((opts||{}).format+'') 
-            ? Jimp.MIME_JPEG 
-            : Jimp.MIME_PNG
-  
-  // make output
-  new Jimp({data: buf, ...dim}, (err,img) => {
-    if (err) future.reject(err);
+            ? JimpMime.jpeg 
+            : JimpMime.png,
+      jopts = {};
 
-    // sharpen image
-    var sa = -_clamp(+opts.sharpen, -1, 1);
-    if (sa) img.convolute([[sa,sa,sa], [sa,-sa*8+1,sa], [sa,sa,sa]]);
-    
-    // send/write output
-    img.getBuffer(fmt, (err, dataBuf) => {
-      if (err) future.reject(err);
-      else future.resolve(dataBuf);
-    });
-  });
-
+  if (fmt == JimpMime.png && !opts.sharpen) {
+    // do nothing, resolve with ready-to-use image
+    future.resolve(pngbuf);
+  }
+  else {
+    Jimp.fromBuffer(pngbuf).then(img => {
+      //sharpen image
+      let sa = -_clamp(+opts.sharpen, -2, 2);
+      if (sa) img.convolute([[sa,sa,sa], [sa,-sa*8+1,sa], [sa,sa,sa]]);
+      //get output
+      if (fmt == JimpMime.jpeg) jopts.quality = opts.quality || 90;
+      return img.getBuffer(fmt, jopts);
+    })
+    .then(buf => future.resolve(buf))
+    .catch(err => future.reject(err))
+  }
   return future.promise;
 }
+
 
 // =======================
 
@@ -154,6 +164,6 @@ module.exports = {
   default: renderSVGtoImage,
   renderSVGtoImage,
   preprocessSVG,
-  renderSVGToBuf,
-  bufferToImage
+  renderSVGToPNG,
+  pngBufferToImage
 };
