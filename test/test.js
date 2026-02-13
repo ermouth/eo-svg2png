@@ -8,6 +8,16 @@ var opts = {
 // The test should produce 3 PNG files out of SVG sources
 
 (async function test(){
+
+  await renderSVGtoImage('', {...opts, ...{
+    width:      480,
+    background: [255, 255, 255, 255],
+    filters:    ['fixDrainage'],  
+    fname:    __dirname + '/dr3.svg',
+  }})
+  .then(_ => console.log('Test 0: Done drainage fix by filter and render'))
+  .catch(err => console.log(`Test 0 render failed: ${err}`));
+
   await renderSVGtoImage('', {...opts, ...{
     filters:  ['fixDrainage'],  
     fname:    __dirname + '/dr2.svg',
