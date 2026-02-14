@@ -4,44 +4,27 @@ Converts SVG string into PNG, JPG or Canvas RGBA Buffer. The lib was
 written for private use and contains several special filters which 
 may be ignored.
 
-## Before install
-
-The lib is primarily intended for Ubuntu. On Linux you will likely 
-need to pre-install one dependency manually to avoid failure 
-during `npm install`:
-
-```bash
-sudo apt-get install librsvg2-dev
-```
-To prepare other OS please read installation manual for 
-[sevruga](https://github.com/Streampunk/sevruga), the renderer 
-under the hood of `eo-svg2png`.
-
-
-
 ## Fit SVG into bitmap image of predefined width
 
-SVG root must have either valid `width`, `height`, `x` and `y`,
-or valid `viewBox` attributes. If they disagree `viewBox` is 
-rebuilt according to values of dimensional attributes.
+SVG root must have either valid `width`, `height`, `x` and `y`.
+If only valid `viewBox` is present, use option `viewBoxAsXYWH` 
+to restore metrics from `viewBox`.
 
-Result image width however will be driven by `opts.width` param, 
-not by SVG root `width` attribute. Result image height is 
+Result image width is taken from `opts.width` param, 
+not from SVG root `width` attribute. Result image height is 
 scaled accordingly.
 
-```javascript
+```js
 const {renderSVGtoImage} = require('eo-svg2png');
 
 var opts = {
   width:      1000,       // result image width, default is 500
   background: [0,0,0,0],  // optional, default is white
-  format:     'jpg',      // optional, default is png
-  sharpen:    0,          // optional, default is 0.1
-  filters:    [],         // array of filter names to apply to SVG DOM,
-                          // see /test and /filters folders for examples
-  font:       ''          // fixes default font if no single font-family 
-                          // attribute was found in SVG,
-                          // pass empty space to avoid font fixing
+  format:     'jpeg',     // optional, default is png
+  sharpen:    0.1,        // optional, default is 0
+  filters:    [],         // array of filters to apply to SVG DOM,
+                          // see /test and /filters folders 
+  font:       ''          // enforces default font
 };
 
 renderSVGtoImage(sourceSVGstring, opts)
@@ -69,14 +52,17 @@ array.
 
 ## Convert SVG to bitmap as is
 
-SVG root must have valid `width`, `height` and `viewBox` attributes. 
+If SVG root has valid `width`, `height` and `viewBox` attributes
+there’s no need to pre-process it, SVG string can be rendered directly 
+into JPEG or PNG.
+
 Result dimensions will be taken from `dim` and if they don’t match 
 original SVG `width` and `height` the result image is truncated.
 
 ```javascript
 const {renderSVGToBuf, bufferToImage} = require('eo-svg2png');
 
-renderSVGToBuf({
+renderSVGToBuffer({
   svg:  sourceSVGstring,    // required
   dim:  {
     width:  bufferWidth,    // required, int from SVG width
@@ -100,10 +86,10 @@ SVG root must have valid `width`, `height` and `viewBox` attributes.
 Result dimensions will be taken from `dim` and if they don’t match 
 original SVG `width` and `height` the result image is truncated.
 
-```javascript
+```js
 const {renderSVGToBuf} = require('eo-svg2png');
 
-renderSVGToBuf({
+renderSVGToBuffer({
   svg:  sourceSVGstring,    // required
   dim:  {
     width:  bufferWidth,    // required, int from SVG width
@@ -118,12 +104,8 @@ renderSVGToBuf({
 });
 ```
 
-## Fonts
-
-Fonts embedded in SVG are mostly ignored. Fonts used must be installed 
-on a host system to work properly.
-
 ## Tests
 
 The `test` folder contains several SVG images which are rendered 
-to PNG files on successful `npm test`. 
+to PNG/JPEG files on successful `npm test`. Timings show performance and
+its dependency on different settings.

@@ -4,39 +4,25 @@
 написана для частного использования и содержит несколько 
 специальных фильтров, которые можно проигнорировать.
 
-## Перед установкой
-
-Конвертер преимущественно предназначен для использования под Ubuntu. 
-Для успешной установки под Ubuntu желательно предустановить ключевую 
-зависимость вручную во избежание ошибок во время `npm install`:
-
-```bash
-sudo apt-get install librsvg2-dev
-```
-
-Для установки под другой ОС нужно прочесть и выполнить инструкции 
-по установке [sevruga](https://github.com/Streampunk/sevruga), 
-основной библиотеки под капотом `eo-svg2png`.
-
 ## Обработка и ресайз SVG в битмап указанной ширины
 
-Корневой эл-т SVG должен иметь корректные `width`, `height`, `x` и `y`,
-либо корректный `viewBox`. Если соотношение сторон из viewBox и размерных
-атрибутов не совпадает, считается, что viewBox неверный, и он
-перестраивается из размерных атрибутов.
+Корневой эл-т SVG должен иметь корректные `width`, `height`, `x` и `y`.
+Если у изображения только корректный `viewBox`, можно выставить в
+опциях вызова ключ `viewBoxAsXYWH`, и метрики будут восстановлены 
+из viewBox.
 
 Ширина картинки на выходе, тем не менее, определяется не атрибутами 
 в SVG, а параметром `opts.width`. Высота итогового изображения также 
 будет пропорционально изменена.
 
-```javascript
+```js
 const {renderSVGtoImage} = require('eo-svg2png');
 
 var opts = {
   width:      1000,       // ширина битмапа на выходе, 500 по умолчанию
   background: [0,0,0,0],  // optional, по умолчанию белый фон
   format:     'jpg',      // optional, по умолчанию png
-  sharpen:    0,          // optional, по умолчанию 0.1
+  sharpen:    0.1,        // optional, по умолчанию 0
   filters:    [],         // optional, массив имён фильтров для модификации
                           // SVG, примеры в /test
   font:       ''          // если в док-те ни одного атрибута font-family 
@@ -78,10 +64,10 @@ renderSVGtoImage(sourceSVGstring, opts)
 и `height` исходного SVG. Эти размеры должны быть продублированы 
 в `dim.width` и `dim.height` как целые числа.
 
-```javascript
+```js
 const {renderSVGToBuf, bufferToImage} = require('eo-svg2png');
 
-renderSVGToBuf({
+renderSVGToBuffer({
   svg:  sourceSVGstring,    // required, SVG строка
   dim:  {
     width:  bufferWidth,    // required, int из SVG width
@@ -109,10 +95,10 @@ renderSVGToBuf({
 и `height` исходного SVG. Эти размеры должны быть продублированы 
 в `dim.width` и `dim.height` как целые числа.
 
-```javascript
+```js
 const {renderSVGToBuf} = require('eo-svg2png');
 
-renderSVGToBuf({
+renderSVGToBuffer({
   svg:  sourceSVGstring,    // required
   dim:  {
     width:  bufferWidth,    // required, int из SVG width
@@ -127,12 +113,8 @@ renderSVGToBuf({
 });
 ```
 
-## Шрифты
-
-Шрифты, внедрённые в SVG, игнорируются. Для использования кастомных 
-шрифтов они должны быть установлены в хостовой ОС.
-
 ## Тесты
 
 Фолдер `test` содержит несколько SVG док-тов. При запуске `npm test`
-они должны быть преобразованы в PNG в том же фолдере. 
+они должны быть преобразованы в PNG или JPEG в том же фолдере. 
+Тайминги показывают как параметры влияют на производительность.

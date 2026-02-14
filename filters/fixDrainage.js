@@ -1,4 +1,3 @@
-const {DOMParser, XMLSerializer} = require('@xmldom/xmldom');
 const xpath = require('xpath');
 
 // Исправляет SVG водоотливов: придвигает заголовок, 
@@ -35,6 +34,7 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
   textNodes.forEach((node, i) => {
     // skip title and long lines which are likely not dimensions
     var nl = node.textContent.length;
+
     if (nl > 6) {
       titleNode = node;
       titleLength = node.textContent.length;
@@ -43,11 +43,14 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
       let x = +node.getAttribute('x'),
           y = +node.getAttribute('y'),
           ta = node.getAttribute('text-anchor')||'start',
-          k1 = ta=='start'?0:ta=='middle'?-0.4:-0.8,
-          k2 = ta=='start'?0.8:ta=='middle'?0.4:0;
+          k1 = ta=='start'?0:ta=='middle'?-0.45:-0.9,
+          k2 = ta=='start'?0.9:ta=='middle'?0.45:0;
       coords.push(['M', x+w0*nl*k1, y]);
       coords.push(['M', x+w0*nl*k2, y-w0*2]);
-      _attrs(node, {'font-size': node.getAttribute('font-size') * 0.8 | 0});
+      _attrs(node, {
+        'font-size': node.getAttribute('font-size') * 0.9 | 0,
+        'font-family': opts.font
+      });
     }
   });
   
@@ -126,6 +129,10 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
       // change dim
       dim.height = dim.height - dY;
     }
+    _attrs(titleNode, {
+      'font-family': opts.font,
+      'font-size': (titleNode.getAttribute('font-size') || 60) * 0.9 | 0,
+    });
   }
 
   // Fix too narrow or small images
