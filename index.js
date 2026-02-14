@@ -1,8 +1,6 @@
-const { Resvg } = require('@resvg/resvg-js');
-const fs = require('fs');
-const {Jimp, JimpMime} = require('jimp');
-const deferred = require('deferred');
-const {DOMParser, XMLSerializer} = require('@xmldom/xmldom');
+const { DOMParser, XMLSerializer } = require('@xmldom/xmldom'),
+      { Jimp, JimpMime } = require('jimp'),
+      { Resvg } = require('@resvg/resvg-js');
 
 // Converts SVG document string into bitmap buffer,
 // returns Promise which is resolved with Buffer.
@@ -10,33 +8,47 @@ const {DOMParser, XMLSerializer} = require('@xmldom/xmldom');
 // Fixes inconsistent x,y,width,height,viewBox 
 // in root <svg> node
 
-function renderSVGtoImage(svgString, opts){
-  var opts = {
-    format:     'png',          // output format, png/jpg, former is default, jpg is ~5x slower
-    width:      500,            // default target bitmap width
-    fname:      '',             // non-empty is for testing, takes a file from fs and saves to fs
-    background: [255,255,255,255],  // background color, RGBA
+module.exports = {
+  default: renderSVGtoImage,
+  renderSVGtoImage,
+  preprocessSVG,
+  renderSVGToBuffer,
+  bufferToImage
+};
 
-    filters:    [],             // array of SVG preprocessors to run (see /filters folder)
-    font:       'OpenGost Type B',  // font to enforce with plugins forceFont and fixDrainage
-    quality:    60,             // default JPEG quality
-    sharpen:    0,              // sharpen -2…2, negatives do strange things, 3…20x slower if !=0
+// =======================
 
-    useViewboxAsXYWH: false,    // if viewBox is present use for as w,y,width,height 
-    applyViewboxCheck: false,   // apply ViewBox check if w,y,width,height <svg> attrs present
-    ...opts
+function renderSVGtoImage(svgString, opts0){
+  let opts = {
+    format:  'png',          // output format, png/jpg, former is default, jpg is ~5x slower
+    width:   500,            // default target bitmap width
+    background: [255,255,255,255],  // background color, RGBA array or CSS3 color srtring
+    font:    'OpenGost Type B TT',  // default font, enforced by fixDrainage and forceFont plugins
+                            
+    filters: [],             // array of SVG preprocessors to run (see /filters folder)
+    quality: 60,             // default JPEG quality
+    sharpen: 0,              // sharpen -2…2, negatives do strange things, 3…20x slower if !=0,
+                             // also modifies bg color into alfa-blend mode if non-zero 
+    viewBoxAsXYWH: false,    // if viewBox is present use for as w,y,width,height 
+    viewBoxCheck: false,     // apply viewBox check if w,y,width,height <svg> attrs present
+    fname:   '',             // non-empty is for testing, takes a file from fs and saves to fs
+    ...opts0
   };
 
   opts.width = typeof opts.width != 'number' ? 500 : _clamp(opts.width, 10, 5000) | 0;
+  opts.format = /^jp[e]?g$/i.test(opts.format+'') ? 'jpeg' : 'png';
 
   var fname = opts.fname,
-      svgString = !fname ? svgString : fs.readFileSync(fname, {encoding: 'utf8'});
+      svgString = !fname ? svgString 
+      : require('fs').readFileSync(fname, {encoding: 'utf8'});
   
   return preprocessSVG(svgString, opts)
-  .then(renderSVGToPNG)
-  .then(pngBufferToImage)
+  .then(renderSVGToBuffer)
+  .then(bufferToImage)
   .then(buf => {
-    if (fname) fs.writeFileSync(fname.replace(/\.svg$/i,'.'+opts.format), buf);
+    if (fname) require('fs').writeFileSync(
+      fname.replace(/\.svg$/i,'.'+opts.format), buf
+    );
     return buf;
   });
 }
@@ -59,13 +71,16 @@ async function preprocessSVG(svgString, opts){
 
   // check if we already have reasonable viewBox
   if (
-    opts.applyViewboxCheck && dim.height && vbox.length && vbox[3] 
+    opts.viewBoxCheck && dim.height && vbox.length && vbox[3] 
     && Math.abs((dim.width/dim.height) - (vbox[2]/vbox[3])) < 0.001
   ) {
     dim = {x:vbox[0], y:vbox[1], width:vbox[2], height:vbox[3]};
   }
-  else if (opts.useViewboxAsXYWH || dim.x == null || dim.y == null ||  dim.width == null ||  dim.height == null){
-    if (!vbox.length) throw new TypeError('Incomplete SVG: no x,y,width,height and no viewBox');
+  else if (
+    opts.viewBoxAsXYWH || dim.x == null || dim.y == null 
+    || dim.width == null || dim.height == null
+  ){
+    if (!vbox.length) throw new TypeError('Wrong SVG: no x,y,width,height and no viewBox');
     dim = {x:vbox[0], y:vbox[1], width:vbox[2], height:vbox[3]};
   }
 
@@ -85,14 +100,14 @@ async function preprocessSVG(svgString, opts){
   // rebuild SVG root node, no x and y attributes
   let k = opts.width / dim.width;
   let d1 = {
-    width:  Math.round(dim.width*k), 
-    height: Math.round(dim.height*k)
+    width:  Math.round(dim.width  * k), 
+    height: Math.round(dim.height * k)
   };
   
-  let newroot = `<svg xmlns="http://www.w3.org/2000/svg" 
-  xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" 
-  viewBox="${dim.x},${dim.y},${dim.width},${dim.height}"
-  width="${d1.width}" height="${d1.height}">`;
+  let newroot = '<svg xmlns="http://www.w3.org/2000/svg" ' 
+      + 'xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" ' 
+      + `viewBox="${dim.x},${dim.y},${dim.width},${dim.height}" `
+      + `width="${d1.width}" height="${d1.height}">`;
 
   newSVG = newSVG.replace(/<svg [^>]+>/, newroot);
 
@@ -101,69 +116,64 @@ async function preprocessSVG(svgString, opts){
 
 // =======================
 
-async function renderSVGToPNG({svg, dim, opts}) {
-
-  let bg0 = opts?.background || [0,0,0,0],
-      bg = bg0.length == 3 ? bg0.concat([255]) : bg0;
+async function renderSVGToBuffer({svg, opts}) {
+  let clr, bg = opts?.background || [0,0,0,0];
+  if (!Array.isArray(bg)) clr = bg; else {
+    bg = bg.length == 3 ? bg.concat([255]) : bg,
+    clr = `rgba(${bg[0]},${bg[1]},${bg[2]},${bg[3]/255})`;
+  }
   let reopts = {
-    background: `rgba(${bg[0]},${bg[1]},${bg[2]},${bg[3]/255})`,
-    fitTo:      { mode:'width', value:opts.width },
+    background: clr,
+    fitTo: { mode:'width', value:opts.width },
     font:{
       fontFiles:[
         './fonts/FiraSansCondensed-Regular.ttf',
         './fonts/OpenGostTypeB.ttf',
-      ].concat(opts.fontFiles||[]),
+      ].concat(opts.fontFiles || []),
       loadSystemFonts: false
     }
   };
+  if (opts.font) reopts.font.defaultFontFamily = opts.font;
   if (opts.fontBuffers) reopts.font.fontBuffers = opts.fontBuffers;
 
   const resvg = new Resvg(svg, reopts),
-        pngData = resvg.render(),
-        pngbuf = pngData.asPng();
+        img = resvg.render(),
+        buf = img.pixels,
+        dim = {width:img.width, height:img.height},
+        png = opts.format=='png' && !opts.sharpen 
+            ? img.asPng() : null;
 
-  return {pngbuf, dim, opts};
+  return {png, dim, buf, opts};
 }
 
 // =======================
 
-function pngBufferToImage({pngbuf, opts}){
-  var future = deferred(),
-      fmt = /^jp[e]?g$/i.test((opts||{}).format+'') 
-            ? JimpMime.jpeg 
-            : JimpMime.png,
-      jopts = {};
+function bufferToImage({png, buf, dim, opts}){
+  var fmt = JimpMime[opts.format || 'png'],
+      iopts = {};
 
   if (fmt == JimpMime.png && !opts.sharpen) {
     // do nothing, resolve with ready-to-use image
-    future.resolve(pngbuf);
+    return Promise.resolve(png);
   }
   else {
-    Jimp.fromBuffer(pngbuf).then(img => {
-      //sharpen image
-      let sa = -_clamp(+opts.sharpen, -2, 2);
-      if (sa) img.convolute([[sa,sa,sa], [sa,-sa*8+1,sa], [sa,sa,sa]]);
-      //get output
-      if (fmt == JimpMime.jpeg) jopts.quality = opts.quality || 90;
-      return img.getBuffer(fmt, jopts);
-    })
-    .then(buf => future.resolve(buf))
-    .catch(err => future.reject(err))
+    let img = new Jimp({data:buf, ...dim}),
+        sa = -_clamp(+opts.sharpen || 0, -2, 2);
+    //sharpen image
+    if (sa) img.convolute([
+      [sa,  sa,     sa], 
+      [sa, -sa*8+1, sa], 
+      [sa,  sa,     sa]
+    ]);
+    //get output
+    if (fmt == JimpMime.jpeg) {
+      iopts.quality = _clamp(opts.quality || 90, 1, 100);
+    }
+    return img.getBuffer(fmt, iopts)
   }
-  return future.promise;
 }
-
 
 // =======================
 
-function _clamp(x, a, b) {
-  return Math.max(a, Math.min(x, b));
-}
+function _clamp(x, a, b) {return Math.max(a, Math.min(x, b))}
 
-module.exports = {
-  default: renderSVGtoImage,
-  renderSVGtoImage,
-  preprocessSVG,
-  renderSVGToPNG,
-  pngBufferToImage
-};

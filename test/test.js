@@ -11,48 +11,51 @@ var opts = {
 
   let tests = [
     {
-      name:     'Drainage with invalid viewBox, fixed by filter and rendered',
+      name:     'Drainage with invalid XYWH, fixed by filter and rendered',
+      viewBoxAsXYWH: true,
       filters:  ['fixDrainage'],  
       fname:    __dirname + '/dr1.svg',
-      useViewboxAsXYWH:  true
     },
     {
-      name:     'Next drainage with invalid viewBox, fixed by filter and rendered',
+      name:     'Drainage with invalid viewBox, fixed by filter and rendered',
       filters:  ['fixDrainage'],  
       fname:    __dirname + '/dr2.svg',
     },
     {
-      name:       'Another drainage with invalid viewBox, fixed by filter and rendered hires',
+      name:       'Another invalid viewBox drain, fixed by filter and rendered hires',
       width:      1000,
-      background: [255, 255, 255, 255],
+      background: [255, 255, 255, 128],
       filters:    ['fixDrainage'],  
       fname:    __dirname + '/dr3.svg',
     },
     { 
-      name:       'Hires map with a little text, render to JPG',
-      width:      2500, 
+      name:       'Hires map with a little text, render to over-compressed JPG',
+      width:      2500,
+      font:       '', 
       format:     'jpg',
+      quality:    30,
       fname:      __dirname + '/re.svg' 
     },
     { 
       name:       'Same hires map, but to default PNG and 2x resolution',
       width:      5000, 
+      font:       '', 
       fname:      __dirname + '/re.svg' 
     },
     { 
-      name:       'Window with invalid XYWH, render adds margin and font, sharpens, adds bg',
-      useViewboxAsXYWH: true, 
+      name:       'Renderer fixes XYWH, adds margin, and also sharpens, bg is CSS string',
+      viewBoxAsXYWH: true, 
       width:      1500, 
       sharpen:    0.1, 
-      background: [240, 248, 255, 200],
-      filters:    ['addMargin3percent', 'forceFont'], 
+      background: 'aliceblue',
+      filters:    ['addMargin3percent'], 
       fname:      __dirname + '/s0.svg' 
     },
     { 
-      name:       'Hires door with invalid viewBox, render adds font, margins and bg',
+      name:       'Renderer fixes invalid viewBox, adds font, margins and bg',
       width:      1500, 
-      background: [200, 210, 255, 30],
-      filters:    ['addMargin3percent', 'forceFont'], 
+      background: [240, 248, 255, 129], //[200, 210, 255, 30],
+      filters:    ['addMargin3percent'], 
       fname:      __dirname + '/s1.svg' 
     },
     { 

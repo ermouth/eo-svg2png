@@ -6,16 +6,16 @@
 
 ## Обработка и ресайз SVG в битмап указанной ширины
 
-Корневой эл-т SVG должен иметь корректные `width`, `height`, `x` и `y`,
-либо корректный `viewBox`. Если соотношение сторон из viewBox и размерных
-атрибутов не совпадает, считается, что viewBox неверный, и он
-перестраивается из размерных атрибутов.
+Корневой эл-т SVG должен иметь корректные `width`, `height`, `x` и `y`.
+Если у изображения только корректный `viewBox`, можно выставить в
+опциях вызова ключ `viewBoxAsXYWH`, и метрики будут восстановлены 
+из viewBox.
 
 Ширина картинки на выходе, тем не менее, определяется не атрибутами 
 в SVG, а параметром `opts.width`. Высота итогового изображения также 
 будет пропорционально изменена.
 
-```javascript
+```js
 const {renderSVGtoImage} = require('eo-svg2png');
 
 var opts = {
@@ -54,7 +54,67 @@ renderSVGtoImage(sourceSVGstring, opts)
 Цепочка фильтров, которые нужно применить, определяется в 
 `opts.filters` при вызове конвертера.
 
+## Конверсия SVG в битмап с размерами из SVG
+
+Если в SVG уже заданы корректные `width`, `height`, `viewBox`
+и не нужны фильтры, можно применить сокращённую схему вызова.
+
+Передаётся только SVG-строка, размеры буфера и некоторые опции. 
+Размер результирующего изображения берётся из атрибутов `width` 
+и `height` исходного SVG. Эти размеры должны быть продублированы 
+в `dim.width` и `dim.height` как целые числа.
+
+```js
+const {renderSVGToBuf, bufferToImage} = require('eo-svg2png');
+
+renderSVGToBuffer({
+  svg:  sourceSVGstring,    // required, SVG строка
+  dim:  {
+    width:  bufferWidth,    // required, int из SVG width
+    height: bufferHeight    // required, int из SVG height
+  },
+  opts: {
+    background: [0,0,0,0],  // optional RGBA, по умолчанию белый
+    format:     'jpg',      // optional, по умолчанию png
+    sharpen:    0           // optional, по умолчанию 0.1
+  }
+})
+.then(bufferToImage)
+.then(buf => {
+  /* buf содержит данные готовые к отправке или сохранению */
+});
+```
+
+## Конверсия SVG в Canvas-style RGBA buffer
+
+Если в SVG уже заданы корректные `width`, `height` и `viewBox`, 
+и не нужны фильтры и упаковка, можно применить минимальную схему вызова.
+
+Передаётся только SVG-строка, размеры буфера и некоторые параметры. 
+Размер результирующего изображения берётся из атрибутов `width` 
+и `height` исходного SVG. Эти размеры должны быть продублированы 
+в `dim.width` и `dim.height` как целые числа.
+
+```js
+const {renderSVGToBuf} = require('eo-svg2png');
+
+renderSVGToBuffer({
+  svg:  sourceSVGstring,    // required
+  dim:  {
+    width:  bufferWidth,    // required, int из SVG width
+    height: bufferHeight    // required, int из SVG height
+  },
+  opts: {
+    background: [0,0,0,0],  // optional RGBA, по умолчанию белый
+  }
+})
+.then(({buf}) => {
+  /* buf содержит RGBA Buffer изображения */
+});
+```
+
 ## Тесты
 
 Фолдер `test` содержит несколько SVG док-тов. При запуске `npm test`
-они должны быть преобразованы в PNG в том же фолдере. 
+они должны быть преобразованы в PNG или JPEG в том же фолдере. 
+Тайминги показывают как параметры влияют на производительность.
