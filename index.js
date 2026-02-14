@@ -127,6 +127,7 @@ async function renderSVGToBuffer({svg, opts}) {
     fitTo: { mode:'width', value:opts.width },
     font:{
       fontFiles:[
+        './fonts/Asket-Narrow-Light.ttf',
         './fonts/FiraSansCondensed-Regular.ttf',
         './fonts/OpenGostTypeB.ttf',
       ].concat(opts.fontFiles || []),

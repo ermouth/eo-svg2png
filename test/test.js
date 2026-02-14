@@ -54,15 +54,32 @@ var opts = {
     { 
       name:       'Renderer fixes invalid viewBox, adds font, margins and bg',
       width:      1500, 
-      background: [240, 248, 255, 129], //[200, 210, 255, 30],
+      background: [240, 248, 255, 129],
       filters:    ['addMargin3percent'], 
       fname:      __dirname + '/s1.svg' 
+    },
+    { 
+      name:       'Renders to hires, fixes invalid viewBox, adds Fira font, margins and bg',
+      width:      3000, 
+      background: 'white', 
+      font:       'Fira Sans Condensed',
+      filters:    ['addMargin3percent'], 
+      fname:      __dirname + '/s2.svg' 
     },
     { 
       name:       'Hires avatar render on transparent bg',
       width:      3000,
       background: [0,0,0,0],
-      fname:  __dirname + '/i0.svg' 
+      fname:      __dirname + '/i0.svg' 
+    },
+    { 
+      name:       'Render external font over 8-bit background PNG embedded',
+      width:      2000,
+      format:     'jpg',
+      font:       'UTM Agin',
+      filters:    ['forceFont'],
+      fname:      __dirname + '/old.svg',
+      fontBuffers: require('fs').readFileSync(__dirname + '/UtmAgin.ttf')
     }
   ];
 

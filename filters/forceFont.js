@@ -9,6 +9,8 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
   // find texts
   var textNodes = xfind('//v:text', svg) || [];
   textNodes.forEach((node) => _attrs(node, {'font-family': opts.font}));
+  var textNodes = xfind('//v:tspan', svg) || [];
+  textNodes.forEach((node) => _attrs(node, {'font-family': opts.font}));
 
   return {svg, dim};
 }
