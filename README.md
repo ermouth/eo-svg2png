@@ -2,7 +2,7 @@
 
 Converts SVG string into PNG, JPG or Canvas RGBA Buffer. The lib was 
 written for private use and contains several special filters which 
-may be ignored.
+may be ignored. Better works with `yarn`.
 
 ## Fit SVG into bitmap image of predefined width
 
@@ -18,13 +18,15 @@ scaled accordingly.
 const {renderSVGtoImage} = require('eo-svg2png');
 
 var opts = {
-  width:      1000,       // result image width, default is 500
-  background: [0,0,0,0],  // optional, default is white
-  format:     'jpeg',     // optional, default is png
-  sharpen:    0.1,        // optional, default is 0
-  filters:    [],         // array of filters to apply to SVG DOM,
-                          // see /test and /filters folders 
-  font:       ''          // enforces default font
+  width:      1000,       // Result image width, default is 500
+  background: [0,0,0,0],  // Optional, default is white
+  format:     'jpeg',     // Optional, default is png
+  sharpen:    0.1,        // Optional, default is 0
+  filters:    [],         // Optional list of filters to apply to SVG DOM
+                          // before render, see /test and /filters 
+  font:       'SomeFont', // Optional, default font name
+  fontBuffers:            // Optional, emits a font into render cycle
+  require('fs').readFileSync('SomeFont.ttf')
 };
 
 renderSVGtoImage(sourceSVGstring, opts)
@@ -107,5 +109,5 @@ renderSVGToBuffer({
 ## Tests
 
 The `test` folder contains several SVG images which are rendered 
-to PNG/JPEG files on successful `npm test`. Timings show performance and
+to PNG/JPEG files on successful `yarn test`. Timings show performance and
 its dependency on different settings.
