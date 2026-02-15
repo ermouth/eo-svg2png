@@ -127,9 +127,9 @@ async function renderSVGToBuffer({svg, opts}) {
     fitTo: { mode:'width', value:opts.width },
     font:{
       fontFiles:[
-        './fonts/Asket-Narrow-Light.ttf',
-        './fonts/FiraSansCondensed-Regular.ttf',
-        './fonts/OpenGostTypeB.ttf',
+        __dirname + '/fonts/Asket-Narrow-Light.ttf',
+        __dirname + '/fonts/FiraSansCondensed-Regular.ttf',
+        __dirname + '/fonts/OpenGostTypeB.ttf',
       ].concat(opts.fontFiles || []),
       loadSystemFonts: false
     }
@@ -144,12 +144,12 @@ async function renderSVGToBuffer({svg, opts}) {
         png = opts.format=='png' && !opts.sharpen 
             ? img.asPng() : null;
 
-  return {png, dim, buf, opts};
+  return {png, dim, buf, opts, resvg};
 }
 
 // =======================
 
-function bufferToImage({png, buf, dim, opts}){
+async function bufferToImage({png, buf, dim, opts}){
   var fmt = JimpMime[opts.format || 'png'],
       iopts = {};
 
