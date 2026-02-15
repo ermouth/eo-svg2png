@@ -2,7 +2,11 @@ const {renderSVGtoImage} = require('../index.js');
 
 var opts = {
   width:  500,
-  font:   'OpenGost Type B TT'
+  font:   'OpenGost Type B TT',
+  fontFiles: [
+    __dirname + '/../fonts/Asket-Narrow-Light.ttf',
+    __dirname + '/../fonts/OpenGostTypeB.ttf',
+  ]
 };
 
 // The test should produce 3 PNG files out of SVG sources
@@ -17,8 +21,10 @@ var opts = {
       fname:    __dirname + '/dr1.svg',
     },
     {
-      name:     'Drainage with invalid viewBox, fixed by filter and rendered',
-      filters:  ['fixDrainage'],  
+      name:     'Drainage with invalid viewBox, fixed by filter, cropped and rendered',
+      filters:  ['fixDrainage','removeInvisible'], 
+      crop:       true,
+      bleed:      20, 
       fname:    __dirname + '/dr2.svg',
     },
     {
@@ -43,28 +49,40 @@ var opts = {
       fname:      __dirname + '/re.svg' 
     },
     { 
-      name:       'Renderer fixes XYWH, adds margin, and also sharpens, bg is CSS string',
+      name:       'Renderer fixes XYWH, adds margin with plugin, and also sharpens, bg is CSS string',
       viewBoxAsXYWH: true, 
       width:      1500, 
       sharpen:    0.1, 
       background: 'aliceblue',
-      filters:    ['addMargin3percent'], 
+      filters:    ['addMargin3percent'],  //  deprecated
       fname:      __dirname + '/s0.svg' 
     },
     { 
-      name:       'Renderer fixes invalid viewBox, adds font, margins and bg',
+      name:       'Renderer fixes invalid viewBox, thickens lines, adds font, margins and bg',
       width:      1500, 
       background: [240, 248, 255, 129],
-      filters:    ['addMargin3percent'], 
+      filters:    ['removeInvisible', {fixThinLines:{minLineWidth: 3}}],
+      crop:       true,
+      bleed:      20,
       fname:      __dirname + '/s1.svg' 
     },
     { 
-      name:       'Renders to hires, fixes invalid viewBox, adds Fira font, margins and bg',
+      name:       'Renders to hires, fixes invalid viewBox, sets Asket font, margins and bg',
       width:      3000, 
       background: 'white', 
-      font:       'Fira Sans Condensed',
-      filters:    ['addMargin3percent'], 
+      font:       'Asket Narrow',
+      filters:    ['removeInvisible', 'forceFont', {fixThinLines:{minLineWidth: 1.5}}], 
+      crop:       true,
+      bleed:      20,
       fname:      __dirname + '/s2.svg' 
+    },
+    { 
+      name:       'Crops to bounding box with bleed and fits into square, fixes thin lines',
+      width:      1000, 
+      filters:    ['removeInvisible', {fixThinLines:{minLineWidth: 3}}],
+      crop:       true,
+      bleed:      100,
+      fname:      __dirname + '/s3.svg' 
     },
     { 
       name:       'Hires avatar render on transparent bg',
@@ -73,13 +91,14 @@ var opts = {
       fname:      __dirname + '/i0.svg' 
     },
     { 
-      name:       'Render external font over 8-bit background PNG embedded',
+      name:       'Render font as buffer over 8-bit background PNG embedded',
       width:      2000,
       format:     'jpg',
       font:       'UTM Agin',
       filters:    ['forceFont'],
       fname:      __dirname + '/old.svg',
-      fontBuffers: require('fs').readFileSync(__dirname + '/UtmAgin.ttf')
+      fontFiles:  null,
+      fontBuffers: require('fs').readFileSync(__dirname + '/../fonts/UtmAgin.ttf')
     }
   ];
 

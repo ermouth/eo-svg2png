@@ -1,0 +1,235 @@
+<svg
+    xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0,-1977,1573,1977" width="796" height="1000">
+    <defs>
+        <linearGradient x1="125" y1="-136" x2="383" y2="-869" gradientUnits="userSpaceOnUse" id="color-1">
+            <stop offset="0" stop-color="#ddeeff"></stop>
+            <stop offset="0.5" stop-color="#d0ddff"></stop>
+            <stop offset="1" stop-color="#eeffff"></stop>
+        </linearGradient>
+        <linearGradient x1="125" y1="-931" x2="383" y2="-1975" gradientUnits="userSpaceOnUse" id="color-2">
+            <stop offset="0" stop-color="#ddeeff"></stop>
+            <stop offset="0.5" stop-color="#d0ddff"></stop>
+            <stop offset="1" stop-color="#eeffff"></stop>
+        </linearGradient>
+        <linearGradient x1="517" y1="-931" x2="1375" y2="-1975" gradientUnits="userSpaceOnUse" id="color-3">
+            <stop offset="0" stop-color="#ddeeff"></stop>
+            <stop offset="0.5" stop-color="#d0ddff"></stop>
+            <stop offset="1" stop-color="#eeffff"></stop>
+        </linearGradient>
+        <linearGradient x1="517" y1="-136" x2="1375" y2="-869" gradientUnits="userSpaceOnUse" id="color-4">
+            <stop offset="0" stop-color="#ddeeff"></stop>
+            <stop offset="0.5" stop-color="#d0ddff"></stop>
+            <stop offset="1" stop-color="#eeffff"></stop>
+        </linearGradient>
+    </defs>
+    <g>
+        <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="none" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+            <g id="bottomLayers" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+            <g id="fillings" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+            <g id="profiles" stroke-width="1">
+                <g visibility="hidden">
+                    <path d="M449.5,-14l0,-2019h1l0,2019z" fill-opacity="0.9" fill="#eeeeee" stroke="#000000" vector-effect="non-scaling-stroke"></path>
+                    <path d="M450,0v-2100" fill="none" stroke="#000000" visibility="hidden"></path>
+                </g>
+                <g visibility="hidden">
+                    <path d="M0,-2100h1500l-67,67h-1366z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"></path>
+                    <path d="M0,-2100h1500" fill="none" stroke="#000000" visibility="hidden"></path>
+                </g>
+                <g visibility="hidden">
+                    <path d="M1433,0l-1366,0v-14l1366,0z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"></path>
+                    <path d="M1500,0h-1500" fill="none" stroke="#000000" visibility="hidden"></path>
+                </g>
+                <g visibility="hidden">
+                    <path d="M0,0l0,-2100l67,67v2033z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"></path>
+                    <path d="M0,0v-2100" fill="none" stroke="#000000" visibility="hidden"></path>
+                </g>
+                <g visibility="hidden">
+                    <path d="M1500,-2100v2100h-67v-2033z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"></path>
+                    <path d="M1500,-2100v2100" fill="none" stroke="#000000" visibility="hidden"></path>
+                </g>
+            </g>
+            <g id="sectionals" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+            <g id="topLayers">
+                <g stroke-width="1">
+                    <g id="bottomLayers" fill="none" stroke="none" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                    <g id="fillings">
+                        <g visibility="hidden">
+                            <g id="dimlns">
+                                <g>
+                                    <path d="M383,-136h158" id="callout1" fill="none" stroke="#000000"></path>
+                                    <path d="M383,-869h158" id="callout2" fill="none" stroke="#000000"></path>
+                                    <path d="M531,-136v-733" id="scale" fill="none" stroke="#000000"></path>
+                                    <text x="502.5" y="506.3" transform="rotate(-90)" id="text" fill="#000000" stroke="none" font-family="GOST type B" font-weight="normal" font-size="109.3" text-anchor="middle">733</text>
+                                </g>
+                                <g>
+                                    <path d="M125,-136v158" id="callout1" fill="none" stroke="#000000"></path>
+                                    <path d="M383,-136v158" id="callout2" fill="none" stroke="#000000"></path>
+                                    <path d="M125,12h258" id="scale" fill="none" stroke="#000000"></path>
+                                    <text x="254" y="-12.7" id="text" fill="#000000" stroke="none" font-family="GOST type B" font-weight="normal" font-size="109.3" text-anchor="middle">258</text>
+                                </g>
+                            </g>
+                            <path d="M125,-136l0,-733l258,0l0,733z" fill-opacity="1" fill="url(#color-1)" stroke="#000000" vector-effect="non-scaling-stroke" opacity="0.6"></path>
+                            <g id="tearings" fill="none" stroke="none" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                            <g id="text" fill="#000000" stroke="none" font-family="GOST type B" font-weight="normal" font-size="48" text-anchor="start">
+                                <text x="606.1" y="1232.1" transform="rotate(-90) scale(0.3,0.3)">6закxН6xСТС6Выбор:6LHTherm Стекло 6мм LH ThermxReva0,38xСТС6Выбор:6LHTherm Стекло 6мм LH ThermxН6x6зак</text>
+                            </g>
+                        </g>
+                        <g visibility="hidden">
+                            <g id="dimlns">
+                                <g>
+                                    <path d="M383,-931h158" id="callout1" fill="none" stroke="#000000"></path>
+                                    <path d="M383,-1975h158" id="callout2" fill="none" stroke="#000000"></path>
+                                    <path d="M531,-931v-1044" id="scale" fill="none" stroke="#000000"></path>
+                                    <text x="1453" y="506.3" transform="rotate(-90)" id="text" fill="#000000" stroke="none" font-family="GOST type B" font-weight="normal" font-size="109.3" text-anchor="middle">1044</text>
+                                </g>
+                                <g>
+                                    <path d="M125,-931v158" id="callout1" fill="none" stroke="#000000"></path>
+                                    <path d="M383,-931v158" id="callout2" fill="none" stroke="#000000"></path>
+                                    <path d="M125,-783h258" id="scale" fill="none" stroke="#000000"></path>
+                                    <text x="254" y="-807.7" id="text" fill="#000000" stroke="none" font-family="GOST type B" font-weight="normal" font-size="109.3" text-anchor="middle">258</text>
+                                </g>
+                            </g>
+                            <path d="M383,-1975l0,1044l-258,0l0,-1044z" fill-opacity="1" fill="url(#color-2)" stroke="#000000" vector-effect="non-scaling-stroke" opacity="0.6"></path>
+                            <g id="tearings" fill="none" stroke="none" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                            <g id="text" fill="#000000" stroke="none" font-family="GOST type B" font-weight="normal" font-size="48" text-anchor="start">
+                                <text x="2530" y="883" transform="rotate(-90) scale(0.4,0.4) skewX(0)">6закxН6xСТС6Выбор:6LHTherm Стекло 6мм LH ThermxReva0,38xСТС6Выбор:6LHTherm Стекло 6мм LH ThermxН6x6зак</text>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="profiles">
+                        <g visibility="hidden">
+                            <path d="M50,-2050h408l-89,89l-230,0z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"></path>
+                            <path d="M0,-2100h450" fill="none" stroke="#000000" visibility="hidden"></path>
+                        </g>
+                        <g visibility="hidden">
+                            <path d="M395,-22l-282,0v-128l282,0z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"></path>
+                            <path d="M450,0h-450" fill="none" stroke="#000000" visibility="hidden"></path>
+                        </g>
+                        <g visibility="hidden">
+                            <path d="M113,-945h282v90l-282,0z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"></path>
+                            <path d="M50,-900h400" fill="none" stroke="#000000" visibility="hidden"></path>
+                        </g>
+                        <g visibility="hidden">
+                            <path d="M458,-2050l0,2028h-89l0,-1939z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"></path>
+                            <path d="M450,-2100v2100" fill="none" stroke="#000000" visibility="hidden"></path>
+                        </g>
+                        <g visibility="hidden">
+                            <path d="M50,-22l0,-2028l89,89v1939z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"></path>
+                            <path d="M0,0v-2100" fill="none" stroke="#000000" visibility="hidden"></path>
+                        </g>
+                    </g>
+                    <g id="sectionals" fill="none" stroke="none" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                    <g id="topLayers" fill="none" stroke="none" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                    <g id="dimlns" fill="none" stroke="none" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start" visibility="hidden"></g>
+                    <g id="text" fill="none" stroke="none" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                </g>
+                <g>
+                    <g id="bottomLayers" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                    <g id="fillings">
+                        <g stroke-width="1">
+                            <g id="dimlns">
+                                <g>
+                                    <path d="M1375,-931h158" id="callout1" fill="none" stroke="#000000"></path>
+                                    <path d="M1375,-1975h158" id="callout2" fill="none" stroke="#000000"></path>
+                                    <path d="M1523,-931v-1044" id="scale" fill="none" stroke="#000000"></path>
+                                    <text x="1453" y="1498.3" transform="rotate(-90)" id="text" fill="#000000" stroke="none" font-family="GOST type B" font-weight="normal" font-size="109.3" text-anchor="middle">1044</text>
+                                </g>
+                                <g>
+                                    <path d="M517,-931v158" id="callout1" fill="none" stroke="#000000"></path>
+                                    <path d="M1375,-931v158" id="callout2" fill="none" stroke="#000000"></path>
+                                    <path d="M517,-783h858" id="scale" fill="none" stroke="#000000"></path>
+                                    <text x="946" y="-807.7" id="text" fill="#000000" stroke="none" font-family="GOST type B" font-weight="normal" font-size="109.3" text-anchor="middle">858</text>
+                                </g>
+                            </g>
+                            <path d="M1375,-1975v1044l-858,0v-1044z" fill-opacity="1" fill="url(#color-3)" stroke="#000000" vector-effect="non-scaling-stroke" opacity="0.6"></path>
+                            <g id="tearings" fill="none" stroke="none" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                            <g id="text" fill="#000000" stroke="none" font-family="GOST type B" font-weight="normal" font-size="48" text-anchor="start">
+                                <text x="1714.9" y="-3076" transform="scale(0.3,0.3)">6закxН6xСТС6Выбор:6LHTherm Стекло 6мм LH ThermxReva0,38xСТС6Выбор:6LHTherm Стекло 6мм LH ThermxН6x6зак</text>
+                            </g>
+                        </g>
+                        <g stroke="none" visibility="hidden">
+                            <g id="dimlns" fill="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                            <path d="M517,-136v-733l858,0v733z" fill-opacity="1" fill="url(#color-4)" stroke-width="0"></path>
+                            <g id="tearings" fill="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                            <g id="text" fill="#000000" stroke-width="1" font-family="GOST type B" font-weight="normal" font-size="48" text-anchor="start">
+                                <text x="1714.9" y="-578.1" transform="scale(0.3,0.3)">6закxН6xСТС6Выбор:6LHTherm Стекло 6мм LH ThermxReva0,38xСТС6Выбор:6LHTherm Стекло 6мм LH ThermxН6x6зак</text>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="profiles" stroke-width="1">
+                        <g visibility="hidden">
+                            <path d="M442,-2050h1008l-89,89l-830,0z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"></path>
+                            <path d="M450,-2100h1050" fill="none" stroke="#000000" visibility="hidden"></path>
+                        </g>
+                        <g visibility="hidden">
+                            <path d="M1387,-22l-882,0v-128l882,0z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"></path>
+                            <path d="M1500,0h-1050" fill="none" stroke="#000000" visibility="hidden"></path>
+                        </g>
+                        <g visibility="hidden">
+                            <path d="M505,-945h882v90l-882,0z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"></path>
+                            <path d="M442,-900h1008" fill="none" stroke="#000000" visibility="hidden"></path>
+                        </g>
+                        <g visibility="hidden">
+                            <path d="M1450,-2050l0,2028h-89l0,-1939z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"></path>
+                            <path d="M1500,-2100v2100" fill="none" stroke="#000000" visibility="hidden"></path>
+                        </g>
+                        <g visibility="hidden">
+                            <path d="M442,-22l0,-2028l89,89v1939z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"></path>
+                            <path d="M450,0v-2100" fill="none" stroke="#000000" visibility="hidden"></path>
+                        </g>
+                    </g>
+                    <g id="sectionals" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                    <g id="topLayers" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                    <g id="dimlns" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start" visibility="hidden"></g>
+                    <g id="text" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                </g>
+            </g>
+            <g id="dimlns" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start" visibility="hidden"></g>
+            <g id="text" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+        </g>
+        <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start" style="mix-blend-mode: normal" visibility="hidden">
+            <g></g>
+        </g>
+        <g id="visualization" fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="none" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+            <g visibility="hidden">
+                <g id="by_insets" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                <g id="by_spec" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                <g id="static" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                <g id="cnn" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                <path id="_opening" stroke="#000000" stroke-dasharray="" visibility="hidden"></path>
+                <path id="_opening2" stroke="#000000" stroke-dasharray="70,50" visibility="hidden"></path>
+            </g>
+            <g>
+                <g id="by_insets" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                <g id="by_spec" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                <g id="static" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                <g id="cnn" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                <path id="_opening" stroke="#000000" stroke-dasharray=""></path>
+                <path id="_opening2" stroke="#000000" stroke-dasharray="70,50"></path>
+            </g>
+            <g>
+                <g id="by_insets" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                <g id="by_spec" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                <g id="static" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                <g id="cnn" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+                <path id="_opening" stroke="#000000" stroke-dasharray=""></path>
+                <path id="_opening2" stroke="#000000" stroke-dasharray="70,50"></path>
+            </g>
+        </g>
+        <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal" visibility="hidden">
+            <g id="articles" fill="none" stroke="none" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"></g>
+            <g visibility="hidden">
+                <path d="" id="callout1" fill="none" stroke="#000000"></path>
+                <path d="" id="callout2" fill="none" stroke="#000000"></path>
+                <path d="" id="scale" fill="none" stroke="#000000"></path>
+                <text x="0" y="0" id="text" fill="#000000" stroke="none" font-family="GOST type B" font-weight="normal" font-size="109.3" text-anchor="middle"></text>
+            </g>
+            <g visibility="hidden">
+                <path d="" id="callout1" fill="none" stroke="#000000"></path>
+                <path d="" id="callout2" fill="none" stroke="#000000"></path>
+                <path d="" id="scale" fill="none" stroke="#000000"></path>
+                <text x="0" y="0" id="text" fill="#000000" stroke="none" font-family="GOST type B" font-weight="normal" font-size="109.3" text-anchor="middle"></text>
+            </g>
+        </g>
+    </g>
+</svg>

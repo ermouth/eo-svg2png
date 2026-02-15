@@ -21,12 +21,13 @@ const {renderSVGtoImage} = require('eo-svg2png');
 
 var opts = {
   width:      1000,       // ширина битмапа на выходе, 500 по умолчанию
-  background: [0,0,0,0],  // optional, по умолчанию белый фон
+  background: [0,0,0,0],  // optional, RGBA array или CSS3 name
   format:     'jpg',      // optional, по умолчанию png
-  sharpen:    0.1,        // optional, по умолчанию 0
+  sharpen:    0.1,        // optional, по умолчанию 0, замедля в 3…15 раз
   filters:    [],         // optional, массив имён фильтров
                           // для препроцесса SVG, примеры в /test
   font:       'SomeFont', // optional, шрифт по умолчанию
+  fontFiles:   [],        // optional, список локальных файлов шрифтов
   fontBuffers:            // optional, добавит внешний шрифт в цикл рендера
   require('fs').readFileSync('SomeFont.ttf')
 };
@@ -42,6 +43,12 @@ renderSVGtoImage(sourceSVGstring, opts)
 После обработки рядом с исходным файлом будет создан файл
 изображения с таким же именем, но другим расширением.
 
+### Шрифты
+
+Бибилиотека не использует установленные в хостовой ОС шрифты. 
+Если в изображении нет шрифтов, всё ок. Если есть – нужно их добавить
+в опции как список файлов или массив из Buffers, содержащих шрифты.
+
 ### Фильтры
 
 Фильтры расположены в папке `/filters`. Каждый фильтр экспортирует 
@@ -55,6 +62,8 @@ renderSVGtoImage(sourceSVGstring, opts)
 
 Цепочка фильтров, которые нужно применить, определяется в 
 `opts.filters` при вызове конвертера.
+
+В `/test/test.js`есть несколько примеров применения.
 
 ## Конверсия SVG в битмап с размерами из SVG
 
@@ -78,7 +87,7 @@ renderSVGToBuffer({
   opts: {
     background: [0,0,0,0],  // optional RGBA, по умолчанию белый
     format:     'jpg',      // optional, по умолчанию png
-    sharpen:    0           // optional, по умолчанию 0.1
+    sharpen:    0.1         // optional, по умолчанию 0
   }
 })
 .then(bufferToImage)
