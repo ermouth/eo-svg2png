@@ -47,10 +47,7 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
           k2 = ta=='start'?0.9:ta=='middle'?0.45:0;
       coords.push(['M', x+w0*nl*k1, y]);
       coords.push(['M', x+w0*nl*k2, y-w0*2]);
-      _attrs(node, {
-        'font-size': node.getAttribute('font-size') * 0.9 | 0,
-        'font-family': opts.font
-      });
+      _attrs(node, {'font-size': node.getAttribute('font-size') * 0.9 | 0});
     }
   });
   
@@ -130,14 +127,18 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
       dim.height = dim.height - dY;
     }
     _attrs(titleNode, {
-      'font-family': opts.font,
       'font-size': (titleNode.getAttribute('font-size') || 60) * 0.9 | 0,
     });
   }
 
+  // Fix font-family
+  ['//v:text', '//v:tspan'].forEach(xpath => {
+    let textNodes = xfind(xpath, svg) || [];
+    textNodes.forEach(node => _attrs(node, {'font-family': opts.font || null}));
+  });
+
   // Fix too narrow or small images
   // where title text is truncated
-  
   if (dim.width < w0 + titleLength * w0) {
     dim.width = w0 + titleLength * w0;
   }

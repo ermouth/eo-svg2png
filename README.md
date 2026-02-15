@@ -19,13 +19,17 @@ const {renderSVGtoImage} = require('eo-svg2png');
 
 var opts = {
   width:      1000,       // Result image width, default is 500
-  background: [0,0,0,0],  // Optional, default is white
+  background: [0,0,0,0],  // Optional, RGBA array or CSS3 name
   format:     'jpeg',     // Optional, default is png
-  sharpen:    0.1,        // Optional, default is 0
+  sharpen:    0.1,        // Optional, default is 0, slows down 3…15x
   filters:    [],         // Optional list of filters to apply to SVG DOM
                           // before render, see /test and /filters 
+  crop:       false,      // trim void space, use w/'removeInvisible' filter
+  bleed:      2,          // padding for crop, should be < width/2
+
   font:       'SomeFont', // Optional, default font name
-  fontBuffers:            // Optional, emits a font into render cycle
+  fontFiles:   [],        // Optional, list of fonts on filesystem
+  fontBuffers:            // Optional, emits a font into render cycle        
   require('fs').readFileSync('SomeFont.ttf')
 };
 
@@ -39,6 +43,12 @@ Add `fname` key with a file name into options to load
 SVG from a file. If `fname` is provided the result image 
 also goes to a file with the same name but different extension.
 
+### Fonts
+
+The lib doesn’t use host OS fonts. If SVG to render has texts you must
+either provide list of font file locaions, or array of Buffers with 
+font data.
+
 ### Filters
 
 Filters are located in `/filters` folder. Each filter exports a single 
@@ -51,6 +61,8 @@ prior cloning.
 
 Sequence of filters for a given SVG is defined in `opts.filters` 
 array.
+
+There are several examples of filter syntax in `/test/test.js`.
 
 ## Convert SVG to bitmap as is
 
@@ -73,7 +85,7 @@ renderSVGToBuffer({
   opts: {
     background: [0,0,0,0],  // optional RGBA, default is white
     format:     'jpg',      // optional, default is png
-    sharpen:    0           // optional, default is 0.1
+    sharpen:    0.1         // optional, default is 0
   }
 })
 .then(bufferToImage)
