@@ -17,7 +17,7 @@ var opts = {
     {
       name:     'Drainage with invalid XYWH, fixed by filter and rendered',
       viewBoxAsXYWH: true,
-      filters:  ['fixDrainage'],  
+      filters:  ['fixDrainage',{fixThinLines:{minLineWidth: 1.5}}],  
       fname:    __dirname + '/dr1.svg',
     },
     {
@@ -28,8 +28,9 @@ var opts = {
       fname:    __dirname + '/dr2.svg',
     },
     {
-      name:       'Another invalid viewBox drain, fixed by filter and rendered hires',
+      name:       'Another invalid viewBox, fixed, limited by height',
       width:      1000,
+      height:     1000,
       background: [255, 255, 255, 128],
       filters:    ['fixDrainage'],  
       fname:    __dirname + '/dr3.svg',
@@ -67,17 +68,17 @@ var opts = {
       fname:      __dirname + '/s1.svg' 
     },
     { 
-      name:       'Renders to hires, fixes invalid viewBox, sets Asket font, margins and bg',
-      width:      3000, 
+      name:       'Fixes invalid viewBox, sets Asket font, margins and bg, fixes thin lines',
+      width:      1000, 
       background: 'white', 
       font:       'Asket Narrow',
-      filters:    ['removeInvisible', 'forceFont', {fixThinLines:{minLineWidth: 1.5}}], 
+      filters:    ['removeInvisible', 'forceFont', {fixThinLines:{minLineWidth: 1}}], 
       crop:       true,
-      bleed:      20,
+      bleed:      5,
       fname:      __dirname + '/s2.svg' 
     },
     { 
-      name:       'Crops to bounding box with bleed and fits into square, fixes thin lines',
+      name:       'Crops to bounding box with bleed, fixes thin lines',
       width:      1000, 
       filters:    ['removeInvisible', {fixThinLines:{minLineWidth: 3}}],
       crop:       true,

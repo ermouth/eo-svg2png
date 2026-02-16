@@ -4,19 +4,29 @@ const xpath = require('xpath');
 // Возвращает {svg, dim}
 
 module.exports = exports = function fixThinLines(svg, dim, opts, params){
-  let xfind = xpath.useNamespaces({ v:'http://www.w3.org/2000/svg' }),
-      popts = Object.assign({
-        minLineWidth: 1
+  const { assign } = Object;
+  let xfind = xpath.useNamespaces({ v:'http://www.w3.org/2000/svg' });
+  let popts = Object.assign({
+        minLineWidth: 1,
+        miterLimit: 2,
+        removeVectorEffect: true
       }, params||{});
 
   let lw = popts.minLineWidth * dim.width / opts.width;
+  let opts2 = {'stroke-miterlimit': popts.miterLimit};
+  if (popts.removeVectorEffect) opts2['vector-effect'] = null;
+  let opts1 = {'stroke-width': lw+'', ...opts2};
 
-  // Fix font-family
-  ['//*[@stroke-width]'].forEach(xpath => {
+  // Fix stroke
+  ['//v:*[@stroke-width]'].forEach(xpath => {
     let textNodes = xfind(xpath, svg) || [];
     textNodes.forEach(node => {
       let w = parseInt(node.getAttribute('stroke-width')) || 0;
-      if (w < lw) _attrs(node, {'stroke-width': lw+''})
+      if (w < lw) {
+        _attrs(node, opts1);
+        let unscale = xfind('//v:*[@vector-effect="non-scaling-stroke"]',node) || [];
+        unscale.forEach(u => _attrs(u, opts2));
+      }
     });
   });
 

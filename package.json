@@ -1,8 +1,8 @@
 {
   "name": "eo-svg2png",
-  "description": "A lib for converting SVG to PNG or JPG image of pre-defined width, with optional SVG pre-processing",
+  "description": "A lib for pre-processing and converting SVG to PNG or JPG image of pre-defined width and height",
   "keywords": ["svg","png","jpg","converter"],
-  "version": "2.0.3",
+  "version": "2.0.4",
   "author": "ermouth <ermouth@gmail.com>",
   "license": "MIT",
 
@@ -23,5 +23,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/ermouth/eo-svg2png.git"
-  }
+  },
+
+  "packageManager": "yarn@1.22.22"
 }
