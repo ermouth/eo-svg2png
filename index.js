@@ -1,7 +1,8 @@
 const { DOMParser, XMLSerializer } = require('@xmldom/xmldom'),
       { Jimp, JimpMime } = require('jimp'),
       { Resvg } = require('@resvg/resvg-js'),
-      { round, abs, min, max } = Math;
+      { round, abs, min, max } = Math,
+      { assign, keys } = Object;
 
 // Converts SVG document string into bitmap buffer,
 // returns Promise which is resolved with Buffer.
@@ -13,6 +14,7 @@ module.exports = {
   default: renderSVGtoImage,
   renderSVGtoImage,
   preprocessSVG,
+  preprocessSVGSync,
   renderSVGToBuffer,
   bufferToImage
 };
@@ -23,6 +25,7 @@ function renderSVGtoImage(svgString, opts0){
   let opts = {
     format:  'png',          // output format, png/jpg, former is default, jpg is ~5x slower
     width:   500,            // default target bitmap width, pixels
+    height:  null,           // max height, width is reduced if height is exceeded
     background: [255,255,255,255],  // background color, RGBA array or CSS3 color srtring
     font:    'OpenGost Type B TT',  // default font, enforced by fixDrainage and forceFont plugins
                             
@@ -61,6 +64,13 @@ function renderSVGtoImage(svgString, opts0){
 // =======================
 
 async function preprocessSVG(svgString, opts){
+  let res = preprocessSVGSync(svgString, opts);
+  return res;
+}
+
+// =======================
+
+function preprocessSVGSync(svgString, opts){
   // get root node and dimensions
   let rootString = svgString.replace(/[\r\n]/g,' ').match(/<svg [^>]+>/s)[0],
       props = [...rootString.matchAll(/(x|y|width|height)\s?=\s?"(-?[0-9\.]+)[^"]{0,4}"/g)],
@@ -99,7 +109,7 @@ async function preprocessSVG(svgString, opts){
       let filterName = '', params = {};
       if (typeof filter == 'string') filterName = filter;
       else {
-        filterName = Object.keys(filter)[0];
+        filterName = keys(filter)[0];
         params = filter[filterName];
       }
       if (!filterName) return;
@@ -125,6 +135,8 @@ async function preprocessSVG(svgString, opts){
 
   // rebuild SVG root node, no x and y attributes
   let k = opts.width / dim.width;
+  if (null != opts.height) k = min(opts.height / dim.height, k);
+  
   let d1 = {
     width:  round(dim.width  * k), 
     height: round(dim.height * k)
@@ -141,14 +153,14 @@ async function preprocessSVG(svgString, opts){
 
 // =======================
 
-async function renderSVGToBuffer({svg, opts}) {
-  let resvg = new Resvg(svg, getReSVGOpts(opts)),
+async function renderSVGToBuffer({svg, opts, dim}) {
+  let resvg = new Resvg(svg, getReSVGOpts(assign({}, opts, dim))),
       img = resvg.render(),
       buf = img.pixels,
-      dim = {width:img.width, height:img.height},
+      dim1 = {width:img.width, height:img.height},
       png = opts.format=='png' && !opts.sharpen 
           ? img.asPng() : null;
-  return {png, dim, buf, opts, resvg};
+  return {png, dim:dim1, buf, opts, resvg};
 }
 
 // =======================
