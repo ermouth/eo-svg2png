@@ -2,7 +2,7 @@
   "name": "eo-svg2png",
   "description": "A lib for pre-processing and converting SVG to PNG or JPG image of pre-defined width and height",
   "keywords": ["svg","png","jpg","converter"],
-  "version": "2.0.4",
+  "version": "2.1.0",
   "author": "ermouth <ermouth@gmail.com>",
   "license": "MIT",
 
@@ -14,7 +14,7 @@
     "@xmldom/xmldom": "^0.8.10",
     "fs": "^0.0.1-security",
     "jimp": "^1.6.0",
-    "@resvg/resvg-js": "^2.6.0",
+    "@resvg/resvg-js": "^2.6.2",
     "xpath": "^0.0.34"
   },
 

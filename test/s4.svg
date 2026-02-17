@@ -1,0 +1,275 @@
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="-613,-1340,2250,1836" width="500" height="408">
+    <defs>
+        <linearGradient x1="-76.2" y1="73.1" x2="344.3" y2="-1122.9" gradientUnits="userSpaceOnUse" id="color-1">
+            <stop offset="0" stop-color="#ddeeff"/>
+            <stop offset="0.5" stop-color="#d0ddff"/>
+            <stop offset="1" stop-color="#eeffff"/>
+        </linearGradient>
+        <linearGradient x1="499.3" y1="73.1" x2="944.3" y2="-1122.9" gradientUnits="userSpaceOnUse" id="color-2">
+            <stop offset="0" stop-color="#ddeeff"/>
+            <stop offset="0.5" stop-color="#d0ddff"/>
+            <stop offset="1" stop-color="#eeffff"/>
+        </linearGradient>
+        <linearGradient x1="1095.3" y1="77.1" x2="1523.8" y2="-1126.9" gradientUnits="userSpaceOnUse" id="color-3">
+            <stop offset="0" stop-color="#ffeeee"/>
+            <stop offset="0.5" stop-color="#ffaaaa"/>
+            <stop offset="1" stop-color="#ffcccc"/>
+        </linearGradient>
+        <linearGradient x1="1674.7" y1="124.1" x2="2571.8" y2="-1173.9" gradientUnits="userSpaceOnUse" id="color-4">
+            <stop offset="0" stop-color="#ddeeff"/>
+            <stop offset="0.5" stop-color="#d0ddff"/>
+            <stop offset="1" stop-color="#eeffff"/>
+        </linearGradient>
+        <linearGradient x1="2675.8" y1="124.1" x2="3572.8" y2="-498.4" gradientUnits="userSpaceOnUse" id="color-5">
+            <stop offset="0" stop-color="#ddeeff"/>
+            <stop offset="0.5" stop-color="#d0ddff"/>
+            <stop offset="1" stop-color="#eeffff"/>
+        </linearGradient>
+        <linearGradient x1="2722.8" y1="-598.9" x2="3525.8" y2="-1126.4" gradientUnits="userSpaceOnUse" id="color-6">
+            <stop offset="0" stop-color="#ffeeee"/>
+            <stop offset="0.5" stop-color="#ffaaaa"/>
+            <stop offset="1" stop-color="#ffcccc"/>
+        </linearGradient>
+        <linearGradient x1="5351.5" y1="-374.3" x2="6248.5" y2="-996.8" gradientUnits="userSpaceOnUse" id="color-7">
+            <stop offset="0" stop-color="#ddeeff"/>
+            <stop offset="0.5" stop-color="#d0ddff"/>
+            <stop offset="1" stop-color="#eeffff"/>
+        </linearGradient>
+    </defs>
+    <g>
+        <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="none" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+            <g id="bottomLayers" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+            <g id="fillings" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+            <g id="profiles" stroke-width="1">
+                <g>
+                    <path d="M1064.3,-1181.9l0,1314l-85,0l0,-1314z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                </g>
+                <g>
+                    <path d="M464.3,-1181.9l0,1314l-85,0l0,-1314z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                </g>
+                <g>
+                    <path d="M-178.2,-1224.9l1800,0l-67,67l-1666,0z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                </g>
+                <g>
+                    <path d="M1621.7,-1224.9l0,1400l-67,-67l0,-1266z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                </g>
+                <g>
+                    <path d="M1621.8,175.1l-1800,0l67,-67l1666,0z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                </g>
+                <g>
+                    <path d="M-178.2,175.1l0,-1400l67,67l0,1266z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                </g>
+            </g>
+            <g id="sectionals" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+            <g id="topLayers">
+                <g>
+                    <g id="bottomLayers" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                    <g id="fillings" stroke="none">
+                        <g>
+                            <g id="dimlns" fill="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                            <path d="M344.3,73.1l-420.5,0l0,-1196l420.5,0z" fill-opacity="1" fill="url(#color-1)" stroke-width="0"/>
+                            <g id="tearings" fill="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                            <g id="text" fill="#000000" stroke-width="1" font-family="GOST type B" font-weight="normal" font-size="48" text-anchor="start">
+                                <text x="-30.8" y="229.3" transform="rotate(-90) scale(1.2,1.2) skewX(0)" font-family="OpenGost Type B TT">4LHBalancexН14x4М1xН14x4И</text>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="profiles" stroke-width="1">
+                        <g>
+                            <path d="M408.3,-1186.9l0,1324l-80,-80l0,-1164z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                        </g>
+                        <g>
+                            <path d="M408.3,137.1l-548.5,0l80,-80h388.5z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                        </g>
+                        <g>
+                            <path d="M-140.2,137.1v-1324l80,80l0,1164z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                        </g>
+                        <g>
+                            <path d="M-140.2,-1186.9l548.5,0l-80,80l-388.5,0z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                        </g>
+                    </g>
+                    <g id="sectionals" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                    <g id="topLayers" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                    <g id="dimlns" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                    <g id="text" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/></g>
+                <g>
+                    <g id="bottomLayers" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                    <g id="fillings">
+                        <g>
+                            <g id="dimlns" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                            <path d="M944.3,73.1l-445,0l0,-1196l445,0z" fill-opacity="1" fill="url(#color-2)" stroke="none" stroke-width="0"/>
+                            <g id="tearings" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                            <g id="text">
+                                <text x="-36.9" y="848.6" transform="rotate(-90) scale(1,1)" fill="#000000" stroke="none" stroke-width="1" font-family="OpenGost Type B TT" font-weight="normal" font-size="48" text-anchor="start">4LHSolarxReva0,38x4М1xН12x4М1xН10x6зак</text>
+                                <path d="M813.7,-19.1c0,-21.2 17.2,-38.4 38.4,-38.4c21.2,0 38.4,17.2 38.4,38.4c0,21.2 -17.2,38.4 -38.4,38.4c-21.2,0 -38.4,-17.2 -38.4,-38.4z" fill="none" stroke-opacity="0.8" stroke="#008000" stroke-width="24"/>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="profiles" stroke-width="1">
+                        <g>
+                            <path d="M1008.3,-1186.9l0,1324l-80,-80l0,-1164z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                        </g>
+                        <g>
+                            <path d="M1008.3,137.1l-573,0l80,-80l413,0z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                        </g>
+                        <g>
+                            <path d="M435.3,137.1l0,-1324l80,80l0,1164z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                        </g>
+                        <g>
+                            <path d="M435.3,-1186.9l573,0l-80,80l-413,0z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                        </g>
+                    </g>
+                    <g id="sectionals" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                    <g id="topLayers" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                    <g id="dimlns" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                    <g id="text" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/></g>
+                <g>
+                    <g id="bottomLayers" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                    <g id="fillings" stroke="none">
+                        <g>
+                            <g id="dimlns" fill="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                            <path d="M1095.3,-1126.9l428.5,0l0,1204l-428.5,0z" fill="url(#color-3)" stroke-width="0"/>
+                            <g id="tearings" fill="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                            <g id="text" fill="#000000" stroke-width="1" font-family="GOST type B" font-weight="normal" font-size="48" text-anchor="start">
+                                <text x="-34" y="1172.9" transform="rotate(-90) scale(1.2,1.2)" font-family="OpenGost Type B TT">4LPHPBrightGreen40/29</text>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="profiles" stroke-width="1">
+                        <g>
+                            <path d="M1035.3,137.1l0,-1324l80,80l0,1164z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                        </g>
+                        <g>
+                            <path d="M1035.3,-1186.9l548.5,0l-80,80l-388.5,0z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                        </g>
+                        <g>
+                            <path d="M1583.7,-1186.9l0,1324l-80,-80l0,-1164z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                        </g>
+                        <g>
+                            <path d="M1583.8,137.1l-548.5,0l80,-80l388.5,0z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                        </g>
+                    </g>
+                    <g id="sectionals" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                    <g id="topLayers" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                    <g id="dimlns" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                    <g id="text" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/></g>
+            </g>
+            <g id="dimlns" stroke-width="1">
+                <g>
+                    <path d="M-178.2,175.1v158" id="callout1" fill="none" stroke="#000000"/>
+                    <path d="M421.8,175.1v158" id="callout2" fill="none" stroke="#000000"/>
+                    <path d="M-178.2,323.1h600" id="scale" fill="none" stroke="#000000"/>
+                    <text x="121.8" y="291.9" id="text" fill="#000000" stroke="none" font-family="OpenGost Type B TT" font-weight="normal" font-size="137.7" text-anchor="middle">600</text>
+                </g>
+                <g>
+                    <path d="M421.8,175.1v158" id="callout1" fill="none" stroke="#000000"/>
+                    <path d="M1021.8,175.1v158" id="callout2" fill="none" stroke="#000000"/>
+                    <path d="M421.8,323.1h600" id="scale" fill="none" stroke="#000000"/>
+                    <text x="721.8" y="291.9" id="text" fill="#000000" stroke="none" font-family="OpenGost Type B TT" font-weight="normal" font-size="137.7" text-anchor="middle">600</text>
+                </g>
+                <g>
+                    <path d="M1021.8,175.1v158" id="callout1" fill="none" stroke="#000000"/>
+                    <path d="M1621.8,175.1v158" id="callout2" fill="none" stroke="#000000"/>
+                    <path d="M1021.8,323.1h600" id="scale" fill="none" stroke="#000000"/>
+                    <text x="1321.8" y="291.9" id="text" fill="#000000" stroke="none" font-family="OpenGost Type B TT" font-weight="normal" font-size="137.7" text-anchor="middle">600</text>
+                </g>
+                <g>
+                    <path d="M-178.2,175.1h-114" id="callout1" fill="none" stroke="#000000"/>
+                    <path d="M-178.2,-1224.9h-114" id="callout2" fill="none" stroke="#000000"/>
+                    <path d="M-282.2,175.1v-1400" id="scale" fill="none" stroke="#000000"/>
+                    <text x="524.9" y="-313.4" transform="rotate(-90)" id="text" fill="#000000" stroke="none" font-family="OpenGost Type B TT" font-weight="normal" font-size="137.7" text-anchor="middle">1400</text>
+                </g>
+                <g>
+                    <path d="M-178.2,175.1v316" id="callout1" fill="none" stroke="#000000"/>
+                    <path d="M1621.8,175.1v316" id="callout2" fill="none" stroke="#000000"/>
+                    <path d="M-178.2,481.1h1800" id="scale" fill="none" stroke="#000000"/>
+                    <text x="721.8" y="449.9" id="text" fill="#000000" stroke="none" font-family="OpenGost Type B TT" font-weight="normal" font-size="137.7" text-anchor="middle">1800</text>
+                </g>
+            </g>
+            <g id="text" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/></g>
+        <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="none" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+            <g id="bottomLayers" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+            <g id="fillings"/>
+            <g id="profiles" stroke-width="1"/>
+            <g id="sectionals" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+            <g id="topLayers" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+            <g id="text" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/></g>
+        <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="none" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+            <g id="bottomLayers" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+            <g id="fillings" stroke="none"/>
+            <g id="profiles" stroke-width="1"/>
+            <g id="sectionals" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+            <g id="topLayers">
+                <g>
+                    <g id="bottomLayers" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                    <g id="fillings"/>
+                    <g id="profiles" stroke-width="1"/>
+                    <g id="sectionals" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                    <g id="topLayers" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                    <g id="text" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/></g>
+            </g>
+            <g id="text" fill="none" stroke="none" stroke-width="1" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/></g>
+        <g id="visualization" fill="none" fill-rule="nonzero" stroke="none" stroke-width="none" stroke-linecap="none" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="none" stroke-dashoffset="none" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+            <g stroke-width="1" stroke-linecap="butt" stroke-dashoffset="0">
+                <g id="by_insets" fill="none" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                <g id="by_spec" fill="#000000" stroke="none" stroke-dasharray="" font-family="GOST type B" font-weight="normal" font-size="60" text-anchor="start">
+                    <text x="-612.6" y="-58.9" transform="rotate(0)" font-family="OpenGost Type B TT">НИЗ РАМЫ - С ПЛАНКОЙ ЗАЩИТЫ</text>
+                </g>
+                <g id="static" fill="none" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                <g id="cnn" fill="none" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/></g>
+            <g stroke-width="1" stroke-linecap="butt" stroke-dashoffset="0">
+                <g id="by_insets" fill="none" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                <g id="by_spec" stroke-dasharray="">
+                    <path d="M377,-488.9h1.3c1.3,0 2.6,-0.5 3.5,-1.5c0.9,-0.9 1.5,-2.2 1.5,-3.5v-60c0,-1.3 -0.5,-2.6 -1.5,-3.5c-0.9,-0.9 -2.2,-1.5 -3.5,-1.5h-20c-1.3,0 -2.6,0.5 -3.5,1.5c-0.9,0.9 -1.5,2.2 -1.5,3.5v60c0,1.3 0.5,2.6 1.5,3.5c0.9,0.9 2.2,1.5 3.5,1.5h1.3v-44.4c0,-1.1 0.4,-2.1 1.2,-2.9c0.8,-0.8 1.8,-1.2 2.9,-1.2h9.2c1.1,0 2.1,0.4 2.9,1.2c0.8,0.8 1.2,1.8 1.2,2.9zM377.2,-404.1c0,0.4 -0.2,0.8 -0.5,1.1c-2.6,1.3 -5.5,1.9 -8.4,1.8c-2.9,0.1 -5.8,-0.5 -8.4,-1.8c-0.3,-0.3 -0.5,-0.6 -0.5,-1.1l0.6,-1.6c0.1,-0.2 0.3,-0.3 0.5,-0.4c1.1,-0.3 2.3,-0.5 3.5,-0.5h4.4h4.4c1.2,0 2.3,0.1 3.5,0.5c0.2,0.1 0.4,0.2 0.5,0.4zM368.3,-544.6h-7.4c-1.3,0 -2.6,0.5 -3.5,1.5c-0.9,0.9 -1.5,2.2 -1.5,3.5v31.8c2.2,5.2 3.4,10.7 3.6,16.4l0.2,36.4l-0.1,27.4c0,7.8 0,15.6 -0.3,23.5c0,0.4 0.2,0.8 0.5,1.1c2.6,1.3 5.5,1.9 8.4,1.8c2.9,0.1 5.8,-0.5 8.4,-1.8c0.3,-0.3 0.5,-0.6 0.5,-1.1c-0.2,-7.8 -0.3,-15.6 -0.3,-23.5l-0.1,-27.4l0.2,-36.4c0.2,-5.6 1.4,-11.2 3.6,-16.4v-31.8c0,-1.3 -0.5,-2.6 -1.5,-3.5c-0.9,-0.9 -2.2,-1.5 -3.5,-1.5z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                    <path d="M-140.2,-1125.7l-3.5,4.8h-12c-0.3,0 -0.5,-0.1 -0.7,-0.3c-0.2,-0.2 -0.3,-0.4 -0.3,-0.7v-50c0,-0.3 0.1,-0.5 0.3,-0.7c0.2,-0.2 0.4,-0.3 0.7,-0.3h12l3.5,4.8zM-157.7,-1172.9h15.5c0.3,0 0.5,-0.1 0.7,-0.3c0.2,-0.2 0.3,-0.4 0.3,-0.7v-12c0,-0.3 -0.1,-0.5 -0.3,-0.7c-0.2,-0.2 -0.4,-0.3 -0.7,-0.3h-16c-0.3,0 -0.5,0.1 -0.7,0.3c-0.2,0.2 -0.3,0.4 -0.3,0.7v78c0,0.3 0.1,0.5 0.3,0.7c0.2,0.2 0.4,0.3 0.7,0.3h16c0.3,0 0.5,-0.1 0.7,-0.3c0.2,-0.2 0.3,-0.4 0.3,-0.7v-12c0,-0.3 -0.1,-0.5 -0.3,-0.7c-0.2,-0.2 -0.4,-0.3 -0.7,-0.3h-15.5z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                    <path d="M-128.2,-1332.9l-15,67h-2l-14,-43l-14,43h-2l-15,-67h1l14,65l15,-45l15,45l14,-65h1zM-99.2,-1265.9h-2v-66l-14,14l-1,-1l15,-15h2zM-55.2,-1296.9c0,4 -1,9 -2,14c-1,6 -3,10 -6,13c-2,3 -5,4 -8,4c-6,0 -10,-5 -13,-16c-2,-5 -2,-11 -2,-16v-5c0,-5 1,-9 2,-15c2,-6 3,-10 6,-13c2,-3 5,-4 8,-4c6,0 10,5 13,16c2,5 3,11 3,16v5zM-57.2,-1296.9v-5c0,-5 -1,-10 -2,-16c-3,-10 -7,-15 -12,-15c-5,0 -9,5 -12,15c-2,5 -2,11 -2,16v5c0,4 1,9 2,15c3,10 7,16 12,16c5,0 9,-5 12,-15c2,-5 2,-11 2,-16zM-12.2,-1296.9c0,4 -1,9 -2,14c-1,6 -3,10 -6,13c-2,3 -5,4 -8,4c-6,0 -10,-5 -13,-16c-2,-5 -2,-11 -2,-16v-5c0,-5 1,-9 2,-15c2,-6 3,-10 6,-13c2,-3 5,-4 8,-4c6,0 10,5 13,16c2,5 3,11 3,16v5zM-14.2,-1296.9v-5c0,-5 -1,-10 -2,-16c-3,-10 -7,-15 -12,-15c-5,0 -9,5 -12,15c-2,5 -2,11 -2,16v5c0,4 1,9 2,15c3,10 7,16 12,16c5,0 9,-5 12,-15c2,-5 2,-11 2,-16z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                    <path d="M-149.2,117.7v2.9c0,0 0,0 0,0c0,0 0,0 0,0h-5.9c0,0 0,0 0,0c0,0 0,0 0,0v-2.9c0,0 0,0 0,0c0,0 0,0 0,0h5.9c0,0 0,0 0,0c0,0 0,0 0,0zM-142.7,139.7h-19v-18c0,-0.3 0.1,-0.5 0.3,-0.7c0.2,-0.2 0.4,-0.3 0.7,-0.3h17c0.3,0 0.5,0.1 0.7,0.3c0.2,0.2 0.3,0.4 0.3,0.7zM-141.2,117.7h-16c-0.3,0 -0.5,-0.1 -0.7,-0.3c-0.2,-0.2 -0.3,-0.4 -0.3,-0.7v-86.8c0,-2.1 1.6,-3.8 3.7,-4l13.3,-1.1c0.3,0 0.6,0.1 0.8,0.3c0.2,0.2 0.3,0.5 0.3,0.7v90.9c0,0.3 -0.1,0.5 -0.3,0.7c-0.2,0.2 -0.4,0.3 -0.7,0.3z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                    <text x="345.7" y="-1068.9" transform="rotate(0)" fill="#000000" stroke="none" font-family="OpenGost Type B TT" font-weight="normal" font-size="60" text-anchor="start">Щ</text>
+                    <path d="M359.9,-1023.9c0,4.8 -2.2,7.6 -6.6,8.5l6.6,13.4l-0.6,0.3l-6.6,-13.5c-0.6,0.1 -1.3,0.1 -2,0.1h-7.7v13.2h-0.7v-30.9h8.4c2.3,0 4.3,0.5 5.9,1.6c2.2,1.5 3.3,3.9 3.3,7.2zM359.2,-1023.9c0,-3 -1,-5.2 -3,-6.6c-1.5,-1 -3.3,-1.5 -5.5,-1.5h-7.7v16.3h7.7c2.3,0 4.1,-0.5 5.5,-1.5c2,-1.3 3,-3.6 3,-6.6zM379.2,-1001.6h-5.1c-2.8,0 -5,-0.8 -6.5,-2.3c-1.5,-1.5 -2.3,-3.7 -2.3,-6.5v-13.5c0,-2.8 0.8,-4.9 2.3,-6.5c1.6,-1.6 3.7,-2.3 6.5,-2.3h5.1v0.7h-5.1c-2.6,0 -4.6,0.7 -6,2.1c-1.4,1.4 -2.1,3.4 -2.1,6v13.5c0,1.3 0.2,2.4 0.5,3.4c0.4,1 0.9,1.9 1.6,2.6c0.7,0.7 1.6,1.2 2.6,1.6c1,0.4 2.2,0.5 3.4,0.5h5.1zM392.5,-1001.9h-0.7v-29.7l-6.2,6.2l-0.5,-0.5l6.6,-6.6h0.8z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                </g>
+                <g id="static" fill="none" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                <g id="cnn" fill="none" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                <path d="M-60.2,57.1l182,-1164l206.5,1164M-60.2,-1106.9l388.5,582l-388.5,582" id="_opening" fill="none" stroke="#000000" stroke-dasharray=""/>
+                <path id="_opening2" fill="none" stroke="#000000" stroke-dasharray="70,50"/>
+            </g>
+            <g stroke-width="1" stroke-linecap="butt" stroke-dashoffset="0">
+                <g id="by_insets" fill="none" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                <g id="by_spec" fill-opacity="0.9" fill="#fefefe" stroke="#000000" stroke-dasharray="">
+                    <path d="M758.3,-1155.6l0,-1.3c0,-2.8 -2.2,-5 -5,-5l-60,0c-2.8,0 -5,2.2 -5,5l0,20c0,2.8 2.2,5 5,5l60,0c2.8,0 5,-2.2 5,-5l0,-1.3l-44.4,0c-2.3,0 -4.1,-1.8 -4.1,-4.1l0,-9.2c0,-2.3 1.8,-4.1 4.1,-4.1zM843.1,-1155.8c0.4,0 0.7,0.2 1,0.5c1.3,2.6 2,5.5 1.8,8.4c0.1,3 -0.5,5.8 -1.8,8.4c-0.3,0.3 -0.6,0.5 -1,0.5l-1.7,-0.6c-0.1,0 -0.3,-0.3 -0.3,-0.5c-0.4,-1 -0.5,-2.3 -0.5,-3.4l0,-8.8c0,-1.1 0.1,-2.3 0.5,-3.4c0,-0.2 0.2,-0.4 0.3,-0.5zM702.6,-1146.9l0,7.4c0,2.8 2.2,5 5,5l31.8,0c5.2,-2.2 10.8,-3.4 16.4,-3.6l36.4,-0.2l27.4,0l23.5,0.3c0.4,0 0.7,-0.2 1,-0.5c1.3,-2.6 2,-5.5 1.8,-8.4c0.1,-3 -0.5,-5.8 -1.8,-8.4c-0.3,-0.3 -0.6,-0.5 -1,-0.5c-7.9,0.2 -15.7,0.3 -23.5,0.2l-27.4,0l-36.4,-0.1c-5.6,-0.2 -11.2,-1.4 -16.4,-3.6l-31.8,0c-2.8,0 -5,2.2 -5,5z" vector-effect="non-scaling-stroke"/>
+                    <path d="M408.3,176.1l-15,67h-2l-14,-43l-14,43h-2l-15,-67h1l14,65l15,-45l15,45l14,-65h1zM437.3,243.1h-2v-66l-14,14l-1,-1l15,-15h2zM481.3,212.1c0,4 -1,9 -2,14c-1,6 -3,10 -6,13c-2,3 -5,4 -8,4c-6,0 -10,-5 -13,-16c-2,-5 -2,-11 -2,-16v-5c0,-5 1,-9 2,-15c2,-6 3,-10 6,-13c2,-3 5,-4 8,-4c6,0 10,5 13,16c2,5 3,11 3,16v5zM479.3,212.1v-5c0,-5 -1,-10 -2,-16c-3,-10 -7,-15 -12,-15c-5,0 -9,5 -12,15c-2,5 -2,11 -2,16v5c0,4 1,9 2,15c3,10 7,16 12,16c5,0 9,-5 12,-15c2,-5 2,-11 2,-16zM524.3,212.1c0,4 -1,9 -2,14c-1,6 -3,10 -6,13c-2,3 -5,4 -8,4c-6,0 -10,-5 -13,-16c-2,-5 -2,-11 -2,-16v-5c0,-5 1,-9 2,-15c2,-6 3,-10 6,-13c2,-3 5,-4 8,-4c6,0 10,5 13,16c2,5 3,11 3,16v5zM522.3,212.1v-5c0,-5 -1,-10 -2,-16c-3,-10 -7,-15 -12,-15c-5,0 -9,5 -12,15c-2,5 -2,11 -2,16v5c0,4 1,9 2,15c3,10 7,16 12,16c5,0 9,-5 12,-15c2,-5 2,-11 2,-16z" vector-effect="non-scaling-stroke"/>
+                    <path d="M981.3,176.1l-15,67h-2l-14,-43l-14,43h-2l-15,-67h1l14,65l15,-45l15,45l14,-65h1zM1010.3,243.1h-2v-66l-14,14l-1,-1l15,-15h2zM1054.3,212.1c0,4 -1,9 -2,14c-1,6 -3,10 -6,13c-2,3 -5,4 -8,4c-6,0 -10,-5 -13,-16c-2,-5 -2,-11 -2,-16v-5c0,-5 1,-9 2,-15c2,-6 3,-10 6,-13c2,-3 5,-4 8,-4c6,0 10,5 13,16c2,5 3,11 3,16v5zM1052.3,212.1v-5c0,-5 -1,-10 -2,-16c-3,-10 -7,-15 -12,-15c-5,0 -9,5 -12,15c-2,5 -2,11 -2,16v5c0,4 1,9 2,15c3,10 7,16 12,16c5,0 9,-5 12,-15c2,-5 2,-11 2,-16zM1097.3,212.1c0,4 -1,9 -2,14c-1,6 -3,10 -6,13c-2,3 -5,4 -8,4c-6,0 -10,-5 -13,-16c-2,-5 -2,-11 -2,-16v-5c0,-5 1,-9 2,-15c2,-6 3,-10 6,-13c2,-3 5,-4 8,-4c6,0 10,5 13,16c2,5 3,11 3,16v5zM1095.3,212.1v-5c0,-5 -1,-10 -2,-16c-3,-10 -7,-15 -12,-15c-5,0 -9,5 -12,15c-2,5 -2,11 -2,16v5c0,4 1,9 2,15c3,10 7,16 12,16c5,0 9,-5 12,-15c2,-5 2,-11 2,-16z" vector-effect="non-scaling-stroke"/>
+                    <path d="M496.5,137.1l4.8,3.5v12c0,0.3 -0.1,0.5 -0.3,0.7c-0.2,0.2 -0.4,0.3 -0.7,0.3h-50c-0.3,0 -0.5,-0.1 -0.7,-0.3c-0.2,-0.2 -0.3,-0.4 -0.3,-0.7l0,-12l4.8,-3.5zM449.3,154.6v-15.5c0,-0.3 -0.1,-0.5 -0.3,-0.7c-0.2,-0.2 -0.4,-0.3 -0.7,-0.3h-12c-0.3,0 -0.5,0.1 -0.7,0.3c-0.2,0.2 -0.3,0.4 -0.3,0.7v16c0,0.3 0.1,0.5 0.3,0.7c0.2,0.2 0.4,0.3 0.7,0.3h78c0.3,0 0.5,-0.1 0.7,-0.3c0.2,-0.2 0.3,-0.4 0.3,-0.7v-16c0,-0.3 -0.1,-0.5 -0.3,-0.7c-0.2,-0.2 -0.4,-0.3 -0.7,-0.3h-12c-0.3,0 -0.5,0.1 -0.7,0.3c-0.2,0.2 -0.3,0.4 -0.3,0.7v15.5z" vector-effect="non-scaling-stroke"/>
+                    <path d="M989.5,137.1l4.8,3.5v12c0,0.3 -0.1,0.5 -0.3,0.7c-0.2,0.2 -0.4,0.3 -0.7,0.3h-50c-0.3,0 -0.5,-0.1 -0.7,-0.3c-0.2,-0.2 -0.3,-0.4 -0.3,-0.7v-12l4.8,-3.5zM942.3,154.6v-15.5c0,-0.3 -0.1,-0.5 -0.3,-0.7c-0.2,-0.2 -0.4,-0.3 -0.7,-0.3h-12c-0.3,0 -0.5,0.1 -0.7,0.3c-0.2,0.2 -0.3,0.4 -0.3,0.7v16c0,0.3 0.1,0.5 0.3,0.7c0.2,0.2 0.4,0.3 0.7,0.3h78c0.3,0 0.5,-0.1 0.7,-0.3c0.2,-0.2 0.3,-0.4 0.3,-0.7v-16c0,-0.3 -0.1,-0.5 -0.3,-0.7c-0.2,-0.2 -0.4,-0.3 -0.7,-0.3h-12c-0.3,0 -0.5,0.1 -0.7,0.3c-0.2,0.2 -0.3,0.4 -0.3,0.7v15.5z" vector-effect="non-scaling-stroke"/>
+                    <path d="M693.8,-1203.2l-6.1,0.2l0,3.6c0,4 -3.2,7.3 -7.2,7.3c-4,0 -7.3,-3.2 -7.3,-7.2l0,-3l-6.2,0.2l0,2.8c0,4 -3.2,7.2 -7.2,7.2c-4,0 -7.2,-3.2 -7.2,-7.2l0,-2.3l-6.2,0.2l0,2.1c0,4 -3.2,7.2 -7.2,7.2c-4,0 -7.2,-3.2 -7.2,-7.2l0,-1.5l-2,0c-3.1,0 -5.7,2.6 -5.7,5.7c0,3.1 2.6,5.7 5.7,5.7l90.3,0l0,-14.5l-12,0.4l0,4.3c0,4 -3.2,7.2 -7.2,7.2c-4,0 -7.2,-3.2 -7.2,-7.2l0,-3.8zM695.9,-1205.3l-10.3,0.3l0,5.6c0.3,2 -0.6,4 -2.3,5.1c-1.7,1.1 -3.9,1.1 -5.6,0c-1.7,-1.1 -2.6,-3.1 -2.3,-5.1l0,-5.2l-10.3,0.4l0,4.8c0,2.9 -2.3,5.2 -5.2,5.2c-2.9,0 -5.2,-2.3 -5.2,-5.2l0,-4.5l-10.3,0.4l0,4.1c0.3,2 -0.6,4 -2.3,5.1c-1.7,1.1 -3.9,1.1 -5.6,0c-1.7,-1.1 -2.6,-3.1 -2.3,-5.1l0,-3.7l-4,0.1c-4.3,0 -7.7,3.4 -7.7,7.7c0,2.1 0.8,4 2.2,5.5c1.4,1.5 3.4,2.3 5.5,2.3l92.3,0l0,-18.8l-16,0.6l0,6.3c0,2.9 -2.3,5.2 -5.2,5.2c-2.9,0 -5.2,-2.3 -5.2,-5.2l0,-6z" vector-effect="non-scaling-stroke"/>
+                </g>
+                <g id="static" fill="none" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                <g id="cnn" fill="none" stroke="none" stroke-dasharray="" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                <path d="M515.3,57.1l206.5,-1164l206.5,1164" id="_opening" fill="none" stroke="#000000" stroke-dasharray=""/>
+                <path id="_opening2" fill="none" stroke="#000000" stroke-dasharray="70,50"/>
+            </g>
+            <g>
+                <g id="by_insets" fill="none" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-dasharray="" stroke-dashoffset="0" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                <g id="by_spec" stroke-width="1" stroke-linecap="butt" stroke-dasharray="" stroke-dashoffset="0">
+                    <path d="M1084,-488.9h1.3c1.3,0 2.6,-0.5 3.5,-1.5c0.9,-0.9 1.5,-2.2 1.5,-3.5v-60c0,-1.3 -0.5,-2.6 -1.5,-3.5c-0.9,-0.9 -2.2,-1.5 -3.5,-1.5h-20c-1.3,0 -2.6,0.5 -3.5,1.5c-0.9,0.9 -1.5,2.2 -1.5,3.5v60c0,1.3 0.5,2.6 1.5,3.5c0.9,0.9 2.2,1.5 3.5,1.5h1.3v-44.4c0,-1.1 0.4,-2.1 1.2,-2.9c0.8,-0.8 1.8,-1.2 2.9,-1.2h9.2c1.1,0 2.1,0.4 2.9,1.2c0.8,0.8 1.2,1.8 1.2,2.9zM1084.2,-404.2c0,0.4 -0.2,0.8 -0.5,1.1c-2.6,1.3 -5.5,1.9 -8.4,1.8c-2.9,0.1 -5.8,-0.5 -8.4,-1.8c-0.3,-0.3 -0.5,-0.6 -0.5,-1.1l0.6,-1.6c0.1,-0.2 0.3,-0.3 0.5,-0.4c1.1,-0.3 2.3,-0.5 3.5,-0.5h4.4h4.4c1.2,0 2.3,0.1 3.5,0.5c0.2,0.1 0.4,0.2 0.5,0.4zM1075.3,-544.6h-7.4c-1.3,0 -2.6,0.5 -3.5,1.5c-0.9,0.9 -1.5,2.2 -1.5,3.5v31.8c2.2,5.2 3.4,10.7 3.6,16.4l0.2,36.4l-0.1,27.4c0,7.8 0,15.6 -0.3,23.5c0,0.4 0.2,0.8 0.5,1.1c2.6,1.3 5.5,1.9 8.4,1.8c2.9,0.1 5.8,-0.5 8.4,-1.8c0.3,-0.3 0.5,-0.6 0.5,-1.1c-0.2,-7.8 -0.3,-15.6 -0.3,-23.5l-0.1,-27.4l0.2,-36.4c0.2,-5.6 1.4,-11.2 3.6,-16.4v-31.8c0,-1.3 -0.5,-2.6 -1.5,-3.5c-0.9,-0.9 -2.2,-1.5 -3.5,-1.5z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                    <path d="M1583.7,-1168.1l3.5,-4.8l12,0c0.3,0 0.5,0.1 0.7,0.3c0.2,0.2 0.3,0.4 0.3,0.7l0,50c0,0.3 -0.1,0.5 -0.3,0.7c-0.2,0.2 -0.4,0.3 -0.7,0.3l-12,0l-3.5,-4.8zM1601.2,-1120.9l-15.5,0c-0.3,0 -0.5,0.1 -0.7,0.3c-0.2,0.2 -0.3,0.4 -0.3,0.7l0,12c0,0.3 0.1,0.5 0.3,0.7c0.2,0.2 0.4,0.3 0.7,0.3l16,0c0.3,0 0.5,-0.1 0.7,-0.3c0.2,-0.2 0.3,-0.4 0.3,-0.7l0,-78c0,-0.3 -0.1,-0.5 -0.3,-0.7c-0.2,-0.2 -0.4,-0.3 -0.7,-0.3l-16,0c-0.3,0 -0.5,0.1 -0.7,0.3c-0.2,0.2 -0.3,0.4 -0.3,0.7l0,12c0,0.3 0.1,0.5 0.3,0.7c0.2,0.2 0.4,0.3 0.7,0.3l15.5,0z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                    <path d="M1515.7,-1332.9l-15,67h-2l-14,-43l-14,43h-2l-15,-67h1l14,65l15,-45l15,45l14,-65h1zM1544.7,-1265.9h-2v-66l-14,14l-1,-1l15,-15h2zM1588.7,-1296.9c0,4 -1,9 -2,14c-1,6 -3,10 -6,13c-2,3 -5,4 -8,4c-6,0 -10,-5 -13,-16c-2,-5 -2,-11 -2,-16v-5c0,-5 1,-9 2,-15c2,-6 3,-10 6,-13c2,-3 5,-4 8,-4c6,0 10,5 13,16c2,5 3,11 3,16v5zM1586.7,-1296.9v-5c0,-5 -1,-10 -2,-16c-3,-10 -7,-15 -12,-15c-5,0 -9,5 -12,15c-2,5 -2,11 -2,16v5c0,4 1,9 2,15c3,10 7,16 12,16c5,0 9,-5 12,-15c2,-5 2,-11 2,-16zM1631.7,-1296.9c0,4 -1,9 -2,14c-1,6 -3,10 -6,13c-2,3 -5,4 -8,4c-6,0 -10,-5 -13,-16c-2,-5 -2,-11 -2,-16v-5c0,-5 1,-9 2,-15c2,-6 3,-10 6,-13c2,-3 5,-4 8,-4c6,0 10,5 13,16c2,5 3,11 3,16v5zM1629.7,-1296.9v-5c0,-5 -1,-10 -2,-16c-3,-10 -7,-15 -12,-15c-5,0 -9,5 -12,15c-2,5 -2,11 -2,16v5c0,4 1,9 2,15c3,10 7,16 12,16c5,0 9,-5 12,-15c2,-5 2,-11 2,-16z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                    <path d="M1592.8,117.8l0,2.9l6,0l0,-3l-6,0zM1586.3,139.7l19,0l0,-18c0,-0.6 -0.4,-1 -1,-1l-17,0c-0.6,0 -1,0.4 -1,1zM1584.8,117.7l16,0c0.6,0 1,-0.4 1,-1l0,-86.8c0,-2.1 -1.6,-3.8 -3.7,-4l-13.2,-1.1c-0.3,0 -0.6,0.1 -0.8,0.3c-0.2,0.2 -0.3,0.5 -0.3,0.7l0,91c0,0.6 0.4,1 1,1z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                    <text x="1056.8" y="-1068.9" transform="rotate(0)" fill="#000000" stroke="none" font-family="OpenGost Type B TT" font-weight="normal" font-size="60" text-anchor="start">М</text>
+                    <path d="M1019,-553.4l0.2,-6.1l3.6,0c4,0 7.2,-3.2 7.2,-7.3c0,-4 -3.2,-7.2 -7.3,-7.2l-3,0l0.2,-6.2l2.8,0c4,0 7.2,-3.2 7.2,-7.2c0,-4 -3.2,-7.2 -7.2,-7.2l-2.3,0l0.2,-6.2l2.1,0c4,0 7.2,-3.2 7.2,-7.2c0,-4 -3.2,-7.2 -7.2,-7.2l-1.5,0l0,-2c0,-3.1 2.6,-5.7 5.7,-5.7c3.1,0 5.7,2.6 5.7,5.7l0,90.3l-14.5,0l0.4,-12l4.3,0c4,0 7.2,-3.2 7.2,-7.2c0,-4 -3.2,-7.2 -7.2,-7.2l-3.8,0zM1016.9,-551.3l0.3,-10.3l5.6,0c2,0.3 4,-0.6 5.1,-2.3c1.1,-1.7 1.1,-3.9 0,-5.6c-1.1,-1.7 -3.1,-2.6 -5.1,-2.3l-5.2,0l0.4,-10.3l4.8,0c2.9,0 5.2,-2.3 5.2,-5.2c0,-2.9 -2.3,-5.2 -5.2,-5.2l-4.5,0l0.4,-10.3l4.1,0c2,0.3 4,-0.6 5.1,-2.3c1.1,-1.7 1.1,-3.9 0,-5.6c-1.1,-1.7 -3.1,-2.6 -5.1,-2.3l-3.7,0l0.1,-4c0,-4.3 3.4,-7.7 7.7,-7.7c2.1,0 4,0.8 5.5,2.2c1.5,1.4 2.3,3.4 2.3,5.5l0,92.3l-18.8,0l0.6,-16l6.3,0c2.9,0 5.2,-2.3 5.2,-5.2c0,-2.9 -2.3,-5.2 -5.2,-5.2l-6,0z" fill-opacity="0.9" fill="#fefefe" stroke="#000000" vector-effect="non-scaling-stroke"/>
+                </g>
+                <g id="static" fill="none" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-dasharray="" stroke-dashoffset="0" font-family="sans-serif" font-weight="normal" font-size="12" text-anchor="start"/>
+                <g id="cnn" fill="none" stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 4" stroke-dashoffset="4">
+                    <path d="M1095.3,77.1l0,-1204" vector-effect="non-scaling-stroke"/>
+                    <path d="M1095.3,-1126.9l428.5,0" vector-effect="non-scaling-stroke"/>
+                    <path d="M1523.7,-1126.9l0,1204" vector-effect="non-scaling-stroke"/>
+                    <path d="M1523.8,77.1l-428.5,0" vector-effect="non-scaling-stroke"/>
+                    <rect x="0" y="0" width="100" height="200" stroke-width="3" vector-effect="non-scaling-stroke"/>
+                </g>
+                <path d="M1115.3,57.1l207,-1164l181.5,1164M1503.8,57.1l-388.5,-582l388.5,-582" id="_opening" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="butt" stroke-dasharray="" stroke-dashoffset="0"/>
+                <path id="_opening2" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="butt" stroke-dasharray="70,50" stroke-dashoffset="0"/>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -74,6 +74,7 @@ function preprocessSVGSync(svgString, opts){
   // get root node and dimensions
   let rootString = svgString.replace(/[\r\n]/g,' ').match(/<svg [^>]+>/s)[0],
       props = [...rootString.matchAll(/(x|y|width|height)\s?=\s?"(-?[0-9\.]+)[^"]{0,4}"/g)],
+      hasFilters = opts.filters && opts.filters.length,
       dim = {},
       vbox = []; 
   // source dimensions raw
@@ -99,44 +100,54 @@ function preprocessSVGSync(svgString, opts){
     dim = {x:vbox[0], y:vbox[1], width:vbox[2], height:vbox[3]};
   }
 
-  let newSVG = svgString;
+  let newSVG = svgString,
+      svg = null;
 
-  if (opts.filters && opts.filters.length) {
+  // remove invisibles and pre-crop
+  if (opts.crop) {
+    svg = SVGtoDOM(svgString);
+    ({svg} = require('./filters/removeInvisible.js')(svg, dim));
+    newSVG = new XMLSerializer().serializeToString(svg);
+    dim = getCroppedDims(newSVG, opts) || dim;
+  }
+
+  if (hasFilters) {
     // filters require SVG DOM
-    let svg = new DOMParser().parseFromString(svgString,'text/xml');
+    svg = svg || SVGtoDOM(svgString);
     // run filters one by one
     opts.filters.forEach(filter => {
-      let filterName = '', params = {};
-      if (typeof filter == 'string') filterName = filter;
+      let t = typeof filter,
+          filterName = '', 
+          params = {}, 
+          fn = function(svg,dim){return{svg,dim}};
+      if (t == 'function') fn = filter;
       else {
-        filterName = keys(filter)[0];
-        params = filter[filterName];
+        if (t == 'string') filterName = filter;
+        else {
+          filterName = keys(filter)[0];
+          params = filter[filterName];
+        }
+        if (!filterName) return;
+        fn = require('./filters/'+filterName+'.js');
       }
-      if (!filterName) return;
-      ({svg,dim} = require('./filters/'+filterName+'.js')(svg, dim, opts, params));
+      ({svg,dim} = fn(svg, dim, opts, params));
     });
     // back to string
     newSVG = new XMLSerializer().serializeToString(svg);
   }
 
-  // try to crop to bbox and add bleed
-  if (opts.crop) {
-    let bb = new Resvg(newSVG, getReSVGOpts(opts)).getBBox();
-    if (bb.width) {
-      let d = opts.bleed * (bb.width/(opts.width - opts.bleed*2));
-      dim = {
-        x: round(bb.x-d), 
-        y: round(bb.y-d),
-        width:  round(bb.width+d*2), 
-        height: round(bb.height+d*2)
-      };
-    }
+  // try to re-crop after plugins
+  if (opts.crop && hasFilters) {
+    dim = getCroppedDims(newSVG, opts) || dim;
   }
 
+  // Calculate scaling factor
+  let k = 1 / max(
+    null != opts.height ? dim.height / opts.height : -1, 
+    dim.width / opts.width
+  );
+
   // rebuild SVG root node, no x and y attributes
-  let k = opts.width / dim.width;
-  if (null != opts.height) k = min(opts.height / dim.height, k);
-  
   let d1 = {
     width:  round(dim.width  * k), 
     height: round(dim.height * k)
@@ -192,6 +203,27 @@ async function bufferToImage({png, buf, dim, opts}){
 
 // =======================
 
+function getCroppedDims(svg, opts){
+  let bb = new Resvg(svg, getReSVGOpts(opts)).getBBox(),
+      bleed = opts.bleed || 0,
+      dim = null;
+  if (bb.width) {
+    let d = bleed * Math.max(
+      opts.height ? bb.height/(opts.height - bleed*2) : -1,
+      bb.width/(opts.width - bleed*2)
+    );
+    dim = {
+      x: round(bb.x-d), 
+      y: round(bb.y-d),
+      width:  round(bb.width+d*2), 
+      height: round(bb.height+d*2)
+    };
+  }
+  return dim; 
+}
+
+// =======================
+
 function getReSVGOpts(opts) {
   let clr, bg = opts?.background || [0,0,0,0];
   if (!Array.isArray(bg)) clr = bg; else {
@@ -200,7 +232,7 @@ function getReSVGOpts(opts) {
   }
   let o = {
     background: clr,
-    fitTo: { mode:'width', value:opts.width },
+    //fitTo: { mode:'width', value:opts.width },
     font:  { loadSystemFonts: false }
   };
   if (opts.fontFiles && opts.fontFiles.length) {
@@ -213,5 +245,9 @@ function getReSVGOpts(opts) {
 
 // =======================
 
+function SVGtoDOM(s){
+  return new DOMParser().parseFromString(s,'text/xml');
+}
 function clamp(x, a, b) {return max(a, min(x, b))}
+
 

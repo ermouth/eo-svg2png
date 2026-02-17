@@ -9,90 +9,105 @@ var opts = {
   ]
 };
 
-// The test should produce 3 PNG files out of SVG sources
+// The test suite creates several PNG and JPEG files using SVG sources
 
 (async function test(){
 
   let tests = [
     {
-      name:     'Drainage with invalid XYWH, fixed by filter and rendered',
+      name:     'Image with invalid XYWH, fixed by filter and rendered',
       viewBoxAsXYWH: true,
-      filters:  ['fixDrainage',{fixThinLines:{minLineWidth: 1.5}}],  
+      filters:  ['fixDrainage', {fixThinLines:{minLineWidth: 1.5}}],  
       fname:    __dirname + '/dr1.svg',
     },
     {
-      name:     'Drainage with invalid viewBox, fixed by filter, cropped and rendered',
-      filters:  ['fixDrainage','removeInvisible'], 
+      name:     'Fixes invalid viewBox, crops and adds bleed',
+      filters:  ['fixDrainage'], 
       crop:       true,
       bleed:      20, 
       fname:    __dirname + '/dr2.svg',
     },
     {
-      name:       'Another invalid viewBox, fixed, limited by height',
+      name:       'Another invalid viewBox, fixed and limited by height',
       width:      1000,
       height:     1000,
-      background: [255, 255, 255, 128],
+      background: 'transparent',
       filters:    ['fixDrainage'],  
       fname:    __dirname + '/dr3.svg',
     },
     { 
-      name:       'Hires map with a little text, render to over-compressed JPG',
-      width:      2500,
+      name:       'A map with a little text, render to over-compressed JPG',
+      width:      1000,
       font:       '', 
       format:     'jpg',
       quality:    30,
       fname:      __dirname + '/re.svg' 
     },
     { 
-      name:       'Same hires map, but to default PNG and 2x resolution',
-      width:      5000, 
+      name:       '…same map, but to default PNG and 2x resolution',
+      width:      2000, 
       font:       '', 
       fname:      __dirname + '/re.svg' 
     },
     { 
-      name:       'Renderer fixes XYWH, adds margin with plugin, and also sharpens, bg is CSS string',
+      name:       'Fixes XYWH, adds margin with plugin, sharpens, adds bg as CSS string',
       viewBoxAsXYWH: true, 
-      width:      1500, 
-      sharpen:    0.1, 
+      width:      1000, 
+      sharpen:    0.2, 
       background: 'aliceblue',
-      filters:    ['addMargin3percent'],  //  deprecated
+      filters:    [
+        'addMargin3percent', //  deprecated
+        'fixNonScalingStroke'
+      ],  
       fname:      __dirname + '/s0.svg' 
     },
     { 
-      name:       'Renderer fixes invalid viewBox, thickens lines, adds font, margins and bg',
-      width:      1500, 
+      name:       'Fixed viewBox, thicker lines + large margins and semi-transparent bg',
+      width:      1500,
+      height:     1500, 
       background: [240, 248, 255, 129],
-      filters:    ['removeInvisible', {fixThinLines:{minLineWidth: 3}}],
+      filters:    ['fixNonScalingStroke', {fixThinLines:{minLineWidth: 2}}],
       crop:       true,
-      bleed:      20,
+      bleed:      100,
       fname:      __dirname + '/s1.svg' 
     },
     { 
-      name:       'Fixes invalid viewBox, sets Asket font, margins and bg, fixes thin lines',
+      name:       'Fixes viewBox, sets Asket font, margins and bg, fixes thin lines',
       width:      1000, 
       background: 'white', 
       font:       'Asket Narrow',
-      filters:    ['removeInvisible', 'forceFont', {fixThinLines:{minLineWidth: 1}}], 
+      filters:    ['fixNonScalingStroke' , 'forceFont', {fixThinLines:{minLineWidth: 1}}], 
       crop:       true,
       bleed:      5,
       fname:      __dirname + '/s2.svg' 
     },
     { 
-      name:       'Crops to bounding box with bleed, fixes thin lines',
+      name:       'Crops, fixes non-scaling strokes and makes thin lines very thick',
       width:      1000, 
-      filters:    ['removeInvisible', {fixThinLines:{minLineWidth: 3}}],
+      filters:    [
+        //'removeInvisible',
+        'fixNonScalingStroke', {fixThinLines:{minLineWidth: 10}}
+      ],
       crop:       true,
-      bleed:      100,
+      bleed:      10,
       fname:      __dirname + '/s3.svg' 
     },
     { 
-      name:       'Hires avatar render on transparent bg',
+      name:       'Fixes dashed non-scaling strokes and thin lines, renders to low-res',
+      width:      500, 
+      filters:    ['fixNonScalingStroke', {fixThinLines:{minLineWidth: 0.5}}],
+      crop:       true,
+      bleed:      10,
+      fname:      __dirname + '/s4.svg' 
+    },
+    { 
+      name:       'Hires avatar render on transparent bg, no crop',
       width:      3000,
       background: [0,0,0,0],
       fname:      __dirname + '/i0.svg' 
     },
     { 
-      name:       'Render font as buffer over 8-bit background PNG embedded',
+      name:       'Renders font from Buffer over embedded 8-bit background PNG',
       width:      2000,
       format:     'jpg',
       font:       'UTM Agin',
@@ -104,11 +119,18 @@ var opts = {
   ];
 
   let i = 0;
+  console.time('\nFull eo-svg2png tests duration');
   for (let t of tests) {
     let t0 = Date.now();
     await renderSVGtoImage('', {...opts, ...t})
-    .then(_ => console.log(`Test ${++i}: ${t.name}; done in ${Date.now()-t0}ms`))
+    .then(_ => {
+      let tn = `Test ${++i}    `.substr(0,8),
+          td = `    ${Date.now()-t0}ms`.substr(-7);
+      console.log(`${tn}${td}   ${t.name}`)
+    })
     .catch(err => console.log(`Test ${++i} FAILED:`, err));
   }
-  console.log('\nFinished eo-svg2png tests.\n')
+  console.timeEnd('\nFull eo-svg2png tests duration');
+  console.log('\nFinished eo-svg2png tests.\n');
+
 })();
