@@ -4,6 +4,8 @@ Converts SVG string into PNG, JPG or Canvas RGBA Buffer. The lib was
 written for private use and contains several special filters which 
 may be ignored. Better works with `yarn`.
 
+The lib is not intended for browsers.
+
 ## Fit SVG into bitmap image of predefined width
 
 SVG root must have either valid `width`, `height`, `x` and `y`.
