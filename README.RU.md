@@ -5,6 +5,8 @@
 специальных фильтров, которые можно проигнорировать. Для 
 установки лучше использовать `yarn`.
 
+Библиотека не предназначена для использования в браузерах.
+
 ## Обработка и ресайз SVG в битмап указанной ширины
 
 Корневой эл-т SVG должен иметь корректные `width`, `height`, `x` и `y`.
@@ -60,10 +62,25 @@ renderSVGtoImage(sourceSVGstring, opts)
 
 Фильтр может мутировать исходные объекты.
 
-Цепочка фильтров, которые нужно применить, определяется в 
-`opts.filters` при вызове конвертера.
+Цепочка фильтров, которые нужно применить, определяется массивом
+`opts.filters` при вызове конвертера. В массиве можно передать 
+свой обработчик как js-функцию.
 
 В `/test/test.js`есть несколько примеров применения.
+
+Встроенные неспециализированные плагины:
+
+* **`fixNonScalingStroke`** – конвертирует обводки с заданным 
+  vector-effect="non-scaling-stroke" в обычные, которые отрендерятся
+  с нужной толщиной при запрошенных размерах картинки
+* **`removeInvisibles`** – удаляет невидимые объекты для корректного
+  определения bounding box, вызывается автоматически если параметр
+  `opts.crop` выставлен в `true`
+* **`fixThinLines`** – устанавливает нижнюю границу толщины обводок,
+  линии тоньше предела будут приведены к указанной толщине, это 
+  позволяет избежать плохо заметных обводок при рендере в низком
+  разрешении
+* **`forceFont`** – меняет атрибут `font-family` у всех текстов.
 
 ## Конверсия SVG в битмап с размерами из SVG
 
@@ -76,7 +93,7 @@ renderSVGtoImage(sourceSVGstring, opts)
 в `dim.width` и `dim.height` как целые числа.
 
 ```js
-const {renderSVGToBuf, bufferToImage} = require('eo-svg2png');
+const {renderSVGToBuffer, bufferToImage} = require('eo-svg2png');
 
 renderSVGToBuffer({
   svg:  sourceSVGstring,    // required, SVG строка
@@ -107,7 +124,7 @@ renderSVGToBuffer({
 в `dim.width` и `dim.height` как целые числа.
 
 ```js
-const {renderSVGToBuf} = require('eo-svg2png');
+const {renderSVGToBuffer} = require('eo-svg2png');
 
 renderSVGToBuffer({
   svg:  sourceSVGstring,    // required
@@ -129,3 +146,7 @@ renderSVGToBuffer({
 Фолдер `test` содержит несколько SVG док-тов. При запуске `yarn test`
 они должны быть преобразованы в PNG или JPEG в том же фолдере. 
 Тайминги показывают как параметры влияют на производительность.
+
+---
+
+(c) 2026 ermouth, eo-svg2png is MIT-licensed, fonts are SIL-licensed

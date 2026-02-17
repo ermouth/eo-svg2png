@@ -4,6 +4,8 @@ Converts SVG string into PNG, JPG or Canvas RGBA Buffer. The lib was
 written for private use and contains several special filters which 
 may be ignored. Better works with `yarn`.
 
+The lib is not intended for browsers.
+
 ## Fit SVG into bitmap image of predefined width
 
 SVG root must have either valid `width`, `height`, `x` and `y`.
@@ -11,15 +13,17 @@ If only valid `viewBox` is present, use option `viewBoxAsXYWH`
 to restore metrics from `viewBox`.
 
 Result image width is taken from `opts.width` param, 
-not from SVG root `width` attribute. Result image height is 
-scaled accordingly.
+not from SVG root `width` attribute. If `opts.height` 
+is defined result image height wouldn’t exceed it.
+
+Both width and height define max image dimensions.
 
 ```js
 const {renderSVGtoImage} = require('eo-svg2png');
 
 var opts = {
   width:      1000,       // Result image width, default is 500
-  background: [0,0,0,0],  // Optional, RGBA array or CSS3 name
+  background: [0,0,0,255],// Optional, RGBA array or CSS3 name
   format:     'jpeg',     // Optional, default is png
   sharpen:    0.1,        // Optional, default is 0, slows down 3…15x
   filters:    [],         // Optional list of filters to apply to SVG DOM
@@ -54,15 +58,26 @@ font data.
 Filters are located in `/filters` folder. Each filter exports a single 
 function which receives SVG DOM, dimensions and options. A filter 
 must return object with two props: `svg` which is new SVG DOM, 
-and `dim` which is dimensions.
+and `dim` which is dimensions. 
 
 It’s ok for a filter to mutate given svg and dim directly without 
 prior cloning. 
 
 Sequence of filters for a given SVG is defined in `opts.filters` 
-array.
+array. An external function can be passed as a filter.
 
 There are several examples of filter syntax in `/test/test.js`.
+
+Built-in non-special filters:
+
+* **`fixNonScalingStroke`** – converts strokes with undesired 
+  vector-effect attribute to standard strokes which is rendered 
+  in intended stroke width for a given image size
+* **`removeInvisibles`** – removes invisible objects, implicit and
+  always runs first if `opts.crop` is true
+* **`fixThinLines`** – set lower bound for line thickness, good 
+  for low-res rendering, helps to avoid too faint strokes
+* **`forceFont`** – changes `font-family` attribute for all texts.
 
 ## Convert SVG to bitmap as is
 
@@ -74,7 +89,7 @@ Result dimensions will be taken from `dim` and if they don’t match
 original SVG `width` and `height` the result image is truncated.
 
 ```javascript
-const {renderSVGToBuf, bufferToImage} = require('eo-svg2png');
+const {renderSVGToBuffer, bufferToImage} = require('eo-svg2png');
 
 renderSVGToBuffer({
   svg:  sourceSVGstring,    // required
@@ -101,7 +116,7 @@ Result dimensions will be taken from `dim` and if they don’t match
 original SVG `width` and `height` the result image is truncated.
 
 ```js
-const {renderSVGToBuf} = require('eo-svg2png');
+const {renderSVGToBuffer} = require('eo-svg2png');
 
 renderSVGToBuffer({
   svg:  sourceSVGstring,    // required
@@ -123,3 +138,7 @@ renderSVGToBuffer({
 The `test` folder contains several SVG images which are rendered 
 to PNG/JPEG files on successful `yarn test`. Timings show performance and
 its dependency on different settings.
+
+---
+
+(c) 2026 ermouth, eo-svg2png is MIT-licensed, fonts are SIL-licensed

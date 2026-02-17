@@ -1,14 +1,10 @@
+// THIS PLUGIN IS DEPRECATED SINCE v2
 
-// Добавляет 3% полей от наименьшего из ширины или высоты. 
-// Поля добавляются со всех сторон
+// Adds 3% margin, just mutates dim object
 
-// svg – SVG DOM object, не используется,
-// dim – {x,y,width,height}, фильтр меняет именно его,
-// opts – не используется
+// Returns {svg, dim}
 
-// Возвращает {svg, dim}
-
-module.exports = exports = function addMargin(svg, dim, opts){
+module.exports = exports = function addMargin(svg, dim){
 
   var margin = Math.min(dim.width, dim.height) * 0.03 | 0;
 
