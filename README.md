@@ -87,7 +87,7 @@ Result dimensions will be taken from `dim` and if they don’t match
 original SVG `width` and `height` the result image is truncated.
 
 ```javascript
-const {renderSVGToBuf, bufferToImage} = require('eo-svg2png');
+const {renderSVGToBuffer, bufferToImage} = require('eo-svg2png');
 
 renderSVGToBuffer({
   svg:  sourceSVGstring,    // required
@@ -114,7 +114,7 @@ Result dimensions will be taken from `dim` and if they don’t match
 original SVG `width` and `height` the result image is truncated.
 
 ```js
-const {renderSVGToBuf} = require('eo-svg2png');
+const {renderSVGToBuffer} = require('eo-svg2png');
 
 renderSVGToBuffer({
   svg:  sourceSVGstring,    // required

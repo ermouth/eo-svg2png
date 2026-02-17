@@ -18,8 +18,6 @@
 в SVG, а параметром `opts.width`. Высота итогового изображения также 
 будет пропорционально изменена.
 
-<small>
-
 ```js
 const {renderSVGtoImage} = require('eo-svg2png');
 
@@ -41,8 +39,6 @@ renderSVGtoImage(sourceSVGstring, opts)
   /* buf содержит данные готовые к отправке или сохранению */
 });
 ```
-
-</small>
 
 Если добавить в `opts` ключ `fname` c именем SVG-файла,
 параметр с SVG-строкой будет проигнорирован и данные взяты из файла.
@@ -96,10 +92,8 @@ renderSVGtoImage(sourceSVGstring, opts)
 и `height` исходного SVG. Эти размеры должны быть продублированы 
 в `dim.width` и `dim.height` как целые числа.
 
-<small>
-
 ```js
-const {renderSVGToBuf, bufferToImage} = require('eo-svg2png');
+const {renderSVGToBuffer, bufferToImage} = require('eo-svg2png');
 
 renderSVGToBuffer({
   svg:  sourceSVGstring,    // required, SVG строка
@@ -118,7 +112,6 @@ renderSVGToBuffer({
   /* buf содержит данные готовые к отправке или сохранению */
 });
 ```
-</small>
 
 ## Конверсия SVG в Canvas-style RGBA buffer
 
@@ -130,10 +123,8 @@ renderSVGToBuffer({
 и `height` исходного SVG. Эти размеры должны быть продублированы 
 в `dim.width` и `dim.height` как целые числа.
 
-<small>
-
 ```js
-const {renderSVGToBuf} = require('eo-svg2png');
+const {renderSVGToBuffer} = require('eo-svg2png');
 
 renderSVGToBuffer({
   svg:  sourceSVGstring,    // required
@@ -149,8 +140,6 @@ renderSVGToBuffer({
   /* buf содержит RGBA Buffer изображения */
 });
 ```
-
-</small>
 
 ## Тесты
 
