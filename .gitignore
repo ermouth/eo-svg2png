@@ -6,6 +6,7 @@
 *.env
 *.svg
 !/test/*.svg
+*.1.svg
 *.png
 *.jpg
 *.jpeg

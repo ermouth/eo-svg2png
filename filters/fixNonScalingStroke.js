@@ -9,6 +9,8 @@ const sSW = 'stroke-width',
       sDO = 'stroke-dashoffset';
 
 module.exports = exports = function fixNonScalingStroke(svg, dim, opts){
+  
+  // Scale factor
   let k = Math.max(
     null != opts.height ? dim.height / opts.height : -1, 
     dim.width / opts.width

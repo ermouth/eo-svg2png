@@ -21,10 +21,13 @@ var opts = {
       fname:    __dirname + '/dr1.svg',
     },
     {
-      name:     'Fixes invalid viewBox, crops and adds bleed',
+      name:     'Fixes viewBox, adds bleed and fits into width and height',
       filters:  ['fixDrainage'], 
-      crop:       true,
-      bleed:      20, 
+      width:    500,
+      height:   600,
+      crop:     true,
+      bleed:    100, 
+      expand:   true,
       fname:    __dirname + '/dr2.svg',
     },
     {
@@ -72,13 +75,15 @@ var opts = {
       fname:      __dirname + '/s1.svg' 
     },
     { 
-      name:       'Fixes viewBox, sets Asket font, margins and bg, fixes thin lines',
+      name:       'Fixes viewBox, adds Asket font, margins and bg, fixes thin lines',
       width:      1000, 
+      height:     800,
       background: 'white', 
       font:       'Asket Narrow',
       filters:    ['fixNonScalingStroke' , 'forceFont', {fixThinLines:{minLineWidth: 1}}], 
       crop:       true,
       bleed:      5,
+      expand:     true,
       fname:      __dirname + '/s2.svg' 
     },
     { 
