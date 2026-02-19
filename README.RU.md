@@ -20,22 +20,26 @@
 
 ```js
 const {renderSVGtoImage} = require('eo-svg2png');
-
-var opts = {
-  width:      1000,       // ширина битмапа на выходе, 500 по умолчанию
-  background: [0,0,0,0],  // optional, RGBA array или CSS3 name
-  format:     'jpg',      // optional, по умолчанию png
-  sharpen:    0.1,        // optional, по умолчанию 0, замедля в 3…15 раз
-  filters:    [],         // optional, массив имён фильтров
+const opts = {
+  width:      1000,       // Обязательно: ширина битмапа на выходе
+  height:     1000,       // Максимальная высота битмапа
+  viewBoxAsXYWH: false,   // Берёт исх. размеры из viewBox, а не из
+                          // атрибутов x, y , width, height
+  background: [0,0,0,0],  // Фон, RGBA array или CSS3 name
+  format:     'jpg',      // По умолчанию png
+  sharpen:    0.1,        // Повысить резкость, замедляет в 3…15 раз
+  filters:    [],         // Массив имён фильтров или функций
                           // для препроцесса SVG, примеры в /test
-  font:       'SomeFont', // optional, шрифт по умолчанию
-  fontFiles:   [],        // optional, список локальных файлов шрифтов
-  fontBuffers:            // optional, добавит внешний шрифт в цикл рендера
-  require('fs').readFileSync('SomeFont.ttf')
-};
+  crop:       false,      // Обрезать пустые поля перед обработкой
+  bleed:      2,          // Добавляет поля до картинки, < width/2
+  expand:     false,      // Расширить до размеров width и height
 
-renderSVGtoImage(sourceSVGstring, opts)
-.then(buf => {
+  font:       'SomeFont', // Шрифт по умолчанию
+  fontFiles:  [],        // Список локальных файлов шрифтов
+  fontBuffers:            // Внешний шрифт как буфер
+              require('fs').readFileSync('SomeFont.ttf')
+};
+renderSVGtoImage(sourceSVGstring, opts).then(buf => {
   /* buf содержит данные готовые к отправке или сохранению */
 });
 ```
@@ -60,20 +64,24 @@ renderSVGtoImage(sourceSVGstring, opts)
 Фильтр должен возвратить объект `{svg, dim}`, где svg – обработанный 
 фильтром SVG DOM object, и dim – обработанный размерный объект.
 
-Фильтр может мутировать исходные объекты.
+Фильтр может мутировать исходные объекты. Чтобы заморозить размеры 
+и предотвратить обрезку размеров SVG после применения фильтров, фильтр 
+должен установить `dim.frozen` в `true`.
 
 Цепочка фильтров, которые нужно применить, определяется массивом
 `opts.filters` при вызове конвертера. В массиве можно передать 
-свой обработчик как js-функцию.
+свой обработчик как js-функцию, такой обработчик будет вызван 
+с параметрами svgDOM, dim, opts и ему будет передан объект 
+`this` с пропсами DOMParser, XMLSerializer, Resvg и xpath.
 
 В `/test/test.js`есть несколько примеров применения.
 
-Встроенные неспециализированные плагины:
+Встроенные неспециализированные фильтры:
 
 * **`fixNonScalingStroke`** – конвертирует обводки с заданным 
   vector-effect="non-scaling-stroke" в обычные, которые отрендерятся
   с нужной толщиной при запрошенных размерах картинки
-* **`removeInvisibles`** – удаляет невидимые объекты для корректного
+* **`removeInvisible`** – удаляет невидимые объекты для корректного
   определения bounding box, вызывается автоматически если параметр
   `opts.crop` выставлен в `true`
 * **`fixThinLines`** – устанавливает нижнюю границу толщины обводок,
@@ -107,8 +115,7 @@ renderSVGToBuffer({
     sharpen:    0.1         // optional, по умолчанию 0
   }
 })
-.then(bufferToImage)
-.then(buf => {
+.then(bufferToImage).then(buf => {
   /* buf содержит данные готовые к отправке или сохранению */
 });
 ```
@@ -140,6 +147,14 @@ renderSVGToBuffer({
   /* buf содержит RGBA Buffer изображения */
 });
 ```
+
+## Очистка и обработка SVG
+
+Функция `preprocessSVGSync(svgString, opts)` обрабатывает SVG согласно
+переданным параметрам. Она возвращает `{svg,dim,bbox}` объект,
+содержащий обработанный SVG как строку, размеры (атрибуты width и height
+итогового SVG), а также bounding box – ширину, высоту и смещение начала 
+координат до скэйла в итоговый размер.
 
 ## Тесты
 

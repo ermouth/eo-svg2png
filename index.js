@@ -1,6 +1,8 @@
 const { DOMParser, XMLSerializer } = require('@xmldom/xmldom'),
       { Jimp, JimpMime } = require('jimp'),
       { Resvg } = require('@resvg/resvg-js'),
+      namespaces = {v:'http://www.w3.org/2000/svg'},
+      xpath = require('xpath'),
       { round, abs, min, max } = Math,
       { assign, keys } = Object;
 
@@ -32,7 +34,8 @@ function renderSVGtoImage(svgString, opts0){
     filters: [],             // array of SVG preprocessors to run (see /filters folder)
 
     crop:    false,          // crop empty margins, better used with 'removeInvisible' filter
-    bleed:   2,              // padding for cropped image, pixels, should be < width/2
+    expand:  false,          // expands image to width and height, if height is defined
+    bleed:   0,              // padding for cropped/expanded image, pixels, should be < width/2
     
     quality: 60,             // default JPEG quality
     sharpen: 0,              // sharpen -2…2, negatives do strange things, 3…20x slower if !=0,
@@ -43,8 +46,9 @@ function renderSVGtoImage(svgString, opts0){
     ...opts0
   };
 
-  opts.width = typeof opts.width != 'number' ? 500 : clamp(opts.width, 10, 5000) | 0;
   opts.format = /^jp[e]?g$/i.test(opts.format+'') ? 'jpeg' : 'png';
+  opts.width = typeof opts.width != 'number' ? 500 
+               : clamp(opts.width, 10, 5000) | 0;
 
   var fname = opts.fname,
       svgString = !fname ? svgString 
@@ -55,7 +59,8 @@ function renderSVGtoImage(svgString, opts0){
   .then(bufferToImage)
   .then(buf => {
     if (fname) require('fs').writeFileSync(
-      fname.replace(/\.svg$/i,'.'+opts.format), buf
+      fname.replace(/\.svg$/i, '.'+opts.format), 
+      buf
     );
     return buf;
   });
@@ -72,8 +77,10 @@ async function preprocessSVG(svgString, opts){
 
 function preprocessSVGSync(svgString, opts){
   // get root node and dimensions
-  let rootString = svgString.replace(/[\r\n]/g,' ').match(/<svg [^>]+>/s)[0],
-      props = [...rootString.matchAll(/(x|y|width|height)\s?=\s?"(-?[0-9\.]+)[^"]{0,4}"/g)],
+  let rootString = svgString.replace(/[\r\n]/g,' ')
+                   .match(/<svg [^>]+>/s)[0],
+      reXYWH = /(x|y|width|height)\s?=\s?"(-?[0-9\.]+)[^"]{0,4}"/g,
+      props = [...rootString.matchAll(reXYWH)],
       hasFilters = opts.filters && opts.filters.length,
       dim = {},
       vbox = []; 
@@ -82,8 +89,11 @@ function preprocessSVGSync(svgString, opts){
 
   // get current viewBox
   let root = rootString.match(/viewBox="([^"]+)"/s);
-  if (root) vbox = rootString.match(/viewBox="([^"]+)"/)[1].split(/[, ]+/).map(n=>round(+n));
-  if (vbox.length && vbox.length != 4) throw new TypeError('Incomplete SVG viewBox');
+  if (root) vbox = rootString.match(/viewBox="([^"]+)"/)[1]
+                   .split(/[, ]+/).map(n=>round(+n));
+  if (vbox.length && vbox.length != 4) {
+    throw new TypeError('Incomplete SVG viewBox');
+  }
 
   // check if we already have reasonable viewBox
   if (
@@ -96,7 +106,9 @@ function preprocessSVGSync(svgString, opts){
     opts.viewBoxAsXYWH || dim.x == null || dim.y == null 
     || dim.width == null || dim.height == null
   ){
-    if (!vbox.length) throw new TypeError('Wrong SVG: no x,y,width,height and no viewBox');
+    if (!vbox.length) {
+      throw new TypeError('No x,y,width,height and no viewBox in SVG');
+    }
     dim = {x:vbox[0], y:vbox[1], width:vbox[2], height:vbox[3]};
   }
 
@@ -108,12 +120,16 @@ function preprocessSVGSync(svgString, opts){
     svg = SVGtoDOM(svgString);
     ({svg} = require('./filters/removeInvisible.js')(svg, dim));
     newSVG = new XMLSerializer().serializeToString(svg);
-    dim = getCroppedDims(newSVG, opts) || dim;
+    dim = getBBox(newSVG, opts) || dim;
   }
 
   if (hasFilters) {
     // filters require SVG DOM
     svg = svg || SVGtoDOM(svgString);
+    let that = {
+      DOMParser, XMLSerializer, Resvg, 
+      getBBox, xpath, namespaces
+    };
     // run filters one by one
     opts.filters.forEach(filter => {
       let t = typeof filter,
@@ -130,15 +146,18 @@ function preprocessSVGSync(svgString, opts){
         if (!filterName) return;
         fn = require('./filters/'+filterName+'.js');
       }
-      ({svg,dim} = fn(svg, dim, opts, params));
+      ({svg,dim} = fn.call(that, svg, dim, opts, params));
     });
     // back to string
     newSVG = new XMLSerializer().serializeToString(svg);
   }
 
-  // try to re-crop after plugins
-  if (opts.crop && hasFilters) {
-    dim = getCroppedDims(newSVG, opts) || dim;
+  // filter could freeze dimensions
+  if (!dim.frozen) {
+    // try to re-crop after plugins
+    if (opts.crop && hasFilters) dim = getBBox(newSVG, opts) || dim;
+    // expand if required
+    if (opts.height && opts.expand) dim = expandBBox(dim, opts);
   }
 
   // Calculate scaling factor
@@ -178,7 +197,6 @@ async function renderSVGToBuffer({svg, opts, dim}) {
 
 async function bufferToImage({png, buf, dim, opts}){
   var fmt = JimpMime[opts.format || 'png'];
-
   if (fmt == JimpMime.png && !opts.sharpen) {
     // do nothing, resolve with ready-to-use image
     return Promise.resolve(png);
@@ -203,8 +221,10 @@ async function bufferToImage({png, buf, dim, opts}){
 
 // =======================
 
-function getCroppedDims(svg, opts){
-  let bb = new Resvg(svg, getReSVGOpts(opts)).getBBox(),
+function getBBox(svg0, opts){
+  let svg = !svg0.documentElement ? svg0
+          : new XMLSerializer().serializeToString(svg0),
+      bb = new Resvg(svg, getReSVGOpts(opts)).getBBox(),
       bleed = opts.bleed || 0,
       dim = null;
   if (bb.width) {
@@ -230,14 +250,8 @@ function getReSVGOpts(opts) {
     bg = bg.length == 3 ? bg.concat([255]) : bg,
     clr = `rgba(${bg[0]},${bg[1]},${bg[2]},${bg[3]/255})`;
   }
-  let o = {
-    background: clr,
-    //fitTo: { mode:'width', value:opts.width },
-    font:  { loadSystemFonts: false }
-  };
-  if (opts.fontFiles && opts.fontFiles.length) {
-    o.font.fontFiles = opts.fontFiles;
-  }
+  let o = {background:clr, font:{loadSystemFonts:false}};
+  if (opts.fontFiles?.length) o.font.fontFiles = opts.fontFiles;
   if (opts.font) o.font.defaultFontFamily = opts.font;
   if (opts.fontBuffers) o.font.fontBuffers = opts.fontBuffers;
   return o;
@@ -245,9 +259,26 @@ function getReSVGOpts(opts) {
 
 // =======================
 
-function SVGtoDOM(s){
-  return new DOMParser().parseFromString(s,'text/xml');
+function expandBBox(dim, {width, height}){
+  // Expands to width and height
+  let asp0 = dim.width / dim.height,
+      asp1 = width / height,
+      epsilon = 0.3 / Math.max(width, height);
+  if (Math.abs(asp0-asp1) < epsilon) return dim;
+  // More width
+  if (asp0 < asp1) {
+    let dx = Math.round(dim.width * (asp1/asp0 - 1) / 2);
+    dim.x -= dx; dim.width += dx*2;
+  }
+  // More height
+  else {
+    let dy = Math.round(dim.height * (asp0/asp1 - 1) / 2);
+    dim.y -= dy; dim.height += dy*2;
+  }
+  return dim;
 }
+
+// =======================
+
+function SVGtoDOM(s){return new DOMParser().parseFromString(s,'text/xml')}
 function clamp(x, a, b) {return max(a, min(x, b))}
-
-
