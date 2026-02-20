@@ -17,7 +17,8 @@ module.exports = exports = function removeInvisible(svg, dim){
 // List of XPath selectors to pre-compile
 const xpaths = [
   '//v:*[@visibility="hidden"]',
-  '//v:path[@d=""]'
+  '//v:path[@d=""]',
+  '//v:g[not(node())]'
 ].map(s => xpath.parse(s));
 
 function findVoids(node) {
