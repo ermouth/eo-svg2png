@@ -47,7 +47,8 @@ module.exports = exports = function fixDrainage(svg, dim, opts){
           k2 = ta=='start'?0.9:ta=='middle'?0.45:0;
       coords.push(['M', x+w0*nl*k1, y]);
       coords.push(['M', x+w0*nl*k2, y-w0*2]);
-      _attrs(node, {'font-size': node.getAttribute('font-size') * 0.9 | 0});
+      let textSize = node.getAttribute('font-size');
+      if (textSize) _attrs(node, {'font-size': textSize * 0.9 | 0});
     }
   });
   
