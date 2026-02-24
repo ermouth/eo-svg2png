@@ -80,7 +80,7 @@ var opts = {
       height:     800,
       background: 'white', 
       font:       'Asket Narrow',
-      filters:    ['fixNonScalingStroke' , 'forceFont', {fixThinLines:{minLineWidth: 1}}], 
+      filters:    ['fixNonScalingStroke' , 'forceFont', {fixThinLines:{minLineWidth: .3}}], 
       crop:       true,
       bleed:      5,
       expand:     true,
@@ -100,7 +100,7 @@ var opts = {
     { 
       name:       'Fixes dashed non-scaling strokes and thin lines, renders to low-res',
       width:      500, 
-      filters:    ['fixNonScalingStroke', {fixThinLines:{minLineWidth: 0.5}}],
+      filters:    ['fixNonScalingStroke', {fixThinLines:{minLineWidth: 0.2}}],
       crop:       true,
       bleed:      10,
       fname:      __dirname + '/s4.svg' 
